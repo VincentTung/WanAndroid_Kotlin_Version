@@ -1,12 +1,11 @@
-package com.example.myapplication
+package com.example.myapplication.ui.activity
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
+import com.example.myapplication.R
 import com.example.myapplication.adapter.MainTabAdapter
-import com.example.myapplication.ui.activity.BaseActivity
 import com.example.myapplication.ui.fragment.MainPageFragment
 import kotlinx.android.synthetic.main.activity_main.*
-import kotlinx.android.synthetic.main.activity_main.view.*
 
 
 class MainActivity : BaseActivity() {

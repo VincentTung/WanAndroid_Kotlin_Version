@@ -1,7 +1,5 @@
 package com.example.myapplication.entity
 
-import android.R.bool
-
 
 
 class Article {
@@ -14,11 +12,11 @@ class Article {
     var author: String? = null
     var chapterId: Int = 0
     var chapterName: String? = null
-//    var collect: bool? = null
+    var collect: String? = null
     var courseId: Int = 0
     var desc: String? = null
     var envelopePic: String? = null
-//    var fresh: bool? = null
+    var fresh: String? = null
     var id: Int = 0
     var link: String? = null
     var niceDate: String? = null
