@@ -6,12 +6,13 @@ import com.example.myapplication.adapter.MainTabAdapter
 import com.example.myapplication.ui.activity.BaseActivity
 import com.example.myapplication.ui.fragment.MainPageFragment
 import kotlinx.android.synthetic.main.activity_main.*
+import kotlinx.android.synthetic.main.activity_main.view.*
 
 
 class MainActivity : BaseActivity() {
 
     private lateinit var fragmentList: List<Fragment>
-    private  val TEXTS:Array<String> = arrayOf("首页","知识体系","公众号","项目","V2EX")
+    private val TEXTS: Array<String> = arrayOf("首页", "知识体系", "公众号", "项目", "V2EX")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -28,6 +29,7 @@ class MainActivity : BaseActivity() {
         alphaIndicator.setOnTabChangedListner {
             tv_title.text = TEXTS[it]
         }
+        alphaIndicator.setViewPager( viewPager)
 
 
     }

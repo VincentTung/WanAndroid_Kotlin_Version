@@ -1,96 +1,107 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              xmlns:app="http://schemas.android.com/apk/res-auto"
-              xmlns:tools="http://schemas.android.com/tools"
-              android:layout_width="match_parent"
-              android:orientation="vertical"
-              android:layout_height="match_parent"
-              tools:context=".MainActivity">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".MainActivity">
 
 
-    <RelativeLayout android:layout_width="match_parent" android:layout_height="@dimen/top_bar_height"
-                    android:background="@color/tab_tx_selected">
-        <TextView android:id="@+id/tv_title" android:layout_width="wrap_content" android:text="首页"
-                  android:textColor="@android:color/white"
-                  android:layout_centerInParent="true" android:textSize="16sp" android:layout_height="wrap_content"/>
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/top_bar_height"
+        android:background="@color/tab_tx_selected">
+
+        <TextView
+            android:id="@+id/tv_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:text="首页"
+            android:textColor="@android:color/white"
+            android:textSize="16sp" />
     </RelativeLayout>
-    <androidx.viewpager.widget.ViewPager android:id="@+id/viewPager" android:layout_width="match_parent"
-                                         android:layout_height="0dp"
-                                         android:layout_weight="1"/>
+
+    <androidx.viewpager.widget.ViewPager
+        android:id="@+id/viewPager"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1" />
 
     <com.yinglan.alphatabs.AlphaTabsIndicator
-            android:id="@+id/alphaIndicator"
-            android:layout_width="match_parent"
-            android:layout_height="55dp"
-            android:orientation="horizontal">
+        android:id="@+id/alphaIndicator"
+        android:layout_width="match_parent"
+        android:layout_height="55dp"
+        android:orientation="horizontal">
 
         <com.yinglan.alphatabs.AlphaTabView
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:padding="5dp"
-                app:tabIconNormal="@drawable/icon_home_pager_not_selected"
-                app:tabIconSelected="@drawable/icon_home_pager_selected"
-                app:tabText="@string/main_page"
-                app:tabTextSize="@dimen/tab_tx_size"
-                app:textColorNormal="@color/tab_tx_normal"
-                app:textColorSelected="@color/tab_tx_selected"
-                app:paddingTexwithIcon="@dimen/tab_padding"/>
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:padding="5dp"
+            app:paddingTexwithIcon="@dimen/tab_padding"
+            app:tabIconNormal="@drawable/icon_home_pager_not_selected"
+            app:tabIconSelected="@drawable/icon_home_pager_selected"
+            app:tabText="@string/main_page"
+            app:tabTextSize="@dimen/tab_tx_size"
+            app:textColorNormal="@color/tab_tx_normal"
+            app:textColorSelected="@color/tab_tx_selected" />
 
         <com.yinglan.alphatabs.AlphaTabView
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:padding="5dp"
-                app:tabIconNormal="@drawable/icon_knowledge_hierarchy_not_selected"
-                app:tabIconSelected="@drawable/icon_knowledge_hierarchy_selected"
-                app:tabText="@string/knowledge_tree"
-                app:tabTextSize="@dimen/tab_tx_size"
-                app:textColorNormal="@color/tab_tx_normal"
-                app:textColorSelected="@color/tab_tx_selected"
-                app:paddingTexwithIcon="@dimen/tab_padding"/>
-
-
-        <com.yinglan.alphatabs.AlphaTabView
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:padding="5dp"
-                app:tabIconNormal="@drawable/icon_me_not_selected"
-                app:tabIconSelected="@drawable/icon_me_selected"
-                app:tabText="@string/wx_account"
-                app:tabTextSize="@dimen/tab_tx_size"
-                app:textColorNormal="@color/tab_tx_normal"
-                app:textColorSelected="@color/tab_tx_selected"
-                app:paddingTexwithIcon="@dimen/tab_padding"/>
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:padding="5dp"
+            app:paddingTexwithIcon="@dimen/tab_padding"
+            app:tabIconNormal="@drawable/icon_knowledge_hierarchy_not_selected"
+            app:tabIconSelected="@drawable/icon_knowledge_hierarchy_selected"
+            app:tabText="@string/knowledge_tree"
+            app:tabTextSize="@dimen/tab_tx_size"
+            app:textColorNormal="@color/tab_tx_normal"
+            app:textColorSelected="@color/tab_tx_selected" />
 
 
         <com.yinglan.alphatabs.AlphaTabView
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:padding="5dp"
-                app:tabIconNormal="@drawable/icon_project_not_selected"
-                app:tabIconSelected="@drawable/icon_project_selected"
-                app:tabText="@string/project"
-                app:tabTextSize="@dimen/tab_tx_size"
-                app:textColorNormal="@color/tab_tx_normal"
-                app:textColorSelected="@color/tab_tx_selected"
-                app:paddingTexwithIcon="@dimen/tab_padding"/>
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:padding="5dp"
+            app:paddingTexwithIcon="@dimen/tab_padding"
+            app:tabIconNormal="@drawable/icon_me_not_selected"
+            app:tabIconSelected="@drawable/icon_me_selected"
+            app:tabText="@string/wx_account"
+            app:tabTextSize="@dimen/tab_tx_size"
+            app:textColorNormal="@color/tab_tx_normal"
+            app:textColorSelected="@color/tab_tx_selected" />
 
 
         <com.yinglan.alphatabs.AlphaTabView
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:padding="5dp"
-                app:tabIconNormal="@drawable/v2_not_selected"
-                app:tabIconSelected="@drawable/v2_selected"
-                app:tabText="@string/v2ex"
-                app:tabTextSize="@dimen/tab_tx_size"
-                app:textColorNormal="@color/tab_tx_normal"
-                app:textColorSelected="@color/tab_tx_selected"
-                app:paddingTexwithIcon="@dimen/tab_padding"/>
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:padding="5dp"
+            app:paddingTexwithIcon="@dimen/tab_padding"
+            app:tabIconNormal="@drawable/icon_project_not_selected"
+            app:tabIconSelected="@drawable/icon_project_selected"
+            app:tabText="@string/project"
+            app:tabTextSize="@dimen/tab_tx_size"
+            app:textColorNormal="@color/tab_tx_normal"
+            app:textColorSelected="@color/tab_tx_selected" />
+
+
+        <com.yinglan.alphatabs.AlphaTabView
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:padding="5dp"
+            app:paddingTexwithIcon="@dimen/tab_padding"
+            app:tabIconNormal="@drawable/v2_not_selected"
+            app:tabIconSelected="@drawable/v2_selected"
+            app:tabText="@string/v2ex"
+            app:tabTextSize="@dimen/tab_tx_size"
+            app:textColorNormal="@color/tab_tx_normal"
+            app:textColorSelected="@color/tab_tx_selected" />
 
 
     </com.yinglan.alphatabs.AlphaTabsIndicator>
