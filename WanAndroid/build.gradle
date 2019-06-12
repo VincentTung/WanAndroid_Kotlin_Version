@@ -13,6 +13,8 @@ buildscript {
     dependencies {
         classpath 'com.android.tools.build:gradle:3.6.0-alpha03'
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
+        classpath 'com.getkeepsafe.dexcount:dexcount-gradle-plugin:0.8.6'
+        classpath "net.rdrei.android.buildtimetracker:gradle-plugin:0.11.+"
         // NOTE: Do not place your application dependencies here; they belong
         // in the individual module build.gradle files
     }
@@ -29,7 +31,36 @@ allprojects {
         }
     }
 }
-
+apply plugin: "build-time-tracker"
 task clean(type: Delete) {
     delete rootProject.buildDir
+}
+
+buildtimetracker {
+    reporters {
+        csv {
+            output "build/times.csv"
+            append true
+            header false
+        }
+
+        summary {
+            ordered false
+            threshold 50
+            barstyle "unicode"
+        }
+
+        csvSummary {
+            csv "build/times.csv"
+        }
+    }
+}
+
+
+tasks.whenTaskAdded {
+
+    task ->
+        if (task.name.contains('AndroidTest')) {
+            task.enabled = false
+        }
 }
