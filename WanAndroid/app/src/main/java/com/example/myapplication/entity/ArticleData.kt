@@ -8,4 +8,5 @@ class ArticleData<T> {
     var pageCount: Int = 0
     var size: Int = 0
     var total: Int = 0
+    var curPage:Int = 0
 }

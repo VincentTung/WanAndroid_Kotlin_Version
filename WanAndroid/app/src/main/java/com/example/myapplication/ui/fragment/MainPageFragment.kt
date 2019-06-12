@@ -1,14 +1,16 @@
 package com.example.myapplication.ui.fragment
 
-import android.content.Intent
+import android.os.Build
 import android.os.Bundle
+import android.os.Handler
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.widget.NestedScrollView
+import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.example.myapplication.R
 import com.example.myapplication.adapter.ArticleListAdapter
 import com.example.myapplication.entity.Article
 import com.example.myapplication.entity.ArticleData
@@ -30,25 +32,40 @@ import kotlinx.android.synthetic.main.fragment_main_page.*
  * 首页
  */
 class MainPageFragment : BaseFragment(), ArticleListAdapter.OnItemListenr {
-    override fun onItemClick(position: Int) {
 
-        this@MainPageFragment.context?.let { articles[position].link?.let { it1 ->
-            WebViewActivity.start(
-                this@MainPageFragment.context!!,
-                it1
-            )
-        } }
-    }
 
     private val banner_offset_time = 2000
+    var mHanlder: Handler = Handler()
     var mPage = 1
     var articles: MutableList<Article> = ArrayList()
     var adapter: ArticleListAdapter = ArticleListAdapter(articles)
+    lateinit var nestedScrollView: NestedScrollView
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        var contentView = inflater.inflate(R.layout.fragment_main_page, null, false)
+        var contentView = inflater.inflate(com.example.myapplication.R.layout.fragment_main_page, null, false)
+        nestedScrollView =
+            contentView.findViewById<NestedScrollView>(com.example.myapplication.R.id.nestedscrollview)
 
-        var recyclerview = contentView.findViewById<RecyclerView>(R.id.recyclerView)
-        recyclerview.layoutManager = LinearLayoutManager(context,LinearLayoutManager.VERTICAL,false)
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            nestedScrollView
+                .setOnScrollChangeListener { v: NestedScrollView, scrollX: Int, scrollY: Int, oldScrollX: Int, ioldScrollY3: Int ->
+                    if (scrollY == (v.getChildAt(0).getMeasuredHeight() - v.getMeasuredHeight())) {
+                        getArticle(mPage + 1)
+                    }
+
+                }
+        }
+
+
+        var recyclerview = contentView.findViewById<RecyclerView>(com.example.myapplication.R.id.recyclerView)
+        var linearLayoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
+        recyclerview.addItemDecoration(
+            DividerItemDecoration(
+                this@MainPageFragment.context,
+                DividerItemDecoration.VERTICAL
+            )
+        )
+        recyclerview.layoutManager = linearLayoutManager
+
         adapter.onItemListenr = this
         recyclerview.adapter = adapter
         recyclerview.setHasFixedSize(true)
@@ -84,7 +101,14 @@ class MainPageFragment : BaseFragment(), ArticleListAdapter.OnItemListenr {
                     banner.setDelayTime(banner_offset_time)
                     banner.setOnBannerListener {
                         var url = result.data?.get(it)?.url
-                        this@MainPageFragment.context?.let { it1 -> url?.let { it2 -> WebViewActivity.start(it1, it2) } }
+                        this@MainPageFragment.context?.let { it1 ->
+                            url?.let { it2 ->
+                                WebViewActivity.start(
+                                    it1,
+                                    it2
+                                )
+                            }
+                        }
 
                     }
                     banner.setIndicatorGravity(BannerConfig.CENTER)
@@ -115,9 +139,20 @@ class MainPageFragment : BaseFragment(), ArticleListAdapter.OnItemListenr {
                 override fun onNext(t: ResultData<ArticleData<List<Article>>>) {
 
                     if (t.errorCode == 0) {
-                        t.data?.datas?.let { articles.addAll(it) }
+                        t.data?.datas?.let {
+                            if (t.data?.datas!!.isNotEmpty()) {
+                                mPage = t.data!!.curPage
+                                articles.addAll(it)
+                                adapter.notifyDataSetChanged()
 
-                        adapter.notifyDataSetChanged()
+                                mHanlder.postDelayed({ nestedScrollView.smoothScrollBy(10, 200) }, 100)
+
+
+                            }
+
+                        }
+
+
                     }
                 }
 
@@ -126,6 +161,18 @@ class MainPageFragment : BaseFragment(), ArticleListAdapter.OnItemListenr {
                 }
 
             })
+    }
+
+    override fun onItemClick(position: Int) {
+
+        this@MainPageFragment.context?.let {
+            articles[position].link?.let { it1 ->
+                WebViewActivity.start(
+                    this@MainPageFragment.context!!,
+                    it1
+                )
+            }
+        }
     }
 
 
