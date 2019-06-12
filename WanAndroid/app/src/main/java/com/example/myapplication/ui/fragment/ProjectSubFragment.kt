@@ -57,7 +57,6 @@ class ProjectSubFragment( var cid: Int) : BaseFragment(), ArticleListAdapter.OnI
 
     private fun getArticle(page: Int) {
 
-
         ApiHelper.mInstance.getApiService().getProjectSubList(page, cid).compose(schdulesTransform())
             .autoDisposable(scopeProvider).subscribe(object :
                 BaseObserver<PageData<List<Project>>, ResultData<PageData<List<Project>>>> {

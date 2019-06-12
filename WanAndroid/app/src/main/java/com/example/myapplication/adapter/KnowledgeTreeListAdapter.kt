@@ -9,7 +9,7 @@ import com.example.myapplication.R
 import com.example.myapplication.entity.Tree
 import com.nex3z.flowlayout.FlowLayout
 
-class KnowledgeTreeListAdapter(var articles: MutableList<Tree>) :
+class KnowledgeTreeListAdapter(var treeList: MutableList<Tree>) :
     RecyclerView.Adapter<KnowledgeTreeListAdapter.ViewHolder>() {
 
     var onItemListener: OnItemListener? = null
@@ -23,12 +23,12 @@ class KnowledgeTreeListAdapter(var articles: MutableList<Tree>) :
     }
 
     override fun getItemCount(): Int {
-        return articles.size
+        return treeList.size
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
 
-        var article = articles[position]
+        var article = treeList[position]
         holder.tv_name.text = article.name
         holder.tv_children.removeAllViews()
         article.children?.forEach {

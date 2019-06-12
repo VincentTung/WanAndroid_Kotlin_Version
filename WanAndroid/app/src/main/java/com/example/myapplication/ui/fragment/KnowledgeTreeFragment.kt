@@ -24,7 +24,7 @@ import com.uber.autodispose.autoDisposable
 class KnowledgeTreeFragment : BaseFragment(), KnowledgeTreeListAdapter.OnItemListener {
     override fun onItemClick(position: Int) {
 
-        this@KnowledgeTreeFragment.context?.let { KnowledgeTreeActivity.start(it,mTreeList[position]) }
+        this@KnowledgeTreeFragment.context?.let { KnowledgeTreeActivity.start(it, mTreeList[position]) }
     }
 
 
@@ -51,6 +51,11 @@ class KnowledgeTreeFragment : BaseFragment(), KnowledgeTreeListAdapter.OnItemLis
         recyclerview.setHasFixedSize(false)
 
 
+        getTree()
+        return contentView
+    }
+
+    private fun getTree() {
         ApiHelper.mInstance.getApiService().getKnowledgeTree().compose(schdulesTransform())
             .autoDisposable(scopeProvider).subscribe(object :
                 BaseObserver<List<Tree>, ResultData<List<Tree>>> {
@@ -68,7 +73,6 @@ class KnowledgeTreeFragment : BaseFragment(), KnowledgeTreeListAdapter.OnItemLis
                     }
                 }
             })
-        return contentView
     }
 
 

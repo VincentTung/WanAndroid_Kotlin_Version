@@ -5,7 +5,6 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.viewpager.widget.ViewPager
 import com.example.myapplication.adapter.MainTabAdapter
 import com.example.myapplication.entity.Chapter
 import com.example.myapplication.net.ApiHelper
@@ -13,7 +12,7 @@ import com.example.myapplication.net.ResultData
 import com.example.myapplication.util.BaseObserver
 import com.example.myapplication.util.ComposeUtil.schdulesTransform
 import com.uber.autodispose.autoDisposable
-import net.lucode.hackware.magicindicator.MagicIndicator
+import kotlinx.android.synthetic.main.fragment_wx_account.*
 import net.lucode.hackware.magicindicator.ViewPagerHelper
 import net.lucode.hackware.magicindicator.buildins.UIUtil
 import net.lucode.hackware.magicindicator.buildins.commonnavigator.CommonNavigator
@@ -28,12 +27,14 @@ import net.lucode.hackware.magicindicator.buildins.commonnavigator.titles.Simple
  * 公众号
  */
 class WXAccountFragment : BaseFragment() {
-
-
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         var contentView = inflater.inflate(com.example.myapplication.R.layout.fragment_wx_account, null, false)
-        var magicIndicator = contentView.findViewById<MagicIndicator>(com.example.myapplication.R.id.magic_indicator)
-        var viewPager = contentView.findViewById<ViewPager>(com.example.myapplication.R.id.viewpager)
+
+        getTree()
+        return contentView
+    }
+
+    private fun getTree() {
         ApiHelper.mInstance.getApiService().getChapterData().compose(schdulesTransform())
             .autoDisposable(scopeProvider).subscribe(object :
                 BaseObserver<List<Chapter>, ResultData<List<Chapter>>> {
@@ -48,7 +49,7 @@ class WXAccountFragment : BaseFragment() {
                             WXAccountSubFragment(it.name, it.id)
                         }
                     var datas = t.data
-                    magicIndicator.setBackgroundColor(resources.getColor(com.example.myapplication.R.color.white))
+                    magic_indicator.setBackgroundColor(resources.getColor(com.example.myapplication.R.color.white))
                     val commonNavigator = CommonNavigator(this@WXAccountFragment.context)
                     commonNavigator.isAdjustMode = false
                     commonNavigator.scrollPivotX = 0.25f
@@ -70,7 +71,7 @@ class WXAccountFragment : BaseFragment() {
                             simplePagerTitleView.setPadding(paddingLeft, paddingTop, paddingLeft, paddingTop)
 
                             simplePagerTitleView.setOnClickListener {
-                                viewPager.currentItem = index
+                                viewpager.currentItem = index
                             }
                             return simplePagerTitleView
                         }
@@ -85,14 +86,13 @@ class WXAccountFragment : BaseFragment() {
                         }
                     }
 
-                    magicIndicator.navigator = commonNavigator
+                    magic_indicator.navigator = commonNavigator
                     commonNavigator.onPageSelected(0)
-                    ViewPagerHelper.bind(magicIndicator, viewPager)
-                    viewPager.adapter = fragments?.let { MainTabAdapter(childFragmentManager, it) }
+                    ViewPagerHelper.bind(magic_indicator, viewpager)
+                    viewpager.adapter = fragments?.let { MainTabAdapter(childFragmentManager, it) }
 
                 }
             })
-        return contentView
     }
 
 
