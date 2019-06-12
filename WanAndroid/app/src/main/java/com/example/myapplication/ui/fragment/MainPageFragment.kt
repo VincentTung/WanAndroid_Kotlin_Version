@@ -3,14 +3,15 @@ package com.example.myapplication.ui.fragment
 import android.os.Build
 import android.os.Bundle
 import android.os.Handler
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ProgressBar
 import androidx.core.widget.NestedScrollView
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.example.myapplication.R
 import com.example.myapplication.adapter.ArticleListAdapter
 import com.example.myapplication.entity.Article
 import com.example.myapplication.entity.ArticleData
@@ -19,36 +20,38 @@ import com.example.myapplication.net.ApiHelper
 import com.example.myapplication.net.ResultData
 import com.example.myapplication.ui.activity.WebViewActivity
 import com.example.myapplication.util.BannerImageLoader
+import com.example.myapplication.util.BaseObserver
+import com.example.myapplication.util.ComposeUtil.schdulesTransform
+import com.uber.autodispose.android.lifecycle.AndroidLifecycleScopeProvider
+import com.uber.autodispose.autoDisposable
 import com.youth.banner.BannerConfig
 import com.youth.banner.Transformer
-import io.reactivex.Observer
-import io.reactivex.android.schedulers.AndroidSchedulers
-import io.reactivex.disposables.Disposable
-import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.fragment_main_page.*
 
 
 /**
  * 首页
  */
-class MainPageFragment : BaseFragment(), ArticleListAdapter.OnItemListenr {
+class MainPageFragment : BaseFragment(), ArticleListAdapter.OnItemListener {
 
 
     private val banner_offset_time = 2000
-    var mHanlder: Handler = Handler()
-    var mPage = 1
-    var articles: MutableList<Article> = ArrayList()
-    var adapter: ArticleListAdapter = ArticleListAdapter(articles)
-    lateinit var nestedScrollView: NestedScrollView
+    private var mHandler: Handler = Handler()
+    private var mPage = 0
+    private var mArticles: MutableList<Article> = mutableListOf()
+    private var mAdapter: ArticleListAdapter = ArticleListAdapter(mArticles)
+    private lateinit var mNestedScrollView: NestedScrollView
+    private lateinit var mProgressBar: ProgressBar
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        var contentView = inflater.inflate(com.example.myapplication.R.layout.fragment_main_page, null, false)
-        nestedScrollView =
-            contentView.findViewById<NestedScrollView>(com.example.myapplication.R.id.nestedscrollview)
+        var contentView = inflater.inflate(R.layout.fragment_main_page, null, false)
+        mNestedScrollView =
+            contentView.findViewById(R.id.nestedscrollview)
 
+        mProgressBar = contentView.findViewById(R.id.progressbar)
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            nestedScrollView
+            mNestedScrollView
                 .setOnScrollChangeListener { v: NestedScrollView, scrollX: Int, scrollY: Int, oldScrollX: Int, ioldScrollY3: Int ->
-                    if (scrollY == (v.getChildAt(0).getMeasuredHeight() - v.getMeasuredHeight())) {
+                    if (scrollY == (v.getChildAt(0).measuredHeight - v.measuredHeight)) {
                         getArticle(mPage + 1)
                     }
 
@@ -56,7 +59,7 @@ class MainPageFragment : BaseFragment(), ArticleListAdapter.OnItemListenr {
         }
 
 
-        var recyclerview = contentView.findViewById<RecyclerView>(com.example.myapplication.R.id.recyclerView)
+        var recyclerview = contentView.findViewById<RecyclerView>(R.id.recyclerView)
         var linearLayoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
         recyclerview.addItemDecoration(
             DividerItemDecoration(
@@ -66,8 +69,8 @@ class MainPageFragment : BaseFragment(), ArticleListAdapter.OnItemListenr {
         )
         recyclerview.layoutManager = linearLayoutManager
 
-        adapter.onItemListenr = this
-        recyclerview.adapter = adapter
+        mAdapter.onItemListener = this
+        recyclerview.adapter = mAdapter
         recyclerview.setHasFixedSize(true)
         getBanner()
         getArticle(mPage)
@@ -77,25 +80,17 @@ class MainPageFragment : BaseFragment(), ArticleListAdapter.OnItemListenr {
 
     private fun getBanner() {
 
-        ApiHelper.mInstance.getApiService().getBanner().subscribeOn(Schedulers.io())
-            .observeOn(AndroidSchedulers.mainThread()).subscribe(object :
-                Observer<ResultData<List<Banner>>> {
-                override fun onSubscribe(d: Disposable) {
+        ApiHelper.mInstance.getApiService().getBanner().compose(schdulesTransform()).autoDisposable(scopeProvider)
+            .subscribe(object :
+                BaseObserver<List<Banner>, ResultData<List<Banner>>> {
+                override fun onFailed(errorCode: Int) {
                 }
 
-                override fun onError(e: Throwable) {
-                    Log.e("Main", e.toString())
-                }
-
-                override fun onNext(result: ResultData<List<Banner>>) {
-                    var images: MutableList<String> = ArrayList()
-                    //to-do
-                    result.data?.forEach {
-                        it.imagePath?.let { it1 -> images.add(it1) }
-                    }
+                override fun onSuccess(result: ResultData<List<Banner>>) {
+                    var imgList = result.data?.map { it.imagePath }
                     banner.setBannerStyle(BannerConfig.CIRCLE_INDICATOR)
                     banner.setImageLoader(BannerImageLoader())
-                    banner.setImages(images)
+                    banner.setImages(imgList)
                     banner.setBannerAnimation(Transformer.DepthPage)
                     banner.isAutoPlay(true)
                     banner.setDelayTime(banner_offset_time)
@@ -112,12 +107,10 @@ class MainPageFragment : BaseFragment(), ArticleListAdapter.OnItemListenr {
 
                     }
                     banner.setIndicatorGravity(BannerConfig.CENTER)
+
                     banner.start()
                 }
 
-                override fun onComplete() {
-
-                }
 
             })
     }
@@ -125,48 +118,38 @@ class MainPageFragment : BaseFragment(), ArticleListAdapter.OnItemListenr {
 
     private fun getArticle(page: Int) {
 
-        ApiHelper.mInstance.getApiService().getArticle(page).subscribeOn(Schedulers.io())
-            .observeOn(AndroidSchedulers.mainThread()).subscribe(object :
-                Observer<ResultData<ArticleData<List<Article>>>> {
-                override fun onSubscribe(d: Disposable) {
-
-                }
-
-                override fun onError(e: Throwable) {
-                    Log.e("Main", e.toString())
-                }
-
-                override fun onNext(t: ResultData<ArticleData<List<Article>>>) {
-
+        mProgressBar.visibility = View.VISIBLE
+        ApiHelper.mInstance.getApiService().getArticle(page).compose(schdulesTransform())
+            .autoDisposable(scopeProvider).subscribe(object :
+                BaseObserver<ArticleData<List<Article>>, ResultData<ArticleData<List<Article>>>> {
+                override fun onSuccess(t: ResultData<ArticleData<List<Article>>>) {
                     if (t.errorCode == 0) {
                         t.data?.datas?.let {
                             if (t.data?.datas!!.isNotEmpty()) {
                                 mPage = t.data!!.curPage
-                                articles.addAll(it)
-                                adapter.notifyDataSetChanged()
-
-                                mHanlder.postDelayed({ nestedScrollView.smoothScrollBy(10, 200) }, 100)
-
-
+                                mArticles.addAll(it)
+                                mAdapter.notifyDataSetChanged()
+                                if (mPage != 1) {
+                                    mHandler.postDelayed({ mNestedScrollView.smoothScrollBy(0, 200) }, 100)
+                                }
                             }
-
                         }
-
-
                     }
+                    mProgressBar.visibility = View.GONE
                 }
 
-                override fun onComplete() {
-
+                override fun onFailed(errorCode: Int) {
+                    mProgressBar.visibility = View.GONE
                 }
+
 
             })
     }
 
     override fun onItemClick(position: Int) {
 
-        this@MainPageFragment.context?.let {
-            articles[position].link?.let { it1 ->
+        this@MainPageFragment.context?.let { it ->
+            mArticles[position].link?.let { it1 ->
                 WebViewActivity.start(
                     this@MainPageFragment.context!!,
                     it1

@@ -16,10 +16,10 @@ class NetWorkStateInterceptor : Interceptor {
     override fun intercept(chain: Interceptor.Chain): Response {
 
         if (!mMonitor.isConnected) {
-            mHandler.post(Runnable { Toast.makeText(WanApplication.mInstance, "没有网络", Toast.LENGTH_SHORT).show() })
+            mHandler.post { Toast.makeText(WanApplication.mInstance, "没有网络", Toast.LENGTH_SHORT).show() }
         }
 
-        return chain.proceed(chain.request());
+        return chain.proceed(chain.request())
     }
 
 }

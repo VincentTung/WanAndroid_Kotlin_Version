@@ -7,13 +7,15 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.myapplication.R
 import com.example.myapplication.entity.Article
+import com.example.myapplication.entity.KnowledgeTree
 
-class ArticleListAdapter(var articles: MutableList<Article>) : RecyclerView.Adapter<ArticleListAdapter.ViewHolder>() {
+class KnowledgeTreeListAdapter(var articles: MutableList<KnowledgeTree>) :
+    RecyclerView.Adapter<KnowledgeTreeListAdapter.ViewHolder>() {
 
     var onItemListener: OnItemListener? = null
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        val view = LayoutInflater.from(parent.context).inflate(R.layout.item_article, parent, false)
+        val view = LayoutInflater.from(parent.context).inflate(R.layout.item_knowledge_tree, parent, false)
 
         return ViewHolder(view)
 
@@ -26,10 +28,9 @@ class ArticleListAdapter(var articles: MutableList<Article>) : RecyclerView.Adap
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
 
         var article = articles[position]
-        holder.tv_author.text = article.author
-        holder.tv_type.text = article.chapterName
-        holder.tv_title.text = article.title
-        holder.tv_date.text = article.niceDate
+        holder.tv_name.text = article.name
+        holder.tv_children.text = article.children?.get(0)?.name
+
 
         holder.itemView.setOnClickListener {
 
@@ -42,10 +43,9 @@ class ArticleListAdapter(var articles: MutableList<Article>) : RecyclerView.Adap
     }
 
     class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        var tv_author = itemView.findViewById<TextView>(R.id.tv_author)
-        var tv_type = itemView.findViewById<TextView>(R.id.tv_type)
-        var tv_date = itemView.findViewById<TextView>(R.id.tv_date)
-        var tv_title = itemView.findViewById<TextView>(R.id.tv_title)
+        var tv_name = itemView.findViewById<TextView>(R.id.tv_name)
+        var tv_children = itemView.findViewById<TextView>(R.id.tv_children)
+
     }
 
 }

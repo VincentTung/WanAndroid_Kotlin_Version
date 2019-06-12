@@ -23,40 +23,53 @@ android {
             proguardFiles getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro"
         }
     }
-}
+    project.tasks.withType(org.jetbrains.kotlin.gradle.tasks.KotlinCompile).all {
+        kotlinOptions {
+            freeCompilerArgs = [
+                    "-Xjsr305=strict",
+                    "-progressive"
+            ]
+            jvmTarget = "1.8"
+        }
+    }
 
-dependencies {
-    testImplementation "junit:junit:4.12"
-    androidTestImplementation "androidx.test.ext:junit:1.1.0"
-    androidTestImplementation "androidx.test.espresso:espresso-core:3.1.1"
-    implementation fileTree(dir: "libs", include: ["*.jar"])
-    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
-    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:${rootProject.ext.versions.coroutines}"
-    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:${rootProject.ext.versions.coroutines}"
-    implementation "androidx.appcompat:appcompat:${rootProject.ext.versions.appcompat}"
-    implementation "androidx.core:core-ktx:${rootProject.ext.versions.core_ktx}"
-    implementation "androidx.constraintlayout:constraintlayout:${rootProject.ext.versions.constraintlayout}"
+    dependencies {
+        testImplementation "junit:junit:4.12"
+        androidTestImplementation "androidx.test.ext:junit:1.1.0"
+        androidTestImplementation "androidx.test.espresso:espresso-core:3.1.1"
+        implementation fileTree(dir: "libs", include: ["*.jar"])
+        implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
+        implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:${rootProject.ext.versions.coroutines}"
+        implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:${rootProject.ext.versions.coroutines}"
+        implementation "androidx.appcompat:appcompat:${rootProject.ext.versions.appcompat}"
+        implementation "androidx.core:core-ktx:${rootProject.ext.versions.core_ktx}"
+        implementation "androidx.constraintlayout:constraintlayout:${rootProject.ext.versions.constraintlayout}"
 
-    implementation "com.yinglan.alphatabs:library:${rootProject.ext.versions.alphatabs}"
+        implementation "com.yinglan.alphatabs:library:${rootProject.ext.versions.alphatabs}"
 
-    implementation "com.youth.banner:banner:${rootProject.ext.versions.banner}"
+        implementation "com.youth.banner:banner:${rootProject.ext.versions.banner}"
 
-    api "com.just.agentweb:agentweb:${rootProject.ext.versions.agentweb}"
-    implementation "androidx.recyclerview:recyclerview:${rootProject.ext.versions.recyclerview}"
-    implementation "androidx.recyclerview:recyclerview-selection:${rootProject.ext.versions.recyclerview}"
+        api "com.just.agentweb:agentweb:${rootProject.ext.versions.agentweb}"
+        implementation "androidx.recyclerview:recyclerview:${rootProject.ext.versions.recyclerview}"
+        implementation "androidx.recyclerview:recyclerview-selection:${rootProject.ext.versions.recyclerview}"
 
-    implementation "com.squareup.okhttp3:okhttp:${rootProject.ext.versions.okhttp}"
-    implementation "com.squareup.okhttp3:logging-interceptor:${rootProject.ext.versions.okhttp}"
+        implementation "com.squareup.okhttp3:okhttp:${rootProject.ext.versions.okhttp}"
+        implementation "com.squareup.okhttp3:logging-interceptor:${rootProject.ext.versions.okhttp}"
 
-    implementation "com.squareup.retrofit2:retrofit:${rootProject.ext.versions.retrofit}"
-    implementation "com.squareup.retrofit2:converter-gson:${rootProject.ext.versions.convertergson}"
-    implementation "com.squareup.retrofit2:adapter-rxjava2:${rootProject.ext.versions.adapterrxjava}"
-    implementation "io.reactivex.rxjava2:rxandroid:${rootProject.ext.versions.rxandroid}"
-
-
-    implementation "com.github.bumptech.glide:glide:${rootProject.ext.versions.glide}"
-
-//    implementation "com.github.zzz40500:android-shapeLoadingView:${rootProject.ext.versions.shapeLoadingView}"
+        implementation "com.squareup.retrofit2:retrofit:${rootProject.ext.versions.retrofit}"
+        implementation "com.squareup.retrofit2:converter-gson:${rootProject.ext.versions.convertergson}"
+        implementation "com.squareup.retrofit2:adapter-rxjava2:${rootProject.ext.versions.adapterrxjava}"
+        implementation "io.reactivex.rxjava2:rxandroid:${rootProject.ext.versions.rxandroid}"
+        implementation "com.uber.autodispose:autodispose-android:${rootProject.ext.versions.autodispose}"
+        implementation "com.uber.autodispose:autodispose:${rootProject.ext.versions.autodispose}"
+        implementation "com.uber.autodispose:autodispose-android-archcomponents:${rootProject.ext.versions.autodispose}"
 
 
+        implementation "com.github.bumptech.glide:glide:${rootProject.ext.versions.glide}"
+        implementation 'com.ogaclejapan.smarttablayout:library:2.0.0@aar'
+        implementation 'com.ogaclejapan.smarttablayout:utils-v4:2.0.0@aar'
+        implementation "com.github.hackware1993:MagicIndicator:${rootProject.ext.versions.MagicIndicator}"
+
+
+    }
 }

@@ -5,9 +5,11 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import com.uber.autodispose.android.lifecycle.AndroidLifecycleScopeProvider
 
- open class BaseFragment:Fragment(){
+open class BaseFragment:Fragment(){
 
+     val scopeProvider by lazy { AndroidLifecycleScopeProvider.from(this) }
      override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
          return super.onCreateView(inflater, container, savedInstanceState)
      }

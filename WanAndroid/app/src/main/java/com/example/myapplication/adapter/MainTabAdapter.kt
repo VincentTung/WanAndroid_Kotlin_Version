@@ -12,8 +12,6 @@ class MainTabAdapter(fm: FragmentManager, var fragments: List<Fragment>) : Fragm
     }
 
 
-
-
     override fun getItem(position: Int): Fragment {
         return fragments[position]
     }
@@ -23,7 +21,4 @@ class MainTabAdapter(fm: FragmentManager, var fragments: List<Fragment>) : Fragm
         super.destroyItem(container, position, `object`)
     }
 
-    override fun instantiateItem(container: ViewGroup, position: Int): Any {
-        return super.instantiateItem(container, position)
-    }
 }
