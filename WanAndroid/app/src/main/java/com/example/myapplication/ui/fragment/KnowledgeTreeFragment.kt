@@ -12,6 +12,7 @@ import com.example.myapplication.adapter.KnowledgeTreeListAdapter
 import com.example.myapplication.entity.KnowledgeTree
 import com.example.myapplication.net.ApiHelper
 import com.example.myapplication.net.ResultData
+import com.example.myapplication.ui.activity.KnowledgeTreeActivity
 import com.example.myapplication.util.BaseObserver
 import com.example.myapplication.util.ComposeUtil.schdulesTransform
 import com.uber.autodispose.autoDisposable
@@ -23,6 +24,7 @@ import com.uber.autodispose.autoDisposable
 class KnowledgeTreeFragment : BaseFragment(), KnowledgeTreeListAdapter.OnItemListener {
     override fun onItemClick(position: Int) {
 
+        this@KnowledgeTreeFragment.context?.let { KnowledgeTreeActivity.start(it,mTreeList[position]) }
     }
 
 

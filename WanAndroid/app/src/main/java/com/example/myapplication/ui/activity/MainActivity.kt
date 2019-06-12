@@ -1,6 +1,9 @@
 package com.example.myapplication.ui.activity
 
 import android.os.Bundle
+import android.view.View
+import android.widget.ImageView
+import android.widget.TextView
 import androidx.fragment.app.Fragment
 import com.example.myapplication.R
 import com.example.myapplication.adapter.MainTabAdapter
@@ -15,13 +18,14 @@ import kotlinx.android.synthetic.main.fragment_knowledge_tree.*
 class MainActivity : BaseActivity() {
 
     private lateinit var fragmentList: List<Fragment>
+
+    private lateinit var tv_title: TextView
     private val tabTexts = arrayOf("首页", "知识体系", "公众号", "项目", "V2EX")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-
-        logd("onCreate")
-
+        findViewById<ImageView>(R.id.img_back).visibility = View.INVISIBLE
+        tv_title = findViewById(R.id.tv_title)
         fragmentList = listOf(
             MainPageFragment(), KnowledgeTreeFragment(), WXAccountFragment(), MainPageFragment(), MainPageFragment()
         )
