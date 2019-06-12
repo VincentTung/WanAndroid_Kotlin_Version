@@ -10,6 +10,12 @@ android {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
     }
+    dexOptions{
+
+        preDexLibraries true
+        maxProcessCount 8
+        javaMaxHeapSize "2048m"
+    }
     defaultConfig {
         applicationId "com.example.myapplication"
         minSdkVersion rootProject.ext.versions.minSdkVersion

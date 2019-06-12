@@ -60,7 +60,7 @@ buildtimetracker {
 tasks.whenTaskAdded {
 
     task ->
-        if (task.name.contains('AndroidTest')) {
+        if (task.name.contains('AndroidTest')||task.name.equals("lint")||task.name.equals("lintVitalRelease")) {
             task.enabled = false
         }
 }
