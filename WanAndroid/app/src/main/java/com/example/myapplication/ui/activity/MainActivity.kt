@@ -21,14 +21,14 @@ class MainActivity : BaseActivity() {
     private lateinit var fragmentList: List<Fragment>
 
     private lateinit var tv_title: TextView
-    private val tabTexts = arrayOf("首页", "知识体系", "公众号", "项目", "V2EX")
+    private val tabTexts = arrayOf("首页", "知识体系", "公众号", "项目")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         findViewById<ImageView>(R.id.img_back).visibility = View.INVISIBLE
         tv_title = findViewById(R.id.tv_title)
         fragmentList = listOf(
-            MainPageFragment(), KnowledgeTreeFragment(), WXAccountFragment(), ProjectFragment(), MainPageFragment()
+            MainPageFragment(), KnowledgeTreeFragment(), WXAccountFragment(), ProjectFragment()
         )
 
         viewPager.adapter = MainTabAdapter(supportFragmentManager, fragmentList)

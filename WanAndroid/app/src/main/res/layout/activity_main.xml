@@ -77,18 +77,18 @@
             app:textColorSelected="@color/tab_tx_selected" />
 
 
-        <com.yinglan.alphatabs.AlphaTabView
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:padding="5dp"
-            app:paddingTexwithIcon="@dimen/tab_padding"
-            app:tabIconNormal="@drawable/v2_not_selected"
-            app:tabIconSelected="@drawable/v2_selected"
-            app:tabText="@string/v2ex"
-            app:tabTextSize="@dimen/tab_tx_size"
-            app:textColorNormal="@color/tab_tx_normal"
-            app:textColorSelected="@color/tab_tx_selected" />
+<!--        <com.yinglan.alphatabs.AlphaTabView-->
+<!--            android:layout_width="0dp"-->
+<!--            android:layout_height="match_parent"-->
+<!--            android:layout_weight="1"-->
+<!--            android:padding="5dp"-->
+<!--            app:paddingTexwithIcon="@dimen/tab_padding"-->
+<!--            app:tabIconNormal="@drawable/v2_not_selected"-->
+<!--            app:tabIconSelected="@drawable/v2_selected"-->
+<!--            app:tabText="@string/v2ex"-->
+<!--            app:tabTextSize="@dimen/tab_tx_size"-->
+<!--            app:textColorNormal="@color/tab_tx_normal"-->
+<!--            app:textColorSelected="@color/tab_tx_selected" />-->
 
 
     </com.yinglan.alphatabs.AlphaTabsIndicator>
