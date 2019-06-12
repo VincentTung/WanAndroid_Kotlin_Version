@@ -13,18 +13,22 @@ interface ApiService {
 
 
     @GET("/article/list/{page}/json")
-    fun getArticle(@Path("page") page: Int): Observable<ResultData<ArticleData<List<Article>>>>
+    fun getArticle(@Path("page") page: Int): Observable<ResultData<PageData<List<Article>>>>
 
 
     @GET(WanUrl.URL_TREE)
-    fun getKnowledgeTree(): Observable<ResultData<List<KnowledgeTree>>>
+    fun getKnowledgeTree(): Observable<ResultData<List<Tree>>>
 
 
     @GET("/article/list/{page}/json")
-    fun getArticleUnderTree(@Path("page") page: Int, @Query("cid") cid: Int): Observable<ResultData<ArticleData<List<Article>>>>
+    fun getArticleUnderTree(@Path("page") page: Int, @Query("cid") cid: Int): Observable<ResultData<PageData<List<Article>>>>
 
     @GET(WanUrl.URL_CHAPTER)
     fun getChapterData(): Observable<ResultData<List<Chapter>>>
 
+    @GET(WanUrl.URL_PROJECT)
+    fun getProjectTree(): Observable<ResultData<List<Tree>>>
 
+    @GET("/project/list/{page}/json")
+    fun getProjectSubList(@Path("page") page: Int, @Query("cid") cid: Int): Observable<ResultData<PageData<List<Project>>>>
 }

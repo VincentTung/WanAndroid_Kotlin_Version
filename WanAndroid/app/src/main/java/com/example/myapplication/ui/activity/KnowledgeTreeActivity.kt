@@ -2,13 +2,12 @@ package com.example.myapplication.ui.activity
 
 import android.content.Context
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.ImageView
 import android.widget.TextView
 import com.example.myapplication.R
 import com.example.myapplication.adapter.MainTabAdapter
-import com.example.myapplication.entity.KnowledgeTree
+import com.example.myapplication.entity.Tree
 import com.example.myapplication.ui.fragment.WXAccountSubFragment
 import kotlinx.android.synthetic.main.activity_knowledge_tree.*
 
@@ -26,7 +25,7 @@ class KnowledgeTreeActivity : BaseActivity() {
     companion object {
 
         @JvmStatic
-        fun start(context: Context, tree: KnowledgeTree) {
+        fun start(context: Context, tree: Tree) {
             var intent = Intent(context, KnowledgeTreeActivity::class.java)
             intent.putExtra("tree", tree)
             context?.startActivity(intent)
@@ -39,7 +38,7 @@ class KnowledgeTreeActivity : BaseActivity() {
         setContentView(R.layout.activity_knowledge_tree)
         tv_title = findViewById(R.id.tv_title)
         findViewById<ImageView>(R.id.img_back).setOnClickListener { finish() }
-        var tree: KnowledgeTree = intent.getParcelableExtra("tree")
+        var tree: Tree = intent.getParcelableExtra("tree")
 
         tv_title.text = tree.name
 

@@ -1,6 +1,6 @@
 package com.example.myapplication.entity
 
-class ArticleData<T> {
+class PageData<T> {
 
     var datas: T? = null
     var offset: Int = 0

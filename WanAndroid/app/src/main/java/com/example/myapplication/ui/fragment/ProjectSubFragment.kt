@@ -10,8 +10,10 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.myapplication.R
 import com.example.myapplication.adapter.ArticleListAdapter
+import com.example.myapplication.adapter.ProjectListAdapter
 import com.example.myapplication.entity.Article
 import com.example.myapplication.entity.PageData
+import com.example.myapplication.entity.Project
 import com.example.myapplication.net.ApiHelper
 import com.example.myapplication.net.ResultData
 import com.example.myapplication.ui.activity.WebViewActivity
@@ -21,18 +23,19 @@ import com.uber.autodispose.autoDisposable
 
 
 /**
- * 公众号
+ * 项目-子Fragment
  */
-class WXAccountSubFragment(var title: String, var cid: Int) : BaseFragment(), ArticleListAdapter.OnItemListener {
+class ProjectSubFragment( var cid: Int) : BaseFragment(), ArticleListAdapter.OnItemListener,
+    ProjectListAdapter.OnItemListener {
     override fun onItemClick(position: Int) {
-        mArticles[position].link?.let { this@WXAccountSubFragment.context?.let { it1 -> WebViewActivity.start(it1, it) } }
+        mArticles[position].link?.let { this@ProjectSubFragment.context?.let { it1 -> WebViewActivity.start(it1, it) } }
     }
 
 
     private var mHandler: Handler = Handler()
     private var mPage = 0
-    private var mArticles: MutableList<Article> = mutableListOf()
-    private var mAdapter: ArticleListAdapter = ArticleListAdapter(mArticles)
+    private var mArticles: MutableList<Project> = mutableListOf()
+    private var mAdapter: ProjectListAdapter = ProjectListAdapter(mArticles)
     private lateinit var recyclerView: RecyclerView
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         var contentView = inflater.inflate(R.layout.fragment_knowledge_sub, null, false)
@@ -43,7 +46,7 @@ class WXAccountSubFragment(var title: String, var cid: Int) : BaseFragment(), Ar
         recyclerView.layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
         recyclerView.addItemDecoration(
             DividerItemDecoration(
-                this@WXAccountSubFragment.context,
+                this@ProjectSubFragment.context,
                 DividerItemDecoration.VERTICAL
             )
         )
@@ -55,10 +58,10 @@ class WXAccountSubFragment(var title: String, var cid: Int) : BaseFragment(), Ar
     private fun getArticle(page: Int) {
 
 
-        ApiHelper.mInstance.getApiService().getArticleUnderTree(page, cid).compose(schdulesTransform())
+        ApiHelper.mInstance.getApiService().getProjectSubList(page, cid).compose(schdulesTransform())
             .autoDisposable(scopeProvider).subscribe(object :
-                BaseObserver<PageData<List<Article>>, ResultData<PageData<List<Article>>>> {
-                override fun onSuccess(t: ResultData<PageData<List<Article>>>) {
+                BaseObserver<PageData<List<Project>>, ResultData<PageData<List<Project>>>> {
+                override fun onSuccess(t: ResultData<PageData<List<Project>>>) {
                     if (t.errorCode == 0) {
                         t.data?.datas?.let {
                             if (t.data?.datas!!.isNotEmpty()) {

@@ -4,9 +4,9 @@ import android.os.Parcel
 import android.os.Parcelable
 
 
-class KnowledgeTree() : Parcelable {
+class Tree() : Parcelable {
 
-    var children: List<KnowledgeTree>? = null
+    var children: List<Tree>? = null
     var courseId: Int = 0
     var id: Int = 0
     var name: String = ""
@@ -41,12 +41,12 @@ class KnowledgeTree() : Parcelable {
         return 0
     }
 
-    companion object CREATOR : Parcelable.Creator<KnowledgeTree> {
-        override fun createFromParcel(parcel: Parcel): KnowledgeTree {
-            return KnowledgeTree(parcel)
+    companion object CREATOR : Parcelable.Creator<Tree> {
+        override fun createFromParcel(parcel: Parcel): Tree {
+            return Tree(parcel)
         }
 
-        override fun newArray(size: Int): Array<KnowledgeTree?> {
+        override fun newArray(size: Int): Array<Tree?> {
             return arrayOfNulls(size)
         }
     }

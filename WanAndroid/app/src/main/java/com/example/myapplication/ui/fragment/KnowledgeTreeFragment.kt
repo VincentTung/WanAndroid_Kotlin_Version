@@ -9,7 +9,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.myapplication.R.layout
 import com.example.myapplication.adapter.KnowledgeTreeListAdapter
-import com.example.myapplication.entity.KnowledgeTree
+import com.example.myapplication.entity.Tree
 import com.example.myapplication.net.ApiHelper
 import com.example.myapplication.net.ResultData
 import com.example.myapplication.ui.activity.KnowledgeTreeActivity
@@ -29,7 +29,7 @@ class KnowledgeTreeFragment : BaseFragment(), KnowledgeTreeListAdapter.OnItemLis
 
 
     private lateinit var mAdapter: KnowledgeTreeListAdapter
-    private var mTreeList = mutableListOf<KnowledgeTree>()
+    private var mTreeList = mutableListOf<Tree>()
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         var contentView = inflater.inflate(layout.fragment_knowledge_tree, null, false)
@@ -53,12 +53,12 @@ class KnowledgeTreeFragment : BaseFragment(), KnowledgeTreeListAdapter.OnItemLis
 
         ApiHelper.mInstance.getApiService().getKnowledgeTree().compose(schdulesTransform())
             .autoDisposable(scopeProvider).subscribe(object :
-                BaseObserver<List<KnowledgeTree>, ResultData<List<KnowledgeTree>>> {
+                BaseObserver<List<Tree>, ResultData<List<Tree>>> {
                 override fun onFailed(errorCode: Int) {
 
                 }
 
-                override fun onSuccess(t: ResultData<List<KnowledgeTree>>) {
+                override fun onSuccess(t: ResultData<List<Tree>>) {
 
 
                     t.data?.let {

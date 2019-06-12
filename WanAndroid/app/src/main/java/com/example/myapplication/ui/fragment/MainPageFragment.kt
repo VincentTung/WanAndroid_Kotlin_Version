@@ -14,7 +14,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.myapplication.R
 import com.example.myapplication.adapter.ArticleListAdapter
 import com.example.myapplication.entity.Article
-import com.example.myapplication.entity.ArticleData
+import com.example.myapplication.entity.PageData
 import com.example.myapplication.entity.Banner
 import com.example.myapplication.net.ApiHelper
 import com.example.myapplication.net.ResultData
@@ -22,7 +22,6 @@ import com.example.myapplication.ui.activity.WebViewActivity
 import com.example.myapplication.util.BannerImageLoader
 import com.example.myapplication.util.BaseObserver
 import com.example.myapplication.util.ComposeUtil.schdulesTransform
-import com.uber.autodispose.android.lifecycle.AndroidLifecycleScopeProvider
 import com.uber.autodispose.autoDisposable
 import com.youth.banner.BannerConfig
 import com.youth.banner.Transformer
@@ -121,8 +120,8 @@ class MainPageFragment : BaseFragment(), ArticleListAdapter.OnItemListener {
         mProgressBar.visibility = View.VISIBLE
         ApiHelper.mInstance.getApiService().getArticle(page).compose(schdulesTransform())
             .autoDisposable(scopeProvider).subscribe(object :
-                BaseObserver<ArticleData<List<Article>>, ResultData<ArticleData<List<Article>>>> {
-                override fun onSuccess(t: ResultData<ArticleData<List<Article>>>) {
+                BaseObserver<PageData<List<Article>>, ResultData<PageData<List<Article>>>> {
+                override fun onSuccess(t: ResultData<PageData<List<Article>>>) {
                     if (t.errorCode == 0) {
                         t.data?.datas?.let {
                             if (t.data?.datas!!.isNotEmpty()) {

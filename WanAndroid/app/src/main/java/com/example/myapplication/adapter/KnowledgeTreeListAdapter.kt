@@ -6,10 +6,10 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.myapplication.R
-import com.example.myapplication.entity.KnowledgeTree
+import com.example.myapplication.entity.Tree
 import com.nex3z.flowlayout.FlowLayout
 
-class KnowledgeTreeListAdapter(var articles: MutableList<KnowledgeTree>) :
+class KnowledgeTreeListAdapter(var articles: MutableList<Tree>) :
     RecyclerView.Adapter<KnowledgeTreeListAdapter.ViewHolder>() {
 
     var onItemListener: OnItemListener? = null

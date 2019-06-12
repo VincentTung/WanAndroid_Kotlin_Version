@@ -1,4 +1,4 @@
-package com.example.myapplication.ui.fragment
+package ui.fragment
 
 import android.content.Context
 import android.os.Bundle
@@ -6,10 +6,16 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.viewpager.widget.ViewPager
+import com.example.myapplication.R
 import com.example.myapplication.adapter.MainTabAdapter
 import com.example.myapplication.entity.Chapter
+import com.example.myapplication.entity.Project
+import com.example.myapplication.entity.Tree
 import com.example.myapplication.net.ApiHelper
 import com.example.myapplication.net.ResultData
+import com.example.myapplication.ui.fragment.BaseFragment
+import com.example.myapplication.ui.fragment.ProjectSubFragment
+import com.example.myapplication.ui.fragment.WXAccountSubFragment
 import com.example.myapplication.util.BaseObserver
 import com.example.myapplication.util.ComposeUtil.schdulesTransform
 import com.uber.autodispose.autoDisposable
@@ -25,31 +31,31 @@ import net.lucode.hackware.magicindicator.buildins.commonnavigator.titles.Simple
 
 
 /**
- * 公众号
+ * 项目
  */
-class WXAccountFragment : BaseFragment() {
+class ProjectFragment() : BaseFragment() {
 
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        var contentView = inflater.inflate(com.example.myapplication.R.layout.fragment_wx_account, null, false)
-        var magicIndicator = contentView.findViewById<MagicIndicator>(com.example.myapplication.R.id.magic_indicator)
-        var viewPager = contentView.findViewById<ViewPager>(com.example.myapplication.R.id.viewpager)
-        ApiHelper.mInstance.getApiService().getChapterData().compose(schdulesTransform())
+        var contentView = inflater.inflate(R.layout.fragment_wx_account, null, false)
+        var magicIndicator = contentView.findViewById<MagicIndicator>(R.id.magic_indicator)
+        var viewPager = contentView.findViewById<ViewPager>(R.id.viewpager)
+        ApiHelper.mInstance.getApiService().getProjectTree().compose(schdulesTransform())
             .autoDisposable(scopeProvider).subscribe(object :
-                BaseObserver<List<Chapter>, ResultData<List<Chapter>>> {
+                BaseObserver<List<Tree>, ResultData<List<Tree>>> {
                 override fun onFailed(errorCode: Int) {
 
                 }
 
-                override fun onSuccess(t: ResultData<List<Chapter>>) {
+                override fun onSuccess(t: ResultData<List<Tree>>) {
 
                     var fragments =
                         t.data?.map {
-                            WXAccountSubFragment(it.name, it.id)
+                            ProjectSubFragment(it.id)
                         }
                     var datas = t.data
-                    magicIndicator.setBackgroundColor(resources.getColor(com.example.myapplication.R.color.white))
-                    val commonNavigator = CommonNavigator(this@WXAccountFragment.context)
+                    magicIndicator.setBackgroundColor(resources.getColor(R.color.white))
+                    val commonNavigator = CommonNavigator(this@ProjectFragment.context)
                     commonNavigator.isAdjustMode = false
                     commonNavigator.scrollPivotX = 0.25f
                     commonNavigator.adapter = object : CommonNavigatorAdapter() {
@@ -61,9 +67,9 @@ class WXAccountFragment : BaseFragment() {
                             val simplePagerTitleView = SimplePagerTitleView(context)
                             simplePagerTitleView.text = datas?.get(index)?.name
                             simplePagerTitleView.normalColor =
-                                resources.getColor(com.example.myapplication.R.color.black)
+                                resources.getColor(R.color.black)
                             simplePagerTitleView.selectedColor =
-                                resources.getColor(com.example.myapplication.R.color.base_color)
+                                resources.getColor(R.color.base_color)
                             simplePagerTitleView.textSize = 15f
                             val paddingLeft = UIUtil.dip2px(context, 20.0)
                             val paddingTop = UIUtil.dip2px(context, 8.0)
@@ -80,7 +86,7 @@ class WXAccountFragment : BaseFragment() {
                             indicator.mode = LinePagerIndicator.MODE_EXACTLY
                             indicator.lineWidth = UIUtil.dip2px(context, 20.0).toFloat()
                             indicator.lineHeight = UIUtil.dip2px(context, 2.0).toFloat()
-                            indicator.setColors(resources.getColor(com.example.myapplication.R.color.base_color))
+                            indicator.setColors(resources.getColor(R.color.base_color))
                             return indicator
                         }
                     }

@@ -13,6 +13,7 @@ import com.example.myapplication.ui.fragment.WXAccountFragment
 import com.example.myapplication.util.logd
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.fragment_knowledge_tree.*
+import ui.fragment.ProjectFragment
 
 
 class MainActivity : BaseActivity() {
@@ -27,7 +28,7 @@ class MainActivity : BaseActivity() {
         findViewById<ImageView>(R.id.img_back).visibility = View.INVISIBLE
         tv_title = findViewById(R.id.tv_title)
         fragmentList = listOf(
-            MainPageFragment(), KnowledgeTreeFragment(), WXAccountFragment(), MainPageFragment(), MainPageFragment()
+            MainPageFragment(), KnowledgeTreeFragment(), WXAccountFragment(), ProjectFragment(), MainPageFragment()
         )
 
         viewPager.adapter = MainTabAdapter(supportFragmentManager, fragmentList)
