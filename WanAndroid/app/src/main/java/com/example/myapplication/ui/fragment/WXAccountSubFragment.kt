@@ -14,6 +14,7 @@ import com.example.myapplication.entity.Article
 import com.example.myapplication.entity.ArticleData
 import com.example.myapplication.net.ApiHelper
 import com.example.myapplication.net.ResultData
+import com.example.myapplication.ui.activity.WebViewActivity
 import com.example.myapplication.util.BaseObserver
 import com.example.myapplication.util.ComposeUtil.schdulesTransform
 import com.uber.autodispose.autoDisposable
@@ -22,7 +23,10 @@ import com.uber.autodispose.autoDisposable
 /**
  * 公众号
  */
-class WXAccountSubFragment(var title: String, var cid: Int) : BaseFragment() {
+class WXAccountSubFragment(var title: String, var cid: Int) : BaseFragment(), ArticleListAdapter.OnItemListener {
+    override fun onItemClick(position: Int) {
+        mArticles[position].link?.let { this@WXAccountSubFragment.context?.let { it1 -> WebViewActivity.start(it1, it) } }
+    }
 
 
     private var mHandler: Handler = Handler()
@@ -34,6 +38,7 @@ class WXAccountSubFragment(var title: String, var cid: Int) : BaseFragment() {
         var contentView = inflater.inflate(R.layout.fragment_knowledge_sub, null, false)
         recyclerView = contentView.findViewById(R.id.recyclerView)
         recyclerView.adapter = mAdapter
+        mAdapter.onItemListener = this
         recyclerView.setHasFixedSize(true)
         recyclerView.layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
         recyclerView.addItemDecoration(

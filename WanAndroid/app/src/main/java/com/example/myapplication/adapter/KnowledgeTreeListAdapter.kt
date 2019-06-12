@@ -6,17 +6,18 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.myapplication.R
-import com.example.myapplication.entity.Article
 import com.example.myapplication.entity.KnowledgeTree
+import com.nex3z.flowlayout.FlowLayout
 
 class KnowledgeTreeListAdapter(var articles: MutableList<KnowledgeTree>) :
     RecyclerView.Adapter<KnowledgeTreeListAdapter.ViewHolder>() {
 
     var onItemListener: OnItemListener? = null
+    lateinit var layoutInflater: LayoutInflater
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val view = LayoutInflater.from(parent.context).inflate(R.layout.item_knowledge_tree, parent, false)
-
+        layoutInflater = LayoutInflater.from(view.context)
         return ViewHolder(view)
 
     }
@@ -29,7 +30,19 @@ class KnowledgeTreeListAdapter(var articles: MutableList<KnowledgeTree>) :
 
         var article = articles[position]
         holder.tv_name.text = article.name
-        holder.tv_children.text = article.children?.get(0)?.name
+        holder.tv_children.removeAllViews()
+        article.children?.forEach {
+
+            var tx: TextView = layoutInflater.inflate(R.layout.item_tree_child, null, false) as TextView
+            tx.text = it.name
+            var layoutParams: ViewGroup.MarginLayoutParams =
+                ViewGroup.MarginLayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT)
+            layoutParams.setMargins(10, 10, 10, 10)
+            tx.layoutParams = layoutParams
+
+            holder.tv_children.addView(tx)
+
+        }
 
 
         holder.itemView.setOnClickListener {
@@ -44,7 +57,7 @@ class KnowledgeTreeListAdapter(var articles: MutableList<KnowledgeTree>) :
 
     class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         var tv_name = itemView.findViewById<TextView>(R.id.tv_name)
-        var tv_children = itemView.findViewById<TextView>(R.id.tv_children)
+        var tv_children = itemView.findViewById<FlowLayout>(R.id.tv_children)
 
     }
 

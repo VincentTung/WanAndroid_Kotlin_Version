@@ -46,7 +46,7 @@ class KnowledgeTreeFragment : BaseFragment(), KnowledgeTreeListAdapter.OnItemLis
 
         mAdapter.onItemListener = this
         recyclerview.adapter = mAdapter
-        recyclerview.setHasFixedSize(true)
+        recyclerview.setHasFixedSize(false)
 
 
         ApiHelper.mInstance.getApiService().getKnowledgeTree().compose(schdulesTransform())
