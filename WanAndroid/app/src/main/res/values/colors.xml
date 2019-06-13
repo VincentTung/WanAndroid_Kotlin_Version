@@ -3,7 +3,7 @@
     <color name="colorPrimary">#2196F3</color>
     <color name="colorPrimaryDark">#2196F3</color>
     <color name="colorAccent">#2196F3</color>
-    <color name="tab_tx_normal">#CCCCCC</color>
+    <color name="tab_tx_normal">#666666</color>
     <color name="base_color">#2196F3</color>
     <color name="tab_tx_selected">#2196F3</color>
 </resources>

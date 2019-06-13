@@ -13,7 +13,7 @@
         android:ellipsize="end"
         android:gravity="center_vertical"
         android:text="看书的小蜗牛"
-        android:textColor="@color/black"
+        android:textColor="#999999"
         android:textSize="14sp" />
 
     <TextView
@@ -28,7 +28,7 @@
         android:paddingRight="5dp"
         android:paddingBottom="2dp"
         android:text="framework"
-        android:textColor="@color/tab_tx_selected"
+        android:textColor="@color/base_color"
         android:textSize="12sp" />
 
     <TextView
@@ -42,7 +42,9 @@
         android:ellipsize="end"
         android:lines="1"
         android:text="我是标题我是标题我是标题"
-        android:textSize="16sp" />
+        android:textColor="#333333"
+        android:textSize="16sp"
+        android:textStyle="bold" />
 
     <TextView
         android:id="@+id/tv_date"
@@ -53,7 +55,7 @@
         android:drawablePadding="5dp"
         android:lines="1"
         android:text="2019-06-06"
-        android:textColor="@color/black"
+        android:textColor="#999999"
         android:textSize="12sp" />
 
 </RelativeLayout>

@@ -4,7 +4,6 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.myapplication.R.layout
@@ -38,12 +37,7 @@ class KnowledgeTreeFragment : BaseFragment(), KnowledgeTreeListAdapter.OnItemLis
 
         mAdapter = KnowledgeTreeListAdapter(mTreeList)
         var linearLayoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
-        recyclerview.addItemDecoration(
-            DividerItemDecoration(
-                this@KnowledgeTreeFragment.context,
-                DividerItemDecoration.VERTICAL
-            )
-        )
+
         recyclerview.layoutManager = linearLayoutManager
 
         mAdapter.onItemListener = this

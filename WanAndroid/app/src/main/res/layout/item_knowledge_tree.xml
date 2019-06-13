@@ -1,39 +1,38 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:padding="6dp"
-    android:layout_marginLeft="5dp"
-    android:layout_marginRight="5dp"
-    android:background="@color/white"
     android:layout_height="wrap_content"
-    android:orientation="vertical">
+    android:layout_margin="10dp"
+    android:background="@drawable/shape_knowledge_item"
+    android:orientation="vertical"
+    android:padding="10dp">
 
     <TextView
         android:id="@+id/tv_name"
-        android:text="11"
-        android:textSize="16sp"
-        android:textColor="@color/black"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:text="11"
+        android:textColor="@color/black"
+        android:textSize="16sp" />
 
 
     <ImageView
         android:id="@+id/img"
-        android:layout_centerVertical="true"
-        android:layout_alignParentRight="true"
-        android:src="@drawable/right_arrow"
         android:layout_width="20dp"
-        android:layout_height="20dp"/>
+        android:layout_height="20dp"
+        android:layout_alignParentRight="true"
+        android:layout_centerVertical="true"
+        android:src="@drawable/right_arrow" />
 
     <com.nex3z.flowlayout.FlowLayout
-        android:text="11  22  33"
-        android:textColor="@color/black"
-        android:textSize="14sp"
-        android:layout_marginTop="10dp"
-        android:layout_alignParentLeft="true"
         android:id="@+id/tv_children"
-        android:layout_toLeftOf="@id/img"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@id/tv_name" />
+        android:layout_below="@id/tv_name"
+        android:layout_alignParentLeft="true"
+        android:layout_marginTop="10dp"
+        android:layout_toLeftOf="@id/img"
+        android:text="11  22  33"
+        android:textColor="@color/black"
+        android:textSize="14sp" />
 </RelativeLayout>

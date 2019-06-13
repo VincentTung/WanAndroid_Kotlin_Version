@@ -8,4 +8,4 @@
 
     android:paddingRight="10dp"
     android:paddingBottom="2dp"
-    android:textColor="#CCCCCC" />
+    android:textColor="#666666" />
