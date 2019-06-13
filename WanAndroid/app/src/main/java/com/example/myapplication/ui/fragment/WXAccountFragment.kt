@@ -46,7 +46,7 @@ class WXAccountFragment : BaseFragment() {
 
                     var fragments =
                         t.data?.map {
-                            WXAccountSubFragment(it.name, it.id)
+                            WXAccountSubFragment.newInstance(it.id)
                         }
                     var datas = t.data
                     magic_indicator.setBackgroundColor(resources.getColor(com.example.myapplication.R.color.white))

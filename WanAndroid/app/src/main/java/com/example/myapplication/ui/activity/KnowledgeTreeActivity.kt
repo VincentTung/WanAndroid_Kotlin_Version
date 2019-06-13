@@ -45,7 +45,7 @@ class KnowledgeTreeActivity : BaseActivity() {
 
         var fragments =
             tree.children?.map {
-                WXAccountSubFragment(it.name, it.id)
+                WXAccountSubFragment.newInstance(it.id)
             }
         var datas = tree.children
         magic_indicator.setBackgroundColor(resources.getColor(com.example.myapplication.R.color.white))

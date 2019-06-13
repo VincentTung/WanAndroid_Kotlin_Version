@@ -23,9 +23,32 @@ import com.uber.autodispose.autoDisposable
 /**
  * 公众号
  */
-class WXAccountSubFragment(var title: String, var cid: Int) : BaseFragment(), ArticleListAdapter.OnItemListener {
+class WXAccountSubFragment : BaseFragment(), ArticleListAdapter.OnItemListener {
+
+    private var cid: Int = 0
+
+    companion object {
+
+        fun newInstance(cid: Int): WXAccountSubFragment {
+
+            var fragment = WXAccountSubFragment()
+            var bundle = Bundle()
+            bundle.putInt("cid", cid)
+            fragment.arguments = bundle
+            return fragment
+        }
+
+    }
+
     override fun onItemClick(position: Int) {
-        mArticles[position].link?.let { this@WXAccountSubFragment.context?.let { it1 -> WebViewActivity.start(it1, it) } }
+        mArticles[position].link?.let {
+            this@WXAccountSubFragment.context?.let { it1 ->
+                WebViewActivity.start(
+                    it1,
+                    it
+                )
+            }
+        }
     }
 
 
@@ -35,6 +58,7 @@ class WXAccountSubFragment(var title: String, var cid: Int) : BaseFragment(), Ar
     private var mAdapter: ArticleListAdapter = ArticleListAdapter(mArticles)
     private lateinit var recyclerView: RecyclerView
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+        cid = arguments?.getInt("cid")!!
         var contentView = inflater.inflate(R.layout.fragment_knowledge_sub, null, false)
         recyclerView = contentView.findViewById(R.id.recyclerView)
         recyclerView.adapter = mAdapter

@@ -3,8 +3,10 @@ package com.example.myapplication.ui.activity
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.os.PersistableBundle
 import com.example.myapplication.R
 import android.widget.LinearLayout
+import com.example.myapplication.util.logd
 import com.just.agentweb.AgentWeb
 import kotlinx.android.synthetic.main.activity_webview.*
 
@@ -24,6 +26,8 @@ class WebViewActivity : BaseActivity() {
     }
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        logd("***onCreate")
         setContentView(R.layout.activity_webview)
 
         iv_back.setOnClickListener {
@@ -36,5 +40,53 @@ class WebViewActivity : BaseActivity() {
             .createAgentWeb()
             .ready()
             .go(url)
+    }
+
+
+    override fun onStart() {
+        super.onStart()
+        logd("***onStart")
+    }
+
+    override fun onResume() {
+        super.onResume()
+        logd("***onResume")
+    }
+
+
+    override fun onPause() {
+        super.onPause()
+        logd("***onPause")
+    }
+
+    override fun onStop() {
+        super.onStop()
+        logd("***onStop")
+    }
+
+
+    override fun onRestart() {
+        super.onRestart()
+        logd("***onRestart")
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        logd("***onDestroy")
+    }
+
+    override fun onRestoreInstanceState(savedInstanceState: Bundle?) {
+        super.onRestoreInstanceState(savedInstanceState)
+        logd("***onRestoreInstanceState")
+    }
+
+    override fun onNewIntent(intent: Intent?) {
+        super.onNewIntent(intent)
+        logd("***onNewIntent")
+    }
+
+    override fun onSaveInstanceState(outState: Bundle) {
+        super.onSaveInstanceState(outState)
+        logd("***onSaveInstanceState")
     }
 }

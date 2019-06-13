@@ -51,7 +51,7 @@ class ProjectFragment() : BaseFragment() {
 
                     var fragments =
                         t.data?.map {
-                            ProjectSubFragment(it.id)
+                            ProjectSubFragment.newInstance(it.id)
                         }
                     var datas = t.data
                     magicIndicator.setBackgroundColor(resources.getColor(R.color.white))

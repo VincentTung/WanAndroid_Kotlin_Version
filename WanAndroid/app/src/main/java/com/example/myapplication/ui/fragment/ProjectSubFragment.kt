@@ -25,12 +25,26 @@ import com.uber.autodispose.autoDisposable
 /**
  * 项目-子Fragment
  */
-class ProjectSubFragment( var cid: Int) : BaseFragment(), ArticleListAdapter.OnItemListener,
+class ProjectSubFragment : BaseFragment(), ArticleListAdapter.OnItemListener,
     ProjectListAdapter.OnItemListener {
     override fun onItemClick(position: Int) {
         mArticles[position].link?.let { this@ProjectSubFragment.context?.let { it1 -> WebViewActivity.start(it1, it) } }
     }
 
+    private var cid: Int = 0
+
+    companion object {
+
+        fun newInstance(cid: Int): ProjectSubFragment {
+
+            var fragment = ProjectSubFragment()
+            var bundle = Bundle()
+            bundle.putInt("cid", cid)
+            fragment.arguments = bundle
+            return fragment
+        }
+
+    }
 
     private var mHandler: Handler = Handler()
     private var mPage = 0
@@ -38,6 +52,7 @@ class ProjectSubFragment( var cid: Int) : BaseFragment(), ArticleListAdapter.OnI
     private var mAdapter: ProjectListAdapter = ProjectListAdapter(mArticles)
     private lateinit var recyclerView: RecyclerView
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+        cid = arguments?.getInt("cid")!!
         var contentView = inflater.inflate(R.layout.fragment_knowledge_sub, null, false)
         recyclerView = contentView.findViewById(R.id.recyclerView)
         recyclerView.adapter = mAdapter
