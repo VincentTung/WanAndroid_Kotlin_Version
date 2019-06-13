@@ -17,7 +17,7 @@ android {
         javaMaxHeapSize "2048m"
     }
     defaultConfig {
-        applicationId "com.example.myapplication"
+        applicationId "com.vincent.wanandroid.kotlin"
         minSdkVersion rootProject.ext.versions.minSdkVersion
         targetSdkVersion rootProject.ext.versions.targetSdkVersion
         versionCode rootProject.ext.versions.versionCode
