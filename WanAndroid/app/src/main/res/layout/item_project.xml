@@ -26,6 +26,8 @@
             android:layout_marginBottom="5dp"
             android:ellipsize="end"
             android:lines="1"
+            android:textColor="#333333"
+            android:textStyle="bold"
             android:text="我是标题我是标题我是标题"
             android:textSize="16sp" />
 
@@ -52,7 +54,7 @@
                 android:drawableLeft="@drawable/date"
                 android:lines="1"
                 android:text="2019-06-06"
-                android:textColor="@color/black" />
+                android:textColor="#999999" />
 
             <TextView
                 android:id="@+id/tv_author"
@@ -62,7 +64,7 @@
                 android:ellipsize="end"
                 android:gravity="center_vertical"
                 android:text="看书的小蜗牛"
-                android:textColor="@color/black" />
+                android:textColor="#999999" />
         </LinearLayout>
     </LinearLayout>
 </LinearLayout>
