@@ -6,14 +6,15 @@
 
     <TextView
         android:id="@+id/tv_author"
-
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:drawableLeft="@drawable/wine"
+        android:drawablePadding="5dp"
         android:ellipsize="end"
         android:gravity="center_vertical"
         android:text="看书的小蜗牛"
-        android:textColor="@color/black" />
+        android:textColor="@color/black"
+        android:textSize="14sp" />
 
     <TextView
         android:id="@+id/tv_type"
@@ -21,8 +22,14 @@
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
         android:layout_alignParentRight="true"
+        android:background="@drawable/shape_type"
+        android:paddingLeft="5dp"
+        android:paddingTop="2dp"
+        android:paddingRight="5dp"
+        android:paddingBottom="2dp"
         android:text="framework"
-        android:textColor="@color/tab_tx_selected" />
+        android:textColor="@color/tab_tx_selected"
+        android:textSize="12sp" />
 
     <TextView
         android:id="@+id/tv_title"
@@ -34,8 +41,7 @@
         android:layout_marginBottom="5dp"
         android:ellipsize="end"
         android:lines="1"
-        android:text="我是标题我是标题我是标题
-"
+        android:text="我是标题我是标题我是标题"
         android:textSize="16sp" />
 
     <TextView
@@ -44,8 +50,10 @@
         android:layout_height="wrap_content"
         android:layout_below="@id/tv_title"
         android:drawableLeft="@drawable/date"
+        android:drawablePadding="5dp"
         android:lines="1"
         android:text="2019-06-06"
-        android:textColor="@color/black" />
+        android:textColor="@color/black"
+        android:textSize="12sp" />
 
 </RelativeLayout>

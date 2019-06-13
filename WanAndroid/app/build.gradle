@@ -78,6 +78,8 @@ android {
 
         implementation "com.nex3z:flow-layout:${rootProject.ext.versions.flow_layout}"
 
+        implementation 'com.jcodecraeer:xrecyclerview:1.5.9'
+
 
     }
 }
