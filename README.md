@@ -1,4 +1,4 @@
-<img src="E:/workspace/wk_github/WanAndroid_Flutter_Version/screen_shot/icon.png">
+<img src="/screen_shot/icon.png">
 
 ## 首先
 
@@ -26,7 +26,7 @@
 | :----------------------------------------------------------: | :----------------------------------------------------------: | :----------------------------------------------------------: |
 |                             首页                             |                           知识体系                           |                            公众号                            |
 
-| <img src="/screen_shot/project.jpg" width="280" height="498" alt="项目"/> | <img src="/screen_shot/g2.gif" width="280" height="498" alt="共态度"/> | <img src="/screen_shot/webview.jpg" width="280" height="498" alt="详细页"/> |
+| <img src="/screen_shot/project.jpg" width="280" height="498" alt="项目"/> | <img src="/screen_shot/g2.gif" width="280" height="498" alt="动态度"/> | <img src="/screen_shot/webview.jpg" width="280" height="498" alt="详细页"/> |
 | :----------------------------------------------------------: | :----------------------------------------------------------: | :----------------------------------------------------------: |
 |                             项目                             |                            动态图                            |                            详细页                            |
 
