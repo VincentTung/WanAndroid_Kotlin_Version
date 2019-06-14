@@ -1,9 +1,5 @@
 <img src="/screen_shot/icon.png">
 
-## 首先
-
-在学习的flutter的过程中想要练习下，于是找到了hongyang大神提供的“玩Android”网站API以及V站提供的API，写了这么一个简单的APP。
-
 ## API来源
 
 1. [玩Android API](https://www.wanandroid.com/blog/show/2)来自hongyang
