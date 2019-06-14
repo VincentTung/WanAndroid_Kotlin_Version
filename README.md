@@ -7,18 +7,6 @@
 ## API来源
 
 1. [玩Android API](https://www.wanandroid.com/blog/show/2)来自hongyang
-2. [V2EX API  from igaozp](<https://github.com/igaozp/V2EX-API>)整理
-3. [V2EX API ](https://www.v2ex.com/p/7v9TEc53)论坛提供
-
-## 用到的三方库
-
-- [banner_view](https://pub.dev/packages/banner_view)
-- [dio](https://pub.flutter-io.cn/packages/dio)
-- [json_annotation](https://pub.flutter-io.cn/packages/dio)
-- [path_provider ](https://pub.flutter-io.cn/packages/path_provider#-installing-tab-)
-- [permission_handler](https://pub.dev/packages/permission_handler)
-- [fluttertoast](https://pub.dartlang.org/packages/fluttertoast)
-- [md2_tab_indicator](https://pub.dev/packages/md2_tab_indicator)
 
 ## 截图预览
 
@@ -34,4 +22,3 @@
 
 1. [hongyang](https://github.com/hongyangAndroid)
 2. [[JsonChao](https://github.com/JsonChao)/**Awesome-WanAndroid**](<https://github.com/JsonChao/Awesome-WanAndroid>)
-3. [igaozp](https://github.com/igaozp/V2EX-API)
