@@ -16,10 +16,6 @@ open class BaseFragment:Fragment(){
      val scopeProvider: AndroidLifecycleScopeProvider by lazy { AndroidLifecycleScopeProvider.from(this) }
      override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
 
-         var  info =  MutableLiveData<Article>()
-
-         info.value = Article()
-         info.postValue()
-         retur n super.onCreateView(inflater, container, savedInstanceState)
+         return super.onCreateView(inflater, container, savedInstanceState)
      }
  }
