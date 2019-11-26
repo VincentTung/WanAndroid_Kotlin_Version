@@ -4,23 +4,32 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProviders
+import androidx.paging.PagedList
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.myapplication.R
 import com.example.myapplication.adapter.ArticleListAdapter
+import com.example.myapplication.cfg.BANNER_OFFSET_TIME
 import com.example.myapplication.entity.Article
 import com.example.myapplication.entity.Banner
-import com.example.myapplication.entity.PageData
 import com.example.myapplication.net.ApiHelper
-import com.example.myapplication.net.ResultData
+import com.example.myapplication.entity.ResultData
+import com.example.myapplication.repository.BannerRepository
 import com.example.myapplication.ui.activity.WebViewActivity
 import com.example.myapplication.util.BannerImageLoader
 import com.example.myapplication.util.BaseObserver
 import com.example.myapplication.util.ComposeUtil.schdulesTransform
+import com.example.myapplication.util.LoadingState
+import com.example.myapplication.util.LoadingState.LOADING_BEGIN
+import com.example.myapplication.viewmodels.MainPageViewModel
+import com.example.myapplication.viewmodels.MainPageViewModelFactory
 import com.jcodecraeer.xrecyclerview.XRecyclerView
 import com.uber.autodispose.autoDisposable
 import com.youth.banner.BannerConfig
 import com.youth.banner.Transformer
+import kotlinx.android.synthetic.main.item_knowledge_tree.*
 
 
 /**
@@ -31,45 +40,68 @@ class MainPageFragment : BaseFragment(), ArticleListAdapter.OnItemListener {
 
     private lateinit var mInflater: LayoutInflater
     private lateinit var recyclerview: XRecyclerView
-    private val banner_offset_time = 2000
-    private var mPage = 0
-    private var mArticles: MutableList<Article> = mutableListOf()
-    private var mAdapter: ArticleListAdapter = ArticleListAdapter(mArticles)
+    private lateinit var mViewModel: MainPageViewModel
+    private var mAdapter: ArticleListAdapter = ArticleListAdapter()
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
 
+        mViewModel =
+            ViewModelProviders.of(this, MainPageViewModelFactory(BannerRepository()))
+                .get(MainPageViewModel::class.java)
         mInflater = inflater
         var contentView = inflater.inflate(R.layout.fragment_main_page, null, false)
         recyclerview = contentView.findViewById<XRecyclerView>(R.id.recyclerView)
-        var linearLayoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
         recyclerview.addItemDecoration(
             DividerItemDecoration(
                 this@MainPageFragment.context,
                 DividerItemDecoration.VERTICAL
             )
         )
-        recyclerview.layoutManager = linearLayoutManager
+        recyclerview.layoutManager =
+            LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
+        recyclerview.setHasFixedSize(true)
+
+        mViewModel.observeArticles().observe(this, Observer<PagedList<Article>> {
+            mAdapter.submitList(it)
+        })
 
         mAdapter.onItemListener = this
         recyclerview.adapter = mAdapter
-        mAdapter.notifyDataSetChanged()
-        recyclerview.setHasFixedSize(true)
 
 
-        getBanner()
-        getArticle(mPage)
+        mViewModel.observeLoadingState().observe(this, Observer {
+
+            if (it === LOADING_BEGIN) {
+                recyclerview.refresh()
+            } else {
+                recyclerview.refreshComplete()
+            }
+        })
+
+
+
+        mViewModel.observeBanners().observe(this, Observer {
+            var imgList = it.map { it.imagePath }
+            addBannerView(imgList, it)
+
+        })
+
         recyclerview.setLoadingListener(object : XRecyclerView.LoadingListener {
 
             override fun onRefresh() {
-                mArticles.clear()
-                mAdapter.notifyDataSetChanged()
-                mPage = 0
-                getArticle(mPage)
+
+                /**
+                 * pagedlist 如何下拉刷新
+                 */
+                recyclerview.refreshComplete()
+
             }
 
             override fun onLoadMore() {
-                getArticle(mPage + 1)
-
             }
         })
 
@@ -79,22 +111,22 @@ class MainPageFragment : BaseFragment(), ArticleListAdapter.OnItemListener {
 
     private fun getBanner() {
 
-        ApiHelper.getInstance().getApiService().getBanner().compose(schdulesTransform()).autoDisposable(scopeProvider)
+        ApiHelper.getInstance().getApiService().getBanner().compose(schdulesTransform())
+            .autoDisposable(scopeProvider)
             .subscribe(object :
                 BaseObserver<List<Banner>, ResultData<List<Banner>>> {
                 override fun onFailed(errorCode: Int) {
                 }
 
                 override fun onSuccess(result: ResultData<List<Banner>>) {
-                    var imgList = result.data?.map { it.imagePath }
-                    addBannerView(imgList, result)
+
                 }
 
 
             })
     }
 
-    private fun addBannerView(imgList: List<String?>?, result: ResultData<List<Banner>>) {
+    private fun addBannerView(imgList: List<String?>?, banner:List<Banner>) {
 
 
         var bannerView = mInflater.inflate(R.layout.include_banner, null, false)
@@ -105,14 +137,14 @@ class MainPageFragment : BaseFragment(), ArticleListAdapter.OnItemListener {
 
         banner_head.setBannerAnimation(Transformer.DepthPage)
         banner_head.isAutoPlay(true)
-        banner_head.setDelayTime(banner_offset_time)
+        banner_head.setDelayTime(BANNER_OFFSET_TIME)
 
         banner_head.setIndicatorGravity(BannerConfig.CENTER)
         recyclerview.addHeaderView(bannerView)
 
         banner_head.setImages(imgList)
         banner_head.setOnBannerListener {
-            var url = result.data?.get(it)?.url
+            var url = banner?.get(it)?.url
             this@MainPageFragment.context?.let { it1 ->
                 url?.let { it2 ->
                     WebViewActivity.start(
@@ -127,58 +159,24 @@ class MainPageFragment : BaseFragment(), ArticleListAdapter.OnItemListener {
     }
 
 
-    private fun getArticle(page: Int) {
-
-        ApiHelper.getInstance().getApiService().getArticle(page).compose(schdulesTransform())
-            .autoDisposable(scopeProvider).subscribe(object :
-                BaseObserver<PageData<List<Article>>, ResultData<PageData<List<Article>>>> {
-                override fun onSuccess(t: ResultData<PageData<List<Article>>>) {
-                    if (t.errorCode == 0) {
-                        t.data?.datas?.let {
-                            if (t.data?.datas!!.isNotEmpty()) {
-                                mPage = t.data!!.curPage
-
-                                if (mArticles.isEmpty()) {
-                                    mArticles.addAll(it)
-                                    mAdapter.notifyDataSetChanged()
-                                } else {
-                                    var begin = mArticles.size
-                                    mArticles.addAll(it)
-                                    mAdapter.notifyItemRangeInserted(begin, it.size)
-                                }
-
-                            }
-                        }
-                    }
-                    stopLoad()
-                }
-
-                override fun onFailed(errorCode: Int) {
-                    stopLoad()
-                }
-
-
-            })
-    }
-
     private fun stopLoad() {
-        if (mPage == 1) {
-            recyclerview.refreshComplete()
-        } else {
-            recyclerview.loadMoreComplete()
-        }
+//        if (mPage == 1) {
+//            recyclerview.refreshComplete()
+//        } else {
+//            recyclerview.loadMoreComplete()
+//        }
     }
 
     override fun onItemClick(position: Int) {
 
-        this@MainPageFragment.context?.let { it ->
-            mArticles[position].link?.let { it1 ->
-                WebViewActivity.start(
-                    this@MainPageFragment.context!!,
-                    it1
-                )
-            }
-        }
+//        this@MainPageFragment.context?.let { it ->
+//            mArticles[position].link?.let { it1 ->
+//                WebViewActivity.start(
+//                    this@MainPageFragment.context!!,
+//                    it1
+//                )
+//            }
+//        }
     }
 
 

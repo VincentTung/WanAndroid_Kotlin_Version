@@ -8,14 +8,11 @@ import android.view.ViewGroup
 import androidx.viewpager.widget.ViewPager
 import com.example.myapplication.R
 import com.example.myapplication.adapter.MainTabAdapter
-import com.example.myapplication.entity.Chapter
-import com.example.myapplication.entity.Project
 import com.example.myapplication.entity.Tree
 import com.example.myapplication.net.ApiHelper
-import com.example.myapplication.net.ResultData
+import com.example.myapplication.entity.ResultData
 import com.example.myapplication.ui.fragment.BaseFragment
 import com.example.myapplication.ui.fragment.ProjectSubFragment
-import com.example.myapplication.ui.fragment.WXAccountSubFragment
 import com.example.myapplication.util.BaseObserver
 import com.example.myapplication.util.ComposeUtil.schdulesTransform
 import com.uber.autodispose.autoDisposable

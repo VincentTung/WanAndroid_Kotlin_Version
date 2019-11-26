@@ -4,35 +4,43 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import androidx.databinding.DataBindingUtil
+import androidx.paging.PagedListAdapter
+import androidx.recyclerview.widget.DiffUtil
+import androidx.recyclerview.widget.DiffUtil.ItemCallback
 import androidx.recyclerview.widget.RecyclerView
 import com.example.myapplication.R
+import com.example.myapplication.databinding.ItemArticleBinding
 import com.example.myapplication.entity.Article
 
-class ArticleListAdapter(var articles: MutableList<Article>) : RecyclerView.Adapter<ArticleListAdapter.ViewHolder>() {
+class ArticleListAdapter() : PagedListAdapter<Article, ArticleListAdapter.ViewHolder>(object :
+    ItemCallback<Article>() {
+    override fun areItemsTheSame(oldItem: Article, newItem: Article): Boolean {
+        return oldItem.id === newItem.id
+    }
+
+    override fun areContentsTheSame(oldItem: Article, newItem: Article): Boolean {
+        return oldItem == newItem
+    }
+}) {
 
     var onItemListener: OnItemListener? = null
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        val view = LayoutInflater.from(parent.context).inflate(R.layout.item_article, parent, false)
-
-        return ViewHolder(view)
+        val dataBinding: ItemArticleBinding = DataBindingUtil.inflate(
+            LayoutInflater.from(parent.context),
+            R.layout.item_article,
+            parent,
+            false
+        );
+        return ViewHolder(dataBinding)
 
     }
 
-    override fun getItemCount(): Int {
-        return articles.size
-    }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-
-        var article = articles[position]
-        holder.tv_author.text = article.author
-        holder.tv_type.text = article.chapterName
-        holder.tv_title.text = article.title
-        holder.tv_date.text = article.niceDate
-
+        holder.itemDataBinding.article = getItem (position)
         holder.itemView.setOnClickListener {
-
             onItemListener?.onItemClick(position)
         }
     }
@@ -41,11 +49,7 @@ class ArticleListAdapter(var articles: MutableList<Article>) : RecyclerView.Adap
         fun onItemClick(position: Int)
     }
 
-    class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        var tv_author = itemView.findViewById<TextView>(R.id.tv_author)
-        var tv_type = itemView.findViewById<TextView>(R.id.tv_type)
-        var tv_date = itemView.findViewById<TextView>(R.id.tv_date)
-        var tv_title = itemView.findViewById<TextView>(R.id.tv_title)
-    }
+    class ViewHolder(val itemDataBinding: ItemArticleBinding) :
+        RecyclerView.ViewHolder(itemDataBinding.root)
 
 }

@@ -39,7 +39,9 @@ android {
             jvmTarget = "1.8"
         }
     }
-
+    dataBinding {
+        enabled = true
+    }
     dependencies {
         testImplementation "junit:junit:4.12"
         androidTestImplementation "androidx.test.ext:junit:1.1.0"
@@ -79,6 +81,22 @@ android {
         implementation "com.nex3z:flow-layout:${rootProject.ext.versions.flow_layout}"
 
         implementation 'com.jcodecraeer:xrecyclerview:1.5.9'
+
+        implementation "androidx.lifecycle:lifecycle-extensions:${rootProject.ext.versions.lifecycle_version}"
+        implementation "androidx.lifecycle:lifecycle-reactivestreams:${rootProject.ext.versions.lifecycle_version}"
+        annotationProcessor "androidx.lifecycle:lifecycle-compiler:${rootProject.ext.versions.lifecycle_version}" // For Kotlin use kapt instead of annotationProcessor
+        implementation "androidx.lifecycle:lifecycle-common-java8:${rootProject.ext.versions.lifecycle_version}"
+
+        implementation "com.squareup.okhttp3:okhttp:${rootProject.ext.versions.okhttp_version}"
+        def paging_version = rootProject.ext.versions.paging_version
+
+        implementation "androidx.paging:paging-runtime:$paging_version" // For Kotlin use paging-runtime-ktx
+
+        // alternatively - without Android dependencies for testing
+        testImplementation "androidx.paging:paging-common:$paging_version" // For Kotlin use paging-common-ktx
+
+        // optional - RxJava support
+        implementation "androidx.paging:paging-rxjava2:$paging_version" // For Kotlin use pag
 
 
     }

@@ -3,7 +3,7 @@ package com.example.myapplication.util
 import android.util.Log
 import com.example.myapplication.app.WanApplication
 import com.example.myapplication.cfg.ERROR_CODE_EXCEPTION
-import com.example.myapplication.net.ResultData
+import com.example.myapplication.entity.ResultData
 import io.reactivex.Observer
 import io.reactivex.disposables.Disposable
 

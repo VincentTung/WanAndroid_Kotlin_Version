@@ -8,7 +8,7 @@ import android.view.ViewGroup
 import com.example.myapplication.adapter.MainTabAdapter
 import com.example.myapplication.entity.Chapter
 import com.example.myapplication.net.ApiHelper
-import com.example.myapplication.net.ResultData
+import com.example.myapplication.entity.ResultData
 import com.example.myapplication.util.BaseObserver
 import com.example.myapplication.util.ComposeUtil.schdulesTransform
 import com.uber.autodispose.autoDisposable

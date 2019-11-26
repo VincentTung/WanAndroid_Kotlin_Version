@@ -13,7 +13,7 @@ import com.example.myapplication.adapter.ArticleListAdapter
 import com.example.myapplication.entity.Article
 import com.example.myapplication.entity.PageData
 import com.example.myapplication.net.ApiHelper
-import com.example.myapplication.net.ResultData
+import com.example.myapplication.entity.ResultData
 import com.example.myapplication.ui.activity.WebViewActivity
 import com.example.myapplication.util.BaseObserver
 import com.example.myapplication.util.ComposeUtil.schdulesTransform
@@ -55,7 +55,7 @@ class WXAccountSubFragment : BaseFragment(), ArticleListAdapter.OnItemListener {
     private var mHandler: Handler = Handler()
     private var mPage = 0
     private var mArticles: MutableList<Article> = mutableListOf()
-    private var mAdapter: ArticleListAdapter = ArticleListAdapter(mArticles)
+    private var mAdapter: ArticleListAdapter = ArticleListAdapter()
     private lateinit var recyclerView: RecyclerView
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         cid = arguments?.getInt("cid")!!

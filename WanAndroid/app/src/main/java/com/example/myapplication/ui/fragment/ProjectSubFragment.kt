@@ -11,11 +11,10 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.myapplication.R
 import com.example.myapplication.adapter.ArticleListAdapter
 import com.example.myapplication.adapter.ProjectListAdapter
-import com.example.myapplication.entity.Article
 import com.example.myapplication.entity.PageData
 import com.example.myapplication.entity.Project
 import com.example.myapplication.net.ApiHelper
-import com.example.myapplication.net.ResultData
+import com.example.myapplication.entity.ResultData
 import com.example.myapplication.ui.activity.WebViewActivity
 import com.example.myapplication.util.BaseObserver
 import com.example.myapplication.util.ComposeUtil.schdulesTransform

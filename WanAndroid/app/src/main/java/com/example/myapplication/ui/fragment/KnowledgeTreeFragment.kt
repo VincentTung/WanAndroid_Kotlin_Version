@@ -4,17 +4,17 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.example.myapplication.R.layout
+import com.example.myapplication.R
 import com.example.myapplication.adapter.KnowledgeTreeListAdapter
 import com.example.myapplication.entity.Tree
-import com.example.myapplication.net.ApiHelper
-import com.example.myapplication.net.ResultData
+import com.example.myapplication.repository.KnowledgeRepository
+import com.example.myapplication.viewmodels.KnowledgeViewModelFactory
 import com.example.myapplication.ui.activity.KnowledgeTreeActivity
-import com.example.myapplication.util.BaseObserver
-import com.example.myapplication.util.ComposeUtil.schdulesTransform
-import com.uber.autodispose.autoDisposable
+import com.example.myapplication.viewmodels.KnowledgeViewModel
 
 
 /**
@@ -23,18 +23,33 @@ import com.uber.autodispose.autoDisposable
 class KnowledgeTreeFragment : BaseFragment(), KnowledgeTreeListAdapter.OnItemListener {
     override fun onItemClick(position: Int) {
 
-        this@KnowledgeTreeFragment.context?.let { KnowledgeTreeActivity.start(it, mTreeList[position]) }
+        this@KnowledgeTreeFragment.context?.let {
+            KnowledgeTreeActivity.start(
+                it,
+                mTreeList[position]
+            )
+        }
     }
 
 
     private lateinit var mAdapter: KnowledgeTreeListAdapter
     private var mTreeList = mutableListOf<Tree>()
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        var contentView = inflater.inflate(layout.fragment_knowledge_tree, null, false)
-        var recyclerview = contentView.findViewById<RecyclerView>(com.example.myapplication.R.id.recyclerView)
+    private lateinit var mViewModel: KnowledgeViewModel
 
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
+        var contentView = inflater.inflate(R.layout.fragment_knowledge_tree, null, false)
+        var recyclerview =
+            contentView.findViewById<RecyclerView>(com.example.myapplication.R.id.recyclerView)
 
+        mViewModel = ViewModelProviders.of(
+            this,
+            KnowledgeViewModelFactory(KnowledgeRepository())
+        ).get(KnowledgeViewModel::class.java)
         mAdapter = KnowledgeTreeListAdapter(mTreeList)
         var linearLayoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
 
@@ -44,29 +59,21 @@ class KnowledgeTreeFragment : BaseFragment(), KnowledgeTreeListAdapter.OnItemLis
         recyclerview.adapter = mAdapter
         recyclerview.setHasFixedSize(false)
 
+        mViewModel.observeKnowledgeTrees().observe(this, Observer<List<Tree>> {
+            mAdapter.treeList.addAll(it)
+            mAdapter.notifyDataSetChanged()
+        })
 
-        getTree()
         return contentView
     }
 
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        getTree()
+    }
+
     private fun getTree() {
-        ApiHelper.getInstance().getApiService().getKnowledgeTree().compose(schdulesTransform())
-            .autoDisposable(scopeProvider).subscribe(object :
-                BaseObserver<List<Tree>, ResultData<List<Tree>>> {
-                override fun onFailed(errorCode: Int) {
-
-                }
-
-                override fun onSuccess(t: ResultData<List<Tree>>) {
-
-
-                    t.data?.let {
-                        mTreeList.addAll(it)
-
-                        mAdapter.notifyDataSetChanged()
-                    }
-                }
-            })
+        mViewModel.getKnowledgeTrees()
     }
 
 
