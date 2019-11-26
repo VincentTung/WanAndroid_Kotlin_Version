@@ -1,18 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android">
+
     <data>
+
+        <import type="com.example.myapplication.adapter.ArticleClickHandler" />
 
         <variable
             name="article"
             type="com.example.myapplication.entity.Article" />
+
         <variable
-            name="a"
-            type="String" />
+            name="clickHandler"
+            type="ArticleClickHandler" />
     </data>
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:onClick="@{(view)->clickHandler.onItemClick(article)}"
         android:padding="10dp">
 
         <TextView
@@ -34,10 +39,10 @@
             android:layout_alignParentTop="true"
             android:layout_alignParentRight="true"
             android:background="@drawable/shape_type"
-            android:paddingLeft="8dp"
-            android:paddingTop="2dp"
             android:gravity="center"
             android:minWidth="20dp"
+            android:paddingLeft="8dp"
+            android:paddingTop="2dp"
             android:paddingRight="8dp"
             android:paddingBottom="2dp"
             android:text="@{article.chapterName}"

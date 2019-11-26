@@ -1,5 +1,6 @@
 package com.example.myapplication.adapter
 
+import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -10,11 +11,31 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.DiffUtil.ItemCallback
 import androidx.recyclerview.widget.RecyclerView
 import com.example.myapplication.R
+import com.example.myapplication.app.WanApplication
 import com.example.myapplication.databinding.ItemArticleBinding
 import com.example.myapplication.entity.Article
+import com.example.myapplication.ui.activity.WebViewActivity
 
+ class ArticleClickHandler constructor(){
+
+    fun onItemClick(article: Article) {
+
+        WanApplication.mInstance?.let {
+            article.link?.let { it ->
+                WebViewActivity.start(
+                    WanApplication.mInstance!!,
+                    it
+                )
+            }
+        }
+    }
+}
 class ArticleListAdapter() : PagedListAdapter<Article, ArticleListAdapter.ViewHolder>(object :
     ItemCallback<Article>() {
+
+
+
+    private val mClickHandler = ArticleClickHandler()
     override fun areItemsTheSame(oldItem: Article, newItem: Article): Boolean {
         return oldItem.id === newItem.id
     }
@@ -40,9 +61,7 @@ class ArticleListAdapter() : PagedListAdapter<Article, ArticleListAdapter.ViewHo
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         holder.itemDataBinding.article = getItem (position)
-        holder.itemView.setOnClickListener {
-            onItemListener?.onItemClick(position)
-        }
+        holder.itemDataBinding.clickHandler = mClickHandler
     }
 
     interface OnItemListener {
@@ -53,3 +72,4 @@ class ArticleListAdapter() : PagedListAdapter<Article, ArticleListAdapter.ViewHo
         RecyclerView.ViewHolder(itemDataBinding.root)
 
 }
+
