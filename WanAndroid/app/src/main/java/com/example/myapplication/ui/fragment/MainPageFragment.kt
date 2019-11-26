@@ -14,14 +14,13 @@ import com.example.myapplication.adapter.ArticleListAdapter
 import com.example.myapplication.cfg.BANNER_OFFSET_TIME
 import com.example.myapplication.entity.Article
 import com.example.myapplication.entity.Banner
-import com.example.myapplication.net.ApiHelper
 import com.example.myapplication.entity.ResultData
+import com.example.myapplication.net.ApiHelper
 import com.example.myapplication.repository.BannerRepository
 import com.example.myapplication.ui.activity.WebViewActivity
 import com.example.myapplication.util.BannerImageLoader
 import com.example.myapplication.util.BaseObserver
 import com.example.myapplication.util.ComposeUtil.schdulesTransform
-import com.example.myapplication.util.LoadingState
 import com.example.myapplication.util.LoadingState.LOADING_BEGIN
 import com.example.myapplication.viewmodels.MainPageViewModel
 import com.example.myapplication.viewmodels.MainPageViewModelFactory
@@ -29,7 +28,6 @@ import com.jcodecraeer.xrecyclerview.XRecyclerView
 import com.uber.autodispose.autoDisposable
 import com.youth.banner.BannerConfig
 import com.youth.banner.Transformer
-import kotlinx.android.synthetic.main.item_knowledge_tree.*
 
 
 /**
@@ -69,7 +67,6 @@ class MainPageFragment : BaseFragment(), ArticleListAdapter.OnItemListener {
             mAdapter.submitList(it)
         })
 
-        mAdapter.onItemListener = this
         recyclerview.adapter = mAdapter
 
 

@@ -1,13 +1,9 @@
 package com.example.myapplication.adapter
 
-import android.content.Context
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
 import androidx.databinding.DataBindingUtil
 import androidx.paging.PagedListAdapter
-import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.DiffUtil.ItemCallback
 import androidx.recyclerview.widget.RecyclerView
 import com.example.myapplication.R
@@ -35,7 +31,6 @@ class ArticleListAdapter() : PagedListAdapter<Article, ArticleListAdapter.ViewHo
 
 
 
-    private val mClickHandler = ArticleClickHandler()
     override fun areItemsTheSame(oldItem: Article, newItem: Article): Boolean {
         return oldItem.id === newItem.id
     }
@@ -45,7 +40,7 @@ class ArticleListAdapter() : PagedListAdapter<Article, ArticleListAdapter.ViewHo
     }
 }) {
 
-    var onItemListener: OnItemListener? = null
+    private val mClickHandler:ArticleClickHandler = ArticleClickHandler()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val dataBinding: ItemArticleBinding = DataBindingUtil.inflate(
@@ -53,7 +48,7 @@ class ArticleListAdapter() : PagedListAdapter<Article, ArticleListAdapter.ViewHo
             R.layout.item_article,
             parent,
             false
-        );
+        )
         return ViewHolder(dataBinding)
 
     }

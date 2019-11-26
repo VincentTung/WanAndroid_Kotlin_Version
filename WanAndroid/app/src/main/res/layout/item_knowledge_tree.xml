@@ -1,39 +1,48 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:layout_margin="10dp"
-    android:background="@drawable/shape_knowledge_item"
-    android:orientation="vertical"
-    android:padding="10dp">
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <TextView
-        android:id="@+id/tv_name"
-        android:layout_width="wrap_content"
+    <data>
+        <variable
+            name="tree"
+            type="com.example.myapplication.entity.Tree" />
+    </data>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="11"
-        android:textStyle="bold"
-        android:textColor="#333333"
-        android:textSize="16sp" />
+        android:layout_margin="10dp"
+        android:background="@drawable/shape_knowledge_item"
+        android:orientation="vertical"
+        android:padding="10dp">
+
+        <TextView
+            android:id="@+id/tv_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@{tree.name}"
+            android:textColor="#333333"
+            android:textSize="16sp"
+            android:textStyle="bold" />
 
 
-    <ImageView
-        android:id="@+id/img"
-        android:layout_width="20dp"
-        android:layout_height="20dp"
-        android:layout_alignParentRight="true"
-        android:layout_centerVertical="true"
-        android:src="@drawable/right_arrow" />
+        <ImageView
+            android:id="@+id/img"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:src="@drawable/right_arrow" />
 
-    <com.nex3z.flowlayout.FlowLayout
-        android:id="@+id/tv_children"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/tv_name"
-        android:layout_alignParentLeft="true"
-        android:layout_marginTop="10dp"
-        android:layout_toLeftOf="@id/img"
-        android:text="11  22  33"
-        android:textColor="@color/black"
-        android:textSize="14sp" />
-</RelativeLayout>
+        <com.nex3z.flowlayout.FlowLayout
+            android:id="@+id/tv_children"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/tv_name"
+            android:layout_alignParentLeft="true"
+            android:layout_marginTop="10dp"
+            android:layout_toLeftOf="@id/img"
+            android:text="11  22  33"
+            android:textColor="@color/black"
+            android:textSize="14sp" />
+    </RelativeLayout>
+</layout>

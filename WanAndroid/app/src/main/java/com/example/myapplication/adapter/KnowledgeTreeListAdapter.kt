@@ -1,13 +1,13 @@
 package com.example.myapplication.adapter
 
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.example.myapplication.R
+import com.example.myapplication.databinding.ItemKnowledgeTreeBinding
 import com.example.myapplication.entity.Tree
-import com.nex3z.flowlayout.FlowLayout
 
 class KnowledgeTreeListAdapter(var treeList: MutableList<Tree>) :
     RecyclerView.Adapter<KnowledgeTreeListAdapter.ViewHolder>() {
@@ -16,9 +16,14 @@ class KnowledgeTreeListAdapter(var treeList: MutableList<Tree>) :
     lateinit var layoutInflater: LayoutInflater
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        val view = LayoutInflater.from(parent.context).inflate(R.layout.item_knowledge_tree, parent, false)
-        layoutInflater = LayoutInflater.from(view.context)
-        return ViewHolder(view)
+        layoutInflater = LayoutInflater.from(parent.context)
+        val dataBinding: ItemKnowledgeTreeBinding = DataBindingUtil.inflate(
+            layoutInflater,
+            R.layout.item_knowledge_tree,
+            parent,
+            false
+        );
+        return ViewHolder(dataBinding)
 
     }
 
@@ -28,19 +33,23 @@ class KnowledgeTreeListAdapter(var treeList: MutableList<Tree>) :
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
 
-        var article = treeList[position]
-        holder.tv_name.text = article.name
-        holder.tv_children.removeAllViews()
-        article.children?.forEach {
+        var tree = treeList[position]
 
-            var tx: TextView = layoutInflater.inflate(R.layout.item_tree_child, null, false) as TextView
+        holder.itemBiding.tree = tree
+        tree.children?.forEach {
+
+            var tx: TextView =
+                layoutInflater.inflate(R.layout.item_tree_child, null, false) as TextView
             tx.text = it.name
             var layoutParams: ViewGroup.MarginLayoutParams =
-                ViewGroup.MarginLayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT)
+                ViewGroup.MarginLayoutParams(
+                    ViewGroup.LayoutParams.WRAP_CONTENT,
+                    ViewGroup.LayoutParams.WRAP_CONTENT
+                )
             layoutParams.setMargins(10, 10, 10, 10)
             tx.layoutParams = layoutParams
 
-            holder.tv_children.addView(tx)
+            holder.itemBiding.tvChildren.addView(tx)
 
         }
 
@@ -55,10 +64,7 @@ class KnowledgeTreeListAdapter(var treeList: MutableList<Tree>) :
         fun onItemClick(position: Int)
     }
 
-    class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        var tv_name = itemView.findViewById<TextView>(R.id.tv_name)
-        var tv_children = itemView.findViewById<FlowLayout>(R.id.tv_children)
-
-    }
+    class ViewHolder(val itemBiding: ItemKnowledgeTreeBinding) :
+        RecyclerView.ViewHolder(itemBiding.root)
 
 }

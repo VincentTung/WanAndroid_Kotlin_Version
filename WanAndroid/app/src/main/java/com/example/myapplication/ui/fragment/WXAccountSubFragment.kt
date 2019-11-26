@@ -12,8 +12,8 @@ import com.example.myapplication.R
 import com.example.myapplication.adapter.ArticleListAdapter
 import com.example.myapplication.entity.Article
 import com.example.myapplication.entity.PageData
-import com.example.myapplication.net.ApiHelper
 import com.example.myapplication.entity.ResultData
+import com.example.myapplication.net.ApiHelper
 import com.example.myapplication.ui.activity.WebViewActivity
 import com.example.myapplication.util.BaseObserver
 import com.example.myapplication.util.ComposeUtil.schdulesTransform
@@ -62,7 +62,6 @@ class WXAccountSubFragment : BaseFragment(), ArticleListAdapter.OnItemListener {
         var contentView = inflater.inflate(R.layout.fragment_knowledge_sub, null, false)
         recyclerView = contentView.findViewById(R.id.recyclerView)
         recyclerView.adapter = mAdapter
-        mAdapter.onItemListener = this
         recyclerView.setHasFixedSize(true)
         recyclerView.layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
         recyclerView.addItemDecoration(
