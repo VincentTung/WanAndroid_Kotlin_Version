@@ -1,8 +1,3 @@
 package com.example.myapplication.entity
 
-class Person {
-    constructor(name:String){
-
-        }
-
-}
+data class Person (val name:String?)

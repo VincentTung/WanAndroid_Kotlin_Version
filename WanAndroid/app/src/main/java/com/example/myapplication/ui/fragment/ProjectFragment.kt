@@ -40,7 +40,7 @@ class ProjectFragment : BaseFragment() {
         var contentView = inflater.inflate(R.layout.fragment_wx_account, null, false)
         var magicIndicator = contentView.findViewById<MagicIndicator>(R.id.magic_indicator)
         var viewPager = contentView.findViewById<ViewPager>(R.id.viewpager)
-        ApiHelper.mInstance.getApiService().getProjectTree().compose(schdulesTransform())
+        ApiHelper.getInstance().getApiService().getProjectTree().compose(schdulesTransform())
             .autoDisposable(scopeProvider).subscribe(object :
                 BaseObserver<List<Tree>, ResultData<List<Tree>>> {
                 override fun onFailed(errorCode: Int) {

@@ -79,7 +79,7 @@ class WXAccountSubFragment : BaseFragment(), ArticleListAdapter.OnItemListener {
     private fun getArticle(page: Int) {
 
 
-        ApiHelper.mInstance.getApiService().getArticleUnderTree(page, cid).compose(schdulesTransform())
+        ApiHelper.getInstance().getApiService().getArticleUnderTree(page, cid).compose(schdulesTransform())
             .autoDisposable(scopeProvider).subscribe(object :
                 BaseObserver<PageData<List<Article>>, ResultData<PageData<List<Article>>>> {
                 override fun onSuccess(t: ResultData<PageData<List<Article>>>) {

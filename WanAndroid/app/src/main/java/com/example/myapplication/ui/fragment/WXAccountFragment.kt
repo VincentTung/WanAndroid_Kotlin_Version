@@ -35,7 +35,7 @@ class WXAccountFragment : BaseFragment() {
     }
 
     private fun getTree() {
-        ApiHelper.mInstance.getApiService().getChapterData().compose(schdulesTransform())
+        ApiHelper.getInstance().getApiService().getChapterData().compose(schdulesTransform())
             .autoDisposable(scopeProvider).subscribe(object :
                 BaseObserver<List<Chapter>, ResultData<List<Chapter>>> {
                 override fun onFailed(errorCode: Int) {

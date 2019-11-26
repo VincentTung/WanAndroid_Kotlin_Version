@@ -4,26 +4,26 @@ import android.os.Parcel
 import android.os.Parcelable
 
 
-class Tree() : Parcelable {
-
-    var children: List<Tree>? = null
-    var courseId: Int = 0
-    var id: Int = 0
-    var name: String = ""
-    var order: Int = 0
-    var parentChapterId: Int = 0
-    var userControlSetTop: Boolean? = null
-    var visible: Int = 0
-
-    constructor(parcel: Parcel) : this() {
-        children = parcel.createTypedArrayList(CREATOR)
-        courseId = parcel.readInt()
-        id = parcel.readInt()
-        name = parcel.readString()
-        order = parcel.readInt()
-        parentChapterId = parcel.readInt()
-        userControlSetTop = parcel.readValue(Boolean::class.java.classLoader) as? Boolean
-        visible = parcel.readInt()
+data class Tree(
+    val children: List<Tree>? = null,
+    val courseId: Int ,
+    val id: Int ,
+    val name: String ,
+    val order: Int,
+    val parentChapterId: Int,
+    val userControlSetTop: Boolean? = null,
+    val visible: Int
+):Parcelable{
+    constructor(parcel: Parcel) : this(
+        parcel.createTypedArrayList(CREATOR),
+        parcel.readInt(),
+        parcel.readInt(),
+        parcel.readString(),
+        parcel.readInt(),
+        parcel.readInt(),
+        parcel.readValue(Boolean::class.java.classLoader) as? Boolean,
+        parcel.readInt()
+    ) {
     }
 
     override fun writeToParcel(parcel: Parcel, flags: Int) {
@@ -50,4 +50,5 @@ class Tree() : Parcelable {
             return arrayOfNulls(size)
         }
     }
+
 }

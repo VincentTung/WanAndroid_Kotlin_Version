@@ -1,29 +1,33 @@
 package com.example.myapplication.entity
 
+import android.os.Parcel
+import android.os.Parcelable
 
 
-class Article {
-    var title: String? = null
-    var type: Int = 0
-    var userId: Int = 0
-    var visible: Int = 0
-    var zan: Int = 0
-    var apkLink: String? = null
-    var author: String? = null
-    var chapterId: Int = 0
-    var chapterName: String? = null
-    var collect: String? = null
-    var courseId: Int = 0
-    var desc: String? = null
-    var envelopePic: String? = null
-    var fresh: Boolean? = null
-    var id: Int = 0
-    var link: String? = null
-    var niceDate: String? = null
-    var origin: String? = null
-    var prefix: String? = null
-    var projectLink: String? = null
-    var publishTime: Long? = null
-    var superChapterId: Int = 0
-    var superChapterName: String? = null
+data class Article(
+    val title: String? = null,
+    val type: Int = 0,
+    val userId: Int = 0,
+    val visible: Int = 0,
+    val zan: Int = 0,
+    val apkLink: String? = null,
+    val author: String? = null,
+    val chapterId: Int = 0,
+    val chapterName: String? = null,
+    val collect: String? = null,
+    val courseId: Int = 0,
+    val desc: String? = null,
+    val envelopePic: String? = null,
+    val fresh: Boolean? = null,
+    val id: Int = 0,
+    val link: String? = null,
+    val niceDate: String? = null,
+    val origin: String? = null,
+    val prefix: String? = null,
+    val projectLink: String? = null,
+    val publishTime: Long? = null,
+    val superChapterId: Int = 0,
+    val superChapterName: String? = null
+) {
+
 }

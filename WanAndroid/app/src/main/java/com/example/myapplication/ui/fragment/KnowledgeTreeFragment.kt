@@ -50,7 +50,7 @@ class KnowledgeTreeFragment : BaseFragment(), KnowledgeTreeListAdapter.OnItemLis
     }
 
     private fun getTree() {
-        ApiHelper.mInstance.getApiService().getKnowledgeTree().compose(schdulesTransform())
+        ApiHelper.getInstance().getApiService().getKnowledgeTree().compose(schdulesTransform())
             .autoDisposable(scopeProvider).subscribe(object :
                 BaseObserver<List<Tree>, ResultData<List<Tree>>> {
                 override fun onFailed(errorCode: Int) {

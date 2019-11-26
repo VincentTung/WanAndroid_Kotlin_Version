@@ -79,7 +79,7 @@ class MainPageFragment : BaseFragment(), ArticleListAdapter.OnItemListener {
 
     private fun getBanner() {
 
-        ApiHelper.mInstance.getApiService().getBanner().compose(schdulesTransform()).autoDisposable(scopeProvider)
+        ApiHelper.getInstance().getApiService().getBanner().compose(schdulesTransform()).autoDisposable(scopeProvider)
             .subscribe(object :
                 BaseObserver<List<Banner>, ResultData<List<Banner>>> {
                 override fun onFailed(errorCode: Int) {
@@ -129,7 +129,7 @@ class MainPageFragment : BaseFragment(), ArticleListAdapter.OnItemListener {
 
     private fun getArticle(page: Int) {
 
-        ApiHelper.mInstance.getApiService().getArticle(page).compose(schdulesTransform())
+        ApiHelper.getInstance().getApiService().getArticle(page).compose(schdulesTransform())
             .autoDisposable(scopeProvider).subscribe(object :
                 BaseObserver<PageData<List<Article>>, ResultData<PageData<List<Article>>>> {
                 override fun onSuccess(t: ResultData<PageData<List<Article>>>) {

@@ -22,7 +22,21 @@ class ApiHelper private constructor() {
 
     companion object {
         private const val CACHE_SIZE: Long = 10 * 1024 * 1024
-        var mInstance: ApiHelper = ApiHelper()
+
+        /**
+         * 单例
+         */
+        @Volatile
+        private var mInstance: ApiHelper? = null
+
+        /**
+         * dcl
+         */
+        fun getInstance(): ApiHelper {
+            return mInstance ?: synchronized(this) {
+                mInstance ?: ApiHelper().also { mInstance = it }
+            }
+        }
     }
 
     private fun initRetrofit() {
@@ -38,7 +52,8 @@ class ApiHelper private constructor() {
         mOkHttpClient = okHttpBuilder.build()
 
         var retrofitBuilder: Retrofit.Builder = Retrofit.Builder()
-        mRetrofit = retrofitBuilder.baseUrl(WanUrl.BASE_URL).addCallAdapterFactory(RxJava2CallAdapterFactory.create())
+        mRetrofit = retrofitBuilder.baseUrl(WanUrl.BASE_URL)
+            .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
             .addConverterFactory(GsonConverterFactory.create()).client(mOkHttpClient).build()
 
         mApiService = mRetrofit.create(ApiService::class.java)

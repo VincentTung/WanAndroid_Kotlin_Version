@@ -1,14 +1,13 @@
 package com.example.myapplication.entity
 
 
-class Chapter {
-    var courseId: Int = 0
-
-    var id: Int = 0
-    var name: String = ""
-    var order: Long? = null
-    var parentChapterId: Int = 0
-    var userControlSetTop: Boolean? = null
-    var visible: Int = 0
-
+data class Chapter (
+    val courseId: Int = 0,
+    val id: Int = 0,
+    val name: String ?,
+    val order: Long? = null,
+    val parentChapterId: Int = 0,
+    val userControlSetTop: Boolean? = null,
+    val visible: Int = 0
+){
 }
