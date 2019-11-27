@@ -44,5 +44,17 @@ interface ApiService {
     @GET(WanUrl.URL_BANNER)
     fun getBanner_Calls(): Call<ResultData<List<Banner>>>
 
+    @GET("/article/list/{page}/json")
+    fun getArticleUnderTree_Calls(@Path("page") page: Int, @Query("cid") cid: Int): Call<ResultData<PageData<List<Article>>>>
+
+    @GET(WanUrl.URL_PROJECT)
+    fun getProjectTree_Calls(): Call<ResultData<List<Tree>>>
+
+    @GET("/project/list/{page}/json")
+    fun getProjectSubList_Calls(@Path("page") page: Int, @Query("cid") cid: Int): Call<ResultData<PageData<List<Project>>>>
+
+    @GET(WanUrl.URL_CHAPTER)
+    fun getChapterData_Calls(): Call<ResultData<List<Chapter>>>
+
 
 }

@@ -7,7 +7,7 @@ import com.example.myapplication.entity.Tree
 import com.example.myapplication.entity.ResultData
 import com.example.myapplication.repository.KnowledgeRepository
 
-class KnowledgeViewModel internal constructor(var knowledgeRepository: KnowledgeRepository):ViewModel() {
+class KnowledgeViewModel internal constructor(private val knowledgeRepository: KnowledgeRepository):ViewModel() {
 
     private var knowledgeTrees: MediatorLiveData<List<Tree>> = MediatorLiveData()
 

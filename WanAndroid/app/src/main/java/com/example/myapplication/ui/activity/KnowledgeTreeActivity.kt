@@ -9,6 +9,7 @@ import com.example.myapplication.R
 import com.example.myapplication.adapter.MainTabAdapter
 import com.example.myapplication.entity.Tree
 import com.example.myapplication.ui.fragment.WXAccountSubFragment
+import com.example.myapplication.util.exView
 import kotlinx.android.synthetic.main.activity_knowledge_tree.*
 
 import net.lucode.hackware.magicindicator.ViewPagerHelper
@@ -36,10 +37,9 @@ class KnowledgeTreeActivity : BaseActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_knowledge_tree)
-        tv_title = findViewById(R.id.tv_title)
-        findViewById<ImageView>(R.id.img_back).setOnClickListener { finish() }
+        tv_title = exView(R.id.tv_title)
+        exView<ImageView>(R.id.img_back).setOnClickListener { finish() }
         var tree: Tree = intent.getParcelableExtra("tree")
-
         tv_title.text = tree.name
 
 
@@ -48,45 +48,54 @@ class KnowledgeTreeActivity : BaseActivity() {
                 WXAccountSubFragment.newInstance(it.id)
             }
         var datas = tree.children
-        magic_indicator.setBackgroundColor(resources.getColor(com.example.myapplication.R.color.white))
-        val commonNavigator = CommonNavigator(this@KnowledgeTreeActivity)
-        commonNavigator.isAdjustMode = false
-        commonNavigator.scrollPivotX = 0.25f
-        commonNavigator.adapter = object : CommonNavigatorAdapter() {
-            override fun getCount(): Int {
-                return datas?.size ?: 0
-            }
 
-            override fun getTitleView(context: Context, index: Int): IPagerTitleView {
-                val simplePagerTitleView = SimplePagerTitleView(context)
-                simplePagerTitleView.text = datas?.get(index)?.name
-                simplePagerTitleView.normalColor =
-                    resources.getColor(com.example.myapplication.R.color.black)
-                simplePagerTitleView.selectedColor =
-                    resources.getColor(com.example.myapplication.R.color.base_color)
-                simplePagerTitleView.textSize = 15f
-                val paddingLeft = UIUtil.dip2px(context, 20.0)
-                val paddingTop = UIUtil.dip2px(context, 8.0)
-                simplePagerTitleView.setPadding(paddingLeft, paddingTop, paddingLeft, paddingTop)
+        magic_indicator.apply {
+            setBackgroundColor(resources.getColor(com.example.myapplication.R.color.white))
+            navigator = CommonNavigator(this@KnowledgeTreeActivity).apply {
+                isAdjustMode = false
+                scrollPivotX = 0.25f
+                adapter = object : CommonNavigatorAdapter() {
+                    override fun getCount(): Int {
+                        return datas?.size ?: 0
+                    }
 
-                simplePagerTitleView.setOnClickListener {
-                    viewPager.currentItem = index
+                    override fun getTitleView(context: Context, index: Int): IPagerTitleView {
+
+                        return SimplePagerTitleView(context).apply {
+
+                            text = datas?.get(index)?.name
+                            normalColor =
+                                resources.getColor(com.example.myapplication.R.color.black)
+                            selectedColor =
+                                resources.getColor(com.example.myapplication.R.color.base_color)
+                            textSize = 15f
+                            val paddingLeft = UIUtil.dip2px(context, 20.0)
+                            val paddingTop = UIUtil.dip2px(context, 8.0)
+                            setPadding(
+                                paddingLeft,
+                                paddingTop,
+                                paddingLeft,
+                                paddingTop
+                            )
+                            setOnClickListener {
+                                viewPager.currentItem = index
+                            }
+                        }
+                    }
+
+                    override fun getIndicator(context: Context): IPagerIndicator {
+
+                        return LinePagerIndicator(context).apply {
+                            mode = LinePagerIndicator.MODE_EXACTLY
+                            lineWidth = UIUtil.dip2px(context, 20.0).toFloat()
+                            lineHeight = UIUtil.dip2px(context, 2.0).toFloat()
+                            setColors(resources.getColor(com.example.myapplication.R.color.base_color))
+                        }
+                    }
                 }
-                return simplePagerTitleView
-            }
-
-            override fun getIndicator(context: Context): IPagerIndicator {
-                val indicator = LinePagerIndicator(context)
-                indicator.mode = LinePagerIndicator.MODE_EXACTLY
-                indicator.lineWidth = UIUtil.dip2px(context, 20.0).toFloat()
-                indicator.lineHeight = UIUtil.dip2px(context, 2.0).toFloat()
-                indicator.setColors(resources.getColor(com.example.myapplication.R.color.base_color))
-                return indicator
+                onPageSelected(0)
             }
         }
-
-        magic_indicator.navigator = commonNavigator
-        commonNavigator.onPageSelected(0)
         ViewPagerHelper.bind(magic_indicator, viewPager)
         viewPager.adapter = fragments?.let { MainTabAdapter(supportFragmentManager, it) }
 

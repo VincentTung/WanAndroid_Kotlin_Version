@@ -22,10 +22,13 @@
             </intent-filter>
         </activity>
         <activity android:name=".ui.activity.KnowledgeTreeActivity" />
-        <activity android:name=".ui.activity.MainActivity">
+        <activity android:name=".ui.activity.MainActivity" android:launchMode="singleInstance">
 
         </activity>
-        <activity android:name=".ui.activity.WebViewActivity" />
+        <activity android:name=".ui.activity.WebViewActivity"
+            android:launchMode="singleTop">
+
+        </activity>
     </application>
 
 </manifest>

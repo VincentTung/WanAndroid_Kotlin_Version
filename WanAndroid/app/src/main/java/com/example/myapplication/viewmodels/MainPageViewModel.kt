@@ -15,11 +15,12 @@ import com.example.myapplication.repository.BannerRepository
 import com.example.myapplication.util.LoadingState
 
 
-class MainPageViewModel internal constructor(val bannerRepository: BannerRepository) : ViewModel() {
+class MainPageViewModel internal constructor(bannerRepository: BannerRepository) :
+    ViewModel() {
 
 
     private val mArticles: LiveData<PagedList<Article>>
-    private lateinit var mLoadingState: LiveData<LoadingState>
+    private var mLoadingState: LiveData<LoadingState>
     private val mBanners: MediatorLiveData<List<Banner>> = MediatorLiveData()
 
     init {
@@ -53,11 +54,11 @@ class MainPageViewModel internal constructor(val bannerRepository: BannerReposit
         return mArticles
     }
 
-    fun observeLoadingState(): LiveData<LoadingState> {
+        fun observeLoadingState(): LiveData<LoadingState> {
         return mLoadingState
     }
 
-    fun observeBanners(): MediatorLiveData<List<Banner>> {
+    fun observeBanners(): LiveData<List<Banner>> {
         return mBanners
     }
 }

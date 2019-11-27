@@ -12,10 +12,9 @@ import com.example.myapplication.databinding.ItemArticleBinding
 import com.example.myapplication.entity.Article
 import com.example.myapplication.ui.activity.WebViewActivity
 
- class ArticleClickHandler constructor(){
+class ArticleClickHandler {
 
     fun onItemClick(article: Article) {
-
         WanApplication.mInstance?.let {
             article.link?.let { it ->
                 WebViewActivity.start(
@@ -26,10 +25,9 @@ import com.example.myapplication.ui.activity.WebViewActivity
         }
     }
 }
-class ArticleListAdapter() : PagedListAdapter<Article, ArticleListAdapter.ViewHolder>(object :
+
+class ArticleListAdapter : PagedListAdapter<Article, ArticleListAdapter.ViewHolder>(object :
     ItemCallback<Article>() {
-
-
 
     override fun areItemsTheSame(oldItem: Article, newItem: Article): Boolean {
         return oldItem.id === newItem.id
@@ -40,7 +38,7 @@ class ArticleListAdapter() : PagedListAdapter<Article, ArticleListAdapter.ViewHo
     }
 }) {
 
-    private val mClickHandler:ArticleClickHandler = ArticleClickHandler()
+    private val mClickHandler: ArticleClickHandler = ArticleClickHandler()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val dataBinding: ItemArticleBinding = DataBindingUtil.inflate(
@@ -55,7 +53,7 @@ class ArticleListAdapter() : PagedListAdapter<Article, ArticleListAdapter.ViewHo
 
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        holder.itemDataBinding.article = getItem (position)
+        holder.itemDataBinding.article = getItem(position)
         holder.itemDataBinding.clickHandler = mClickHandler
     }
 

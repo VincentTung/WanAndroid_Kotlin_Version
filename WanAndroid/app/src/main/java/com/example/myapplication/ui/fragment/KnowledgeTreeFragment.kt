@@ -14,6 +14,7 @@ import com.example.myapplication.databinding.FragmentKnowledgeTreeBinding
 import com.example.myapplication.entity.Tree
 import com.example.myapplication.repository.KnowledgeRepository
 import com.example.myapplication.ui.activity.KnowledgeTreeActivity
+import com.example.myapplication.util.exViewModel
 import com.example.myapplication.viewmodels.KnowledgeViewModel
 import com.example.myapplication.viewmodels.KnowledgeViewModelFactory
 
@@ -44,12 +45,11 @@ class KnowledgeTreeFragment : BaseFragment(), KnowledgeTreeListAdapter.OnItemLis
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        mBinding =  DataBindingUtil.inflate(inflater, R.layout.fragment_knowledge_tree,container,false)
-        mViewModel = ViewModelProviders.of(
-            this,
-            KnowledgeViewModelFactory(KnowledgeRepository())
-        ).get(KnowledgeViewModel::class.java)
-
+        mBinding =
+            DataBindingUtil.inflate(inflater, R.layout.fragment_knowledge_tree, container, false)
+        mViewModel = exViewModel(
+            KnowledgeViewModelFactory(KnowledgeRepository()), KnowledgeViewModel::class.java
+        )
         return mBinding.root
     }
 
@@ -60,15 +60,16 @@ class KnowledgeTreeFragment : BaseFragment(), KnowledgeTreeListAdapter.OnItemLis
         mAdapter = KnowledgeTreeListAdapter(mTreeList)
         mAdapter.onItemListener = this
 
-        mBinding.recyclerView.layoutManager =   LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
-        mBinding.recyclerView.adapter = mAdapter
-        mBinding.recyclerView.setHasFixedSize(false)
+        mBinding.recyclerView.apply {
+            layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
+            adapter = mAdapter
+            setHasFixedSize(false)
+        }
 
         mViewModel.observeKnowledgeTrees().observe(this, Observer<List<Tree>> {
             mAdapter.treeList.addAll(it)
             mAdapter.notifyDataSetChanged()
         })
-
         getTree()
     }
 

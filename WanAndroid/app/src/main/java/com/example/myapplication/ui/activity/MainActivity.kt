@@ -11,10 +11,11 @@ import com.example.myapplication.adapter.MainTabAdapter
 import com.example.myapplication.ui.fragment.KnowledgeTreeFragment
 import com.example.myapplication.ui.fragment.MainPageFragment
 import com.example.myapplication.ui.fragment.WXAccountFragment
+import com.example.myapplication.util.exView
 import com.example.myapplication.util.logd
 import kotlinx.android.synthetic.main.activity_main.*
-import kotlinx.android.synthetic.main.fragment_knowledge_tree.*
 import kotlinx.android.synthetic.main.fragment_wx_account.*
+import kotlinx.android.synthetic.main.include_top_title.*
 import ui.fragment.ProjectFragment
 
 
@@ -22,33 +23,41 @@ class MainActivity : BaseActivity() {
 
     private var fragmentList = mutableListOf<Fragment>()
 
-    private lateinit var tv_title: TextView
+//    private lateinit var tv_title: TextView
     private val tabTexts = arrayOf("首页", "知识体系", "公众号", "项目")
     override fun onCreate(savedInstanceState: Bundle?) {
         logd("***onCreate")
         logd("***onCreate_Restore:" + savedInstanceState?.getLong("time"))
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        findViewById<ImageView>(R.id.img_back).visibility = View.INVISIBLE
-        tv_title = findViewById(R.id.tv_title)
+        exView<ImageView>(R.id.img_back).visibility = View.INVISIBLE
+//        tv_title = exView(R.id.tv_title)
 
+        tv_title.visibility
         if (fragmentList == null || fragmentList.isEmpty()) {
             fragmentList.addAll(
                 listOf(
-                    MainPageFragment(), KnowledgeTreeFragment(), WXAccountFragment(), ProjectFragment()
+                    MainPageFragment(),
+                    KnowledgeTreeFragment(),
+                    WXAccountFragment(),
+                    ProjectFragment()
                 )
             )
 
-            viewPager.adapter = MainTabAdapter(supportFragmentManager, fragmentList)
-            viewPager.currentItem = 0
-            viewPager.offscreenPageLimit = 3
-            viewPager.isEnabled = false
 
-            alphaIndicator.setOnTabChangedListner {
-                tv_title.text = tabTexts[it]
+            viewPager.apply {
+                adapter = MainTabAdapter(supportFragmentManager, fragmentList)
+                currentItem = 0
+                offscreenPageLimit = 3
+                isEnabled = false
             }
-            alphaIndicator.setViewPager(viewPager)
 
+            alphaIndicator.apply {
+                setOnTabChangedListner {
+                    tv_title.text = tabTexts[it]
+                }
+                setViewPager(viewPager)
+            }
         }
 
         restoreTabIndex(savedInstanceState)
@@ -107,7 +116,7 @@ class MainActivity : BaseActivity() {
 
         if (savedInstanceState != null) {
             var index = savedInstanceState.getInt("index", -1)
-            if (index > 0 &&viewpager.currentItem != index) {
+            if (index > 0 && viewpager.currentItem != index) {
                 viewPager.currentItem = index
             }
         }

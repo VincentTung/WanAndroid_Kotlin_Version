@@ -5,6 +5,8 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProviders
 import androidx.viewpager.widget.ViewPager
 import com.example.myapplication.R
 import com.example.myapplication.adapter.MainTabAdapter
@@ -15,7 +17,10 @@ import com.example.myapplication.ui.fragment.BaseFragment
 import com.example.myapplication.ui.fragment.ProjectSubFragment
 import com.example.myapplication.util.BaseObserver
 import com.example.myapplication.util.ComposeUtil.schdulesTransform
+import com.example.myapplication.util.exViewModel
+import com.example.myapplication.viewmodels.ProjectViewModel
 import com.uber.autodispose.autoDisposable
+import kotlinx.android.synthetic.main.fragment_wx_account.*
 import net.lucode.hackware.magicindicator.MagicIndicator
 import net.lucode.hackware.magicindicator.ViewPagerHelper
 import net.lucode.hackware.magicindicator.buildins.UIUtil
@@ -33,69 +38,79 @@ import net.lucode.hackware.magicindicator.buildins.commonnavigator.titles.Simple
 class ProjectFragment : BaseFragment() {
 
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        var contentView = inflater.inflate(R.layout.fragment_wx_account, null, false)
-        var magicIndicator = contentView.findViewById<MagicIndicator>(R.id.magic_indicator)
-        var viewPager = contentView.findViewById<ViewPager>(R.id.viewpager)
-        ApiHelper.getInstance().getApiService().getProjectTree().compose(schdulesTransform())
-            .autoDisposable(scopeProvider).subscribe(object :
-                BaseObserver<List<Tree>, ResultData<List<Tree>>> {
-                override fun onFailed(errorCode: Int) {
+    private lateinit var mViewModel:ProjectViewModel
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
+        mViewModel = exViewModel(ProjectViewModel::class.java)
+        return  inflater.inflate(R.layout.fragment_wx_account, null, false)
+    }
 
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        mViewModel.observeProjects().observe(this, Observer {
+
+            var fragments =
+                 it.map {
+                    ProjectSubFragment.newInstance(it.id)
                 }
 
-                override fun onSuccess(t: ResultData<List<Tree>>) {
+            magic_indicator.setBackgroundColor(resources.getColor(R.color.white))
+            magic_indicator.navigator = CommonNavigator(this@ProjectFragment.context).apply {
 
-                    var fragments =
-                        t.data?.map {
-                            ProjectSubFragment.newInstance(it.id)
-                        }
-                    var datas = t.data
-                    magicIndicator.setBackgroundColor(resources.getColor(R.color.white))
-                    val commonNavigator = CommonNavigator(this@ProjectFragment.context)
-                    commonNavigator.isAdjustMode = false
-                    commonNavigator.scrollPivotX = 0.25f
-                    commonNavigator.adapter = object : CommonNavigatorAdapter() {
-                        override fun getCount(): Int {
-                            return datas?.size ?: 0
-                        }
+                isAdjustMode = false
+                scrollPivotX = 0.25f
+                adapter = object : CommonNavigatorAdapter() {
+                    override fun getCount(): Int {
+                        return it.size ?: 0
+                    }
 
-                        override fun getTitleView(context: Context, index: Int): IPagerTitleView {
-                            val simplePagerTitleView = SimplePagerTitleView(context)
-                            simplePagerTitleView.text = datas?.get(index)?.name
-                            simplePagerTitleView.normalColor =
+                    override fun getTitleView(
+                        context: Context,
+                        index: Int
+                    ): IPagerTitleView {
+
+                        return SimplePagerTitleView(context).apply {
+                            text = it.get(index)?.name
+                            normalColor =
                                 resources.getColor(R.color.black)
-                            simplePagerTitleView.selectedColor =
+                            selectedColor =
                                 resources.getColor(R.color.base_color)
-                            simplePagerTitleView.textSize = 15f
+                            textSize = 15f
                             val paddingLeft = UIUtil.dip2px(context, 20.0)
                             val paddingTop = UIUtil.dip2px(context, 8.0)
-                            simplePagerTitleView.setPadding(paddingLeft, paddingTop, paddingLeft, paddingTop)
-
-                            simplePagerTitleView.setOnClickListener {
-                                viewPager.currentItem = index
+                            setPadding(
+                                paddingLeft,
+                                paddingTop,
+                                paddingLeft,
+                                paddingTop
+                            )
+                            setOnClickListener {
+                                viewpager.currentItem = index
                             }
-                            return simplePagerTitleView
-                        }
-
-                        override fun getIndicator(context: Context): IPagerIndicator {
-                            val indicator = LinePagerIndicator(context)
-                            indicator.mode = LinePagerIndicator.MODE_EXACTLY
-                            indicator.lineWidth = UIUtil.dip2px(context, 20.0).toFloat()
-                            indicator.lineHeight = UIUtil.dip2px(context, 2.0).toFloat()
-                            indicator.setColors(resources.getColor(R.color.base_color))
-                            return indicator
                         }
                     }
 
-                    magicIndicator.navigator = commonNavigator
-                    commonNavigator.onPageSelected(0)
-                    ViewPagerHelper.bind(magicIndicator, viewPager)
-                    viewPager.adapter = fragments?.let { MainTabAdapter(childFragmentManager, it) }
-
+                    override fun getIndicator(context: Context): IPagerIndicator {
+                        return LinePagerIndicator(context).apply {
+                            mode = LinePagerIndicator.MODE_EXACTLY
+                            lineWidth = UIUtil.dip2px(context, 20.0).toFloat()
+                            lineHeight = UIUtil.dip2px(context, 2.0).toFloat()
+                            setColors(resources.getColor(R.color.base_color))
+                        }
+                    }
                 }
-            })
-        return contentView
+                onPageSelected(0)
+            }
+            ViewPagerHelper.bind(magic_indicator, viewpager)
+            viewpager.adapter = fragments?.let { it -> MainTabAdapter(childFragmentManager, it) }
+        })
+
+        mViewModel.getProjects()
+
     }
 
 
