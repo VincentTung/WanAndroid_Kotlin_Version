@@ -16,4 +16,8 @@ class ArticleDataSourceFactory : androidx.paging.DataSource.Factory<Int, Article
     fun observeArticleDataSource(): LiveData<ArticleDataSource> {
         return mLiveArticleDataSource;
     }
+
+    fun getDataSource(): ArticleDataSource {
+        return mArticleDataSource
+    }
 }

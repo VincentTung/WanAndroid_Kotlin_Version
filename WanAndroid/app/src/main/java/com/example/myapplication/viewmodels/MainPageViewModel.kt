@@ -22,20 +22,20 @@ class MainPageViewModel internal constructor(bannerRepository: BannerRepository)
     private val mArticles: LiveData<PagedList<Article>>
     private var mLoadingState: LiveData<LoadingState>
     private val mBanners: MediatorLiveData<List<Banner>> = MediatorLiveData()
+    private  var mArticleDataFactory: ArticleDataSourceFactory = ArticleDataSourceFactory()
 
     init {
-        val factory = ArticleDataSourceFactory()
         val executor = Executors.newFixedThreadPool(5)
         val pagedListConfig: PagedList.Config =
             PagedList.Config.Builder().setEnablePlaceholders(false).setInitialLoadSizeHint(10)
                 .setPageSize(20).build()
         mArticles =
-            LivePagedListBuilder(factory, pagedListConfig).setFetchExecutor(
+            LivePagedListBuilder(mArticleDataFactory, pagedListConfig).setFetchExecutor(
                 executor
             ).build()
 
         mLoadingState = Transformations.switchMap(
-            factory.observeArticleDataSource()
+            mArticleDataFactory.observeArticleDataSource()
         )
         {
 
@@ -48,6 +48,7 @@ class MainPageViewModel internal constructor(bannerRepository: BannerRepository)
             mBanners.value = it.data
             mBanners.removeSource(source)
         }
+
     }
 
     fun observeArticles(): LiveData<PagedList<Article>> {
@@ -61,4 +62,5 @@ class MainPageViewModel internal constructor(bannerRepository: BannerRepository)
     fun observeBanners(): LiveData<List<Banner>> {
         return mBanners
     }
+
 }

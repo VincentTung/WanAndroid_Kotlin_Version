@@ -12,8 +12,6 @@ import java.util.concurrent.Executors
 
 class WXAccountSubFragmentViewModel : ViewModel() {
     private lateinit var mArticles :LiveData<PagedList<Article>>
-    private val mRepository = ArticleRepository()
-
     init {
         val factory = ArticleDataSourceFactory()
         val executor = Executors.newFixedThreadPool(5)

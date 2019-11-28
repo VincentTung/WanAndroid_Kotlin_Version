@@ -5,7 +5,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProviders
 import androidx.paging.PagedList
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -18,23 +17,19 @@ import com.example.myapplication.repository.BannerRepository
 import com.example.myapplication.ui.activity.WebViewActivity
 import com.example.myapplication.util.BannerImageLoader
 import com.example.myapplication.util.LoadingState.LOADING_BEGIN
-import com.example.myapplication.util.exView
 import com.example.myapplication.util.exViewModel
 import com.example.myapplication.viewmodels.MainPageViewModel
 import com.example.myapplication.viewmodels.MainPageViewModelFactory
 import com.jcodecraeer.xrecyclerview.XRecyclerView
 import com.youth.banner.BannerConfig
 import com.youth.banner.Transformer
-import kotlinx.android.synthetic.main.fragment_knowledge_sub.*
 import kotlinx.android.synthetic.main.fragment_main_page.*
-import kotlinx.android.synthetic.main.fragment_main_page.recyclerView
 
 
 /**
  * 首页
  */
 class MainPageFragment : BaseFragment() {
-
 
     private lateinit var mViewModel: MainPageViewModel
     private var mAdapter: ArticleListAdapter = ArticleListAdapter()
@@ -44,7 +39,8 @@ class MainPageFragment : BaseFragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        mViewModel =exViewModel(MainPageViewModelFactory(BannerRepository()),MainPageViewModel::class.java)
+        mViewModel =
+            exViewModel(MainPageViewModelFactory(BannerRepository()), MainPageViewModel::class.java)
         return inflater.inflate(R.layout.fragment_main_page, null, false)
     }
 
@@ -65,11 +61,7 @@ class MainPageFragment : BaseFragment() {
             setLoadingListener(object : XRecyclerView.LoadingListener {
 
                 override fun onRefresh() {
-
-                    /**
-                     * pagedlist 如何下拉刷新
-                     */
-                    recyclerView.refreshComplete()
+                    mViewModel.observeArticles().value?.dataSource?.invalidate()
 
                 }
 

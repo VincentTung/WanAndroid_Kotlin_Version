@@ -21,6 +21,7 @@ class WebViewActivity : BaseActivity() {
         fun start(context: Context, url:String){
             var intent = Intent(context, WebViewActivity::class.java)
             intent.putExtra("url", url)
+            intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
             context?.startActivity(intent)
         }
     }

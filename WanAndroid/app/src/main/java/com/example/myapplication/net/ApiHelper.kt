@@ -30,7 +30,7 @@ class ApiHelper private constructor() {
         private var mInstance: ApiHelper? = null
 
         /**
-         * dcl
+         * DCL
          */
         fun getInstance(): ApiHelper {
             return mInstance ?: synchronized(this) {
