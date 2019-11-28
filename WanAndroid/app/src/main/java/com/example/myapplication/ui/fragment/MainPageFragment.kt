@@ -61,8 +61,7 @@ class MainPageFragment : BaseFragment() {
             setLoadingListener(object : XRecyclerView.LoadingListener {
 
                 override fun onRefresh() {
-                    mViewModel.observeArticles().value?.dataSource?.invalidate()
-
+//                    mViewModel.observeArticles().value?.dataSource?.invalidate()
                 }
 
                 override fun onLoadMore() {
