@@ -37,8 +37,8 @@ class MainActivity : BaseActivity() {
         if (fragmentList == null || fragmentList.isEmpty()) {
             fragmentList.addAll(
                 listOf(
-                    MainPageFragment(),
-                    KnowledgeTreeFragment(),
+                    MainPageFragment()
+                   , KnowledgeTreeFragment(),
                     WXAccountFragment(),
                     ProjectFragment()
                 )

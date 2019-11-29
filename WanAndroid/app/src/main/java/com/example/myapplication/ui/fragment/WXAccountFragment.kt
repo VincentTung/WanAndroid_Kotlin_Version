@@ -43,59 +43,59 @@ class WXAccountFragment : BaseFragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        mViewModel.observeChapters().observe(this, Observer {
-
-            var fragments =
-                it?.map {
-                    WXAccountSubFragment.newInstance(it.id)
-                }
-            magic_indicator.apply {
-                setBackgroundColor(resources.getColor(com.example.myapplication.R.color.white))
-                navigator = CommonNavigator(this@WXAccountFragment.context).apply {
-                    isAdjustMode = false
-                    scrollPivotX = 0.25f
-                    adapter = object : CommonNavigatorAdapter() {
-                        override fun getCount(): Int {
-                            return it?.size ?: 0
-                        }
-
-                        override fun getTitleView(
-                            context: Context,
-                            index: Int
-                        ): IPagerTitleView {
-                            return SimplePagerTitleView(context).apply {
-                                text = it?.get(index)?.name
-                                normalColor =
-                                    resources.getColor(com.example.myapplication.R.color.black)
-                                selectedColor =
-                                    resources.getColor(com.example.myapplication.R.color.base_color)
-                                textSize = 15f
-                                val paddingLeft = UIUtil.dip2px(context, 20.0)
-                                val paddingTop = UIUtil.dip2px(context, 8.0)
-                                setPadding(paddingLeft, paddingTop, paddingLeft, paddingTop)
-                                setOnClickListener {
-                                    viewpager.currentItem = index
-                                }
-                            }
-
-                        }
-
-                        override fun getIndicator(context: Context): IPagerIndicator {
-                            return LinePagerIndicator(context).apply {
-                                mode = LinePagerIndicator.MODE_EXACTLY
-                                lineWidth = UIUtil.dip2px(context, 20.0).toFloat()
-                                lineHeight = UIUtil.dip2px(context, 2.0).toFloat()
-                                setColors(resources.getColor(com.example.myapplication.R.color.base_color))
-                            }
-                        }
-                    }
-                    onPageSelected(0)
-                }
-            }
-            ViewPagerHelper.bind(magic_indicator, viewpager)
-            viewpager.adapter = fragments?.let { MainTabAdapter(childFragmentManager, it) }
-        })
-        mViewModel.getChapters()
+//        mViewModel.observeChapters().observe(this, Observer {
+//
+//            var fragments =
+//                it?.map {
+//                    WXAccountSubFragment.newInstance(it.id)
+//                }
+//            magic_indicator.apply {
+//                setBackgroundColor(resources.getColor(com.example.myapplication.R.color.white))
+//                navigator = CommonNavigator(this@WXAccountFragment.context).apply {
+//                    isAdjustMode = false
+//                    scrollPivotX = 0.25f
+//                    adapter = object : CommonNavigatorAdapter() {
+//                        override fun getCount(): Int {
+//                            return it?.size ?: 0
+//                        }
+//
+//                        override fun getTitleView(
+//                            context: Context,
+//                            index: Int
+//                        ): IPagerTitleView {
+//                            return SimplePagerTitleView(context).apply {
+//                                text = it?.get(index)?.name
+//                                normalColor =
+//                                    resources.getColor(com.example.myapplication.R.color.black)
+//                                selectedColor =
+//                                    resources.getColor(com.example.myapplication.R.color.base_color)
+//                                textSize = 15f
+//                                val paddingLeft = UIUtil.dip2px(context, 20.0)
+//                                val paddingTop = UIUtil.dip2px(context, 8.0)
+//                                setPadding(paddingLeft, paddingTop, paddingLeft, paddingTop)
+//                                setOnClickListener {
+//                                    viewpager.currentItem = index
+//                                }
+//                            }
+//
+//                        }
+//
+//                        override fun getIndicator(context: Context): IPagerIndicator {
+//                            return LinePagerIndicator(context).apply {
+//                                mode = LinePagerIndicator.MODE_EXACTLY
+//                                lineWidth = UIUtil.dip2px(context, 20.0).toFloat()
+//                                lineHeight = UIUtil.dip2px(context, 2.0).toFloat()
+//                                setColors(resources.getColor(com.example.myapplication.R.color.base_color))
+//                            }
+//                        }
+//                    }
+//                    onPageSelected(0)
+//                }
+//            }
+//            ViewPagerHelper.bind(magic_indicator, viewpager)
+//            viewpager.adapter = fragments?.let { MainTabAdapter(childFragmentManager, it) }
+//        })
+//        mViewModel.getChapters()
 
     }
 

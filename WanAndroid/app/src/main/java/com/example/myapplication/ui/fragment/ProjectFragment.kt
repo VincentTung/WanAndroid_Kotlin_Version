@@ -109,7 +109,7 @@ class ProjectFragment : BaseFragment() {
             viewpager.adapter = fragments?.let { it -> MainTabAdapter(childFragmentManager, it) }
         })
 
-        mViewModel.getProjects()
+//        mViewModel.getProjects()
 
     }
 

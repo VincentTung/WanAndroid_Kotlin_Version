@@ -6,14 +6,15 @@ import androidx.lifecycle.ViewModel
 import androidx.paging.LivePagedListBuilder
 import androidx.paging.PagedList
 import com.example.myapplication.datasource.ArticleDataSourceFactory
+import com.example.myapplication.datasource.WXArticleDataSourceFactory
 import com.example.myapplication.entity.Article
 import com.example.myapplication.repository.ArticleRepository
 import java.util.concurrent.Executors
 
-class WXAccountSubFragmentViewModel : ViewModel() {
+class WXAccountSubFragmentViewModel(private  val cid:Int) : ViewModel() {
     private lateinit var mArticles :LiveData<PagedList<Article>>
     init {
-        val factory = ArticleDataSourceFactory()
+        val factory = WXArticleDataSourceFactory(cid)
         val executor = Executors.newFixedThreadPool(5)
         val pagedListConfig: PagedList.Config =
             PagedList.Config.Builder().setEnablePlaceholders(false).setInitialLoadSizeHint(10)

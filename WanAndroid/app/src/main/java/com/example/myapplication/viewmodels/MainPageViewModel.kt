@@ -13,6 +13,7 @@ import com.example.myapplication.entity.Banner
 import com.example.myapplication.repository.BannerRepository
 
 import com.example.myapplication.util.LoadingState
+import java.util.*
 
 
 class MainPageViewModel internal constructor(bannerRepository: BannerRepository) :
@@ -22,13 +23,21 @@ class MainPageViewModel internal constructor(bannerRepository: BannerRepository)
     private val mArticles: LiveData<PagedList<Article>>
     private var mLoadingState: LiveData<LoadingState>
     private val mBanners: MediatorLiveData<List<Banner>> = MediatorLiveData()
-    private  var mArticleDataFactory: ArticleDataSourceFactory = ArticleDataSourceFactory()
+    private var mArticleDataFactory: ArticleDataSourceFactory
 
     init {
+
+        val source = bannerRepository.getBanners()
+        mBanners.addSource(source) {
+            mBanners.value = it.data
+            mBanners.removeSource(source)
+        }
+
         val executor = Executors.newFixedThreadPool(5)
         val pagedListConfig: PagedList.Config =
-            PagedList.Config.Builder().setEnablePlaceholders(false).setInitialLoadSizeHint(10)
-                .setPageSize(20).build()
+            PagedList.Config.Builder().setEnablePlaceholders(false).setInitialLoadSizeHint(5).setPrefetchDistance(1)
+                .setPageSize(5).build()
+        mArticleDataFactory = ArticleDataSourceFactory()
         mArticles =
             LivePagedListBuilder(mArticleDataFactory, pagedListConfig).setFetchExecutor(
                 executor
@@ -43,19 +52,20 @@ class MainPageViewModel internal constructor(bannerRepository: BannerRepository)
 
         }
 
-        val source = bannerRepository.getBanners()
-        mBanners.addSource(source) {
-            mBanners.value = it.data
-            mBanners.removeSource(source)
-        }
 
+
+    }
+
+    fun refreshArticles(){
+
+        mArticleDataFactory.getDataSource().invalidate()
     }
 
     fun observeArticles(): LiveData<PagedList<Article>> {
         return mArticles
     }
 
-        fun observeLoadingState(): LiveData<LoadingState> {
+    fun observeLoadingState(): LiveData<LoadingState> {
         return mLoadingState
     }
 

@@ -70,7 +70,7 @@ class KnowledgeTreeFragment : BaseFragment(), KnowledgeTreeListAdapter.OnItemLis
             mAdapter.treeList.addAll(it)
             mAdapter.notifyDataSetChanged()
         })
-        getTree()
+//        getTree()
     }
 
     private fun getTree() {

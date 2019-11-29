@@ -58,35 +58,29 @@ class MainPageFragment : BaseFragment() {
                 LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
             setHasFixedSize(true)
             adapter = mAdapter
-            setLoadingListener(object : XRecyclerView.LoadingListener {
 
+            setLoadingListener(object : XRecyclerView.LoadingListener {
                 override fun onRefresh() {
 //                    mViewModel.observeArticles().value?.dataSource?.invalidate()
+                    mViewModel.refreshArticles()
+
                 }
 
                 override fun onLoadMore() {
                 }
             })
         }
-
-        mViewModel.observeArticles().observe(this, Observer<PagedList<Article>> {
-            mAdapter.submitList(it)
-            //todo 首页 滑动到头部的问题
-        })
-
-        mViewModel.observeLoadingState().observe(this, Observer {
-            if (it === LOADING_BEGIN) {
-                recyclerView.refresh()
-            } else {
-                recyclerView.refreshComplete()
-            }
-        })
-
         mViewModel.observeBanners().observe(this, Observer {
             var imgList = it.map { it.imagePath }
             addBannerView(imgList, it)
 
         })
+        mViewModel.observeArticles().observe(this, Observer<PagedList<Article>> {
+            mAdapter.submitList(it)
+            //todo 首页 滑动到头部的问题
+        })
+
+
     }
 
     private fun addBannerView(imgList: List<String?>?, banner: List<Banner>) {

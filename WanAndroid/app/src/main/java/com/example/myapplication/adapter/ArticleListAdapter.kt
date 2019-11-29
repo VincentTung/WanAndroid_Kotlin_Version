@@ -60,7 +60,6 @@ class ArticleListAdapter : PagedListAdapter<Article, ArticleListAdapter.ViewHold
     interface OnItemListener {
         fun onItemClick(position: Int)
     }
-
     class ViewHolder(val itemDataBinding: ItemArticleBinding) :
         RecyclerView.ViewHolder(itemDataBinding.root)
 

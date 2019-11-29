@@ -9,7 +9,8 @@ import com.example.myapplication.util.LoadingState
 import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
 
-class ArticleDataSource(private val articleRepository: ArticleRepository) :
+
+class WXArticleDataSource(private val articleRepository: ArticleRepository, private val cid: Int) :
     PageKeyedDataSource<Int, Article>() {
 
     private val loadingState: MutableLiveData<LoadingState> = MutableLiveData()
@@ -19,14 +20,14 @@ class ArticleDataSource(private val articleRepository: ArticleRepository) :
     ) {
 
         loadingState.postValue(LoadingState.LOADING_BEGIN)
-        val source = articleRepository.getArticles(0)
+        val source = articleRepository.getArticlesUnderTree(cid, 0)
         Observable.just(source).observeOn(AndroidSchedulers.mainThread()).subscribe {
             source.observeForever {
                 it.data?.datas?.let { it1 ->
                     callback.onResult(
                         it1,
                         null,
-                        it!!.data!!.curPage
+                        it!!.data!!.curPage - 1
                     )
                     loadingState.postValue(LoadingState.LOADING_STOP)
                 }
@@ -36,13 +37,21 @@ class ArticleDataSource(private val articleRepository: ArticleRepository) :
     }
 
     override fun loadAfter(params: LoadParams<Int>, callback: LoadCallback<Int, Article>) {
-        val source = articleRepository.getArticles(params.key)
-        Observable.just(source).observeOn(AndroidSchedulers.mainThread()).subscribe {
-            source.observeForever {
-                it.data?.datas?.let { it1 -> callback.onResult(it1, it!!.data!!.curPage) }
-                loadingState.postValue(LoadingState.LOADING_STOP)
+        val source = articleRepository.getArticlesUnderTree(cid, params.key)
+        val nextKey =
+
+            Observable.just(source).observeOn(AndroidSchedulers.mainThread()).subscribe {
+                source.observeForever {
+                    if (it.data === null || it.data.datas?.isEmpty()!!) {
+                        it.data?.datas?.let { it1 -> callback.onResult(it1, null) }
+                    } else {
+                        it.data?.datas?.let { it1 ->
+                            callback.onResult(it1, it!!.data!!.curPage)
+                        }
+                    }
+                    loadingState.postValue(LoadingState.LOADING_STOP)
+                }
             }
-        }
     }
 
     override fun loadBefore(params: LoadParams<Int>, callback: LoadCallback<Int, Article>) {

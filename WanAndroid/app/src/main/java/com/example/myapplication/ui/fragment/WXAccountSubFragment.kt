@@ -71,7 +71,7 @@ class WXAccountSubFragment : BaseFragment(), ArticleListAdapter.OnItemListener {
         savedInstanceState: Bundle?
     ): View? {
         cid = arguments?.getInt("cid")!!
-        mViewModel = exViewModel(WXAccountSubFragmentViewModel::class.java)
+        mViewModel = WXAccountSubFragmentViewModel(cid)
         return inflater.inflate(R.layout.fragment_knowledge_sub, null, false)
     }
 
