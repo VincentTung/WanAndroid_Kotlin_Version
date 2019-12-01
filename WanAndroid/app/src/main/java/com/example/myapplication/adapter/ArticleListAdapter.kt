@@ -3,42 +3,16 @@ package com.example.myapplication.adapter
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
-import androidx.paging.PagedListAdapter
-import androidx.recyclerview.widget.DiffUtil.ItemCallback
 import androidx.recyclerview.widget.RecyclerView
 import com.example.myapplication.R
-import com.example.myapplication.app.WanApplication
 import com.example.myapplication.databinding.ItemArticleBinding
 import com.example.myapplication.entity.Article
-import com.example.myapplication.ui.activity.WebViewActivity
 
-class ArticleClickHandler {
-
-    fun onItemClick(article: Article) {
-        WanApplication.mInstance?.let {
-            article.link?.let { it ->
-                WebViewActivity.start(
-                    WanApplication.mInstance!!,
-                    it
-                )
-            }
-        }
-    }
-}
-
-class ArticleListAdapter : PagedListAdapter<Article, ArticleListAdapter.ViewHolder>(object :
-    ItemCallback<Article>() {
-
-    override fun areItemsTheSame(oldItem: Article, newItem: Article): Boolean {
-        return oldItem.id === newItem.id
-    }
-
-    override fun areContentsTheSame(oldItem: Article, newItem: Article): Boolean {
-        return oldItem == newItem
-    }
-}) {
-
+class ArticleListAdapter() :
+    RecyclerView.Adapter<ArticleListAdapter.ViewHolder>() {
     private val mClickHandler: ArticleClickHandler = ArticleClickHandler()
+    var onItemListener: OnItemListener? = null
+    private var articleList: MutableList<Article> = mutableListOf()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val dataBinding: ItemArticleBinding = DataBindingUtil.inflate(
@@ -51,17 +25,32 @@ class ArticleListAdapter : PagedListAdapter<Article, ArticleListAdapter.ViewHold
 
     }
 
+    override fun getItemCount(): Int {
+        return articleList.size
+    }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        holder.itemDataBinding.article = getItem(position)
-        holder.itemDataBinding.clickHandler = mClickHandler
+
+        holder.itemBinding.article = articleList[position]
+        holder.itemView.setOnClickListener {
+            onItemListener?.onItemClick(position)
+        }
+    }
+
+    fun submitList(list: List<Article>) {
+        var length = list.size
+        if (length == 0) return
+        var index = articleList.size
+
+        articleList.addAll(list)
+        notifyItemRangeInserted(index+1,length)
     }
 
     interface OnItemListener {
         fun onItemClick(position: Int)
     }
-    class ViewHolder(val itemDataBinding: ItemArticleBinding) :
-        RecyclerView.ViewHolder(itemDataBinding.root)
+
+    class ViewHolder(val itemBinding: ItemArticleBinding) :
+        RecyclerView.ViewHolder(itemBinding.root)
 
 }
-

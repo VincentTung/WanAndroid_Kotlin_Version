@@ -2,6 +2,7 @@ package com.example.myapplication.viewmodels
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MediatorLiveData
+import androidx.lifecycle.Observer
 import androidx.lifecycle.Transformations
 import androidx.lifecycle.ViewModel
 import androidx.paging.LivePagedListBuilder
@@ -9,6 +10,7 @@ import androidx.paging.PagedList
 import com.example.myapplication.datasource.ArticleDataSourceFactory
 import com.example.myapplication.entity.Article
 import com.example.myapplication.entity.Banner
+import com.example.myapplication.repository.ArticleRepository
 import com.example.myapplication.repository.BannerRepository
 import com.example.myapplication.util.LoadingState
 import java.util.concurrent.Executors
@@ -18,10 +20,14 @@ class MainPageViewModel internal constructor(bannerRepository: BannerRepository)
     ViewModel() {
 
 
-    private val mArticles: LiveData<PagedList<Article>>
-    private var mLoadingState: LiveData<LoadingState>
+    private val mArticles: MediatorLiveData<ArrayList<Article>> = MediatorLiveData()
+    private var mLoadingState: MediatorLiveData<LoadingState> = MediatorLiveData()
     private val mBanners: MediatorLiveData<List<Banner>> = MediatorLiveData()
-    private var mArticleDataFactory: ArticleDataSourceFactory
+
+    private var mPage = 0
+
+    private val mArticleRepository:ArticleRepository = ArticleRepository()
+    p
 
     init {
 
@@ -31,35 +37,39 @@ class MainPageViewModel internal constructor(bannerRepository: BannerRepository)
             mBanners.removeSource(source)
         }
 
-        val executor = Executors.newFixedThreadPool(5)
-        val pagedListConfig: PagedList.Config =
-            PagedList.Config.Builder().setEnablePlaceholders(false).setInitialLoadSizeHint(20).setPrefetchDistance(3)
-                .setPageSize(20).build()
-        mArticleDataFactory = ArticleDataSourceFactory()
-        mArticles =
-            LivePagedListBuilder(mArticleDataFactory, pagedListConfig).setFetchExecutor(
-                executor
-            ).build()
 
-        mLoadingState = Transformations.switchMap(
-            mArticleDataFactory.observeArticleDataSource()
-        )
-        {
-
-            it.observeLoadingState()
-
-        }
 
 
 
     }
 
+
+    fun getArticle( page:Int){
+
+        val source = mArticleRepository.getArticles(page)
+        mArticles.addSource(source, Observer {
+
+             it.data?.datas?.let { it1 ->
+
+                 var list = mArticles.value
+
+                 list?.addAll(it1)
+                 mArticles.value = list
+
+             }
+
+            mArticles.removeSource(source)
+        })
+
+
+    }
     fun refreshArticles(){
-
-        mArticleDataFactory.getDataSource().invalidate()
+        mArticles.value = null
+        mPage = 0
+        getArticle(mPage)
     }
 
-    fun observeArticles(): LiveData<PagedList<Article>> {
+    fun observeArticles(): MediatorLiveData<ArrayList<Article>> {
         return mArticles
     }
 

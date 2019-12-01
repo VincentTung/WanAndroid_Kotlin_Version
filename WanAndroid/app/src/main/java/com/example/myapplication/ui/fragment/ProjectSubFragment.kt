@@ -9,7 +9,7 @@ import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.myapplication.R
-import com.example.myapplication.adapter.ArticleListAdapter
+import com.example.myapplication.adapter.ArticlePagedListAdapter
 import com.example.myapplication.adapter.ProjectListAdapter
 import com.example.myapplication.entity.Project
 import com.example.myapplication.ui.activity.WebViewActivity
@@ -21,7 +21,7 @@ import kotlinx.android.synthetic.main.fragment_knowledge_sub.*
 /**
  * 项目-子Fragment
  */
-class ProjectSubFragment : BaseFragment(), ArticleListAdapter.OnItemListener,
+class ProjectSubFragment : BaseFragment(), ArticlePagedListAdapter.OnItemListener,
     ProjectListAdapter.OnItemListener {
     override fun onItemClick(position: Int) {
         mProjects[position].link?.let {

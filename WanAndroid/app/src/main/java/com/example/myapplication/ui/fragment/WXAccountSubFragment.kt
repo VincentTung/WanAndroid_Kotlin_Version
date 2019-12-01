@@ -10,7 +10,7 @@ import androidx.paging.PagedList
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.myapplication.R
-import com.example.myapplication.adapter.ArticleListAdapter
+import com.example.myapplication.adapter.ArticlePagedListAdapter
 import com.example.myapplication.entity.Article
 import com.example.myapplication.ui.activity.WebViewActivity
 import com.example.myapplication.viewmodels.WXAccountSubFragmentViewModel
@@ -20,7 +20,7 @@ import kotlinx.android.synthetic.main.fragment_knowledge_sub.*
 /**
  * 公众号
  */
-class WXAccountSubFragment : BaseFragment(), ArticleListAdapter.OnItemListener {
+class WXAccountSubFragment : BaseFragment(), ArticlePagedListAdapter.OnItemListener {
 
     private var cid: Int = 0
 
@@ -52,7 +52,7 @@ class WXAccountSubFragment : BaseFragment(), ArticleListAdapter.OnItemListener {
     private var mHandler: Handler = Handler()
     private var mPage = 0
     private var mArticles: MutableList<Article> = mutableListOf()
-    private var mAdapter: ArticleListAdapter = ArticleListAdapter()
+    private var mAdapterPaged: ArticlePagedListAdapter = ArticlePagedListAdapter()
 
     private lateinit var mViewModel: WXAccountSubFragmentViewModel
     override fun onCreateView(
@@ -68,7 +68,7 @@ class WXAccountSubFragment : BaseFragment(), ArticleListAdapter.OnItemListener {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         recyclerView.apply {
-            adapter = mAdapter
+            adapter = mAdapterPaged
             setHasFixedSize(true)
             layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
             addItemDecoration(
@@ -79,7 +79,7 @@ class WXAccountSubFragment : BaseFragment(), ArticleListAdapter.OnItemListener {
             )
         }
         mViewModel.observeArticles().observe(this, Observer<PagedList<Article>> {
-            mAdapter.submitList(it)
+            mAdapterPaged.submitList(it)
         })
     }
 
