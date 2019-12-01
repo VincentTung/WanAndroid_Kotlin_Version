@@ -16,7 +16,7 @@ import com.example.myapplication.entity.Banner
 import com.example.myapplication.repository.BannerRepository
 import com.example.myapplication.ui.activity.WebViewActivity
 import com.example.myapplication.util.BannerImageLoader
-import com.example.myapplication.util.LoadingState.LOADING_BEGIN
+import com.example.myapplication.util.LoadingState
 import com.example.myapplication.util.exViewModel
 import com.example.myapplication.viewmodels.MainPageViewModel
 import com.example.myapplication.viewmodels.MainPageViewModelFactory
@@ -34,6 +34,7 @@ class MainPageFragment : BaseFragment() {
     private lateinit var mViewModel: MainPageViewModel
     private var mAdapter: ArticleListAdapter = ArticleListAdapter()
 
+    private  var mFirstLoaded = true
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -77,7 +78,16 @@ class MainPageFragment : BaseFragment() {
         })
         mViewModel.observeArticles().observe(this, Observer<PagedList<Article>> {
             mAdapter.submitList(it)
-            //todo 首页 滑动到头部的问题
+
+        })
+
+        mViewModel.observeLoadingState().observe(this, Observer {
+            if(it == LoadingState.LOADING_STOP){
+                if(mAdapter.currentList?.size!! <= 40){
+                    recyclerView.scrollTo(0,0)
+                    mFirstLoaded = false
+                }
+            }
         })
 
 

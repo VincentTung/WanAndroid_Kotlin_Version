@@ -6,7 +6,6 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.myapplication.R
 import com.example.myapplication.adapter.KnowledgeTreeListAdapter
@@ -70,7 +69,7 @@ class KnowledgeTreeFragment : BaseFragment(), KnowledgeTreeListAdapter.OnItemLis
             mAdapter.treeList.addAll(it)
             mAdapter.notifyDataSetChanged()
         })
-//        getTree()
+        getTree()
     }
 
     private fun getTree() {

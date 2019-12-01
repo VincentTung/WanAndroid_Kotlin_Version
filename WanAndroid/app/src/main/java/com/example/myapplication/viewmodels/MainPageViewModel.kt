@@ -2,18 +2,16 @@ package com.example.myapplication.viewmodels
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MediatorLiveData
+import androidx.lifecycle.Transformations
 import androidx.lifecycle.ViewModel
 import androidx.paging.LivePagedListBuilder
 import androidx.paging.PagedList
 import com.example.myapplication.datasource.ArticleDataSourceFactory
 import com.example.myapplication.entity.Article
-import java.util.concurrent.Executors
-import androidx.lifecycle.Transformations
 import com.example.myapplication.entity.Banner
 import com.example.myapplication.repository.BannerRepository
-
 import com.example.myapplication.util.LoadingState
-import java.util.*
+import java.util.concurrent.Executors
 
 
 class MainPageViewModel internal constructor(bannerRepository: BannerRepository) :
@@ -35,8 +33,8 @@ class MainPageViewModel internal constructor(bannerRepository: BannerRepository)
 
         val executor = Executors.newFixedThreadPool(5)
         val pagedListConfig: PagedList.Config =
-            PagedList.Config.Builder().setEnablePlaceholders(false).setInitialLoadSizeHint(5).setPrefetchDistance(1)
-                .setPageSize(5).build()
+            PagedList.Config.Builder().setEnablePlaceholders(false).setInitialLoadSizeHint(20).setPrefetchDistance(3)
+                .setPageSize(20).build()
         mArticleDataFactory = ArticleDataSourceFactory()
         mArticles =
             LivePagedListBuilder(mArticleDataFactory, pagedListConfig).setFetchExecutor(
