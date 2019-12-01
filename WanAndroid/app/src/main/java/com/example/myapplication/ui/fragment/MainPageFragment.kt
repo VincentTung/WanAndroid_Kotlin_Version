@@ -9,7 +9,7 @@ import androidx.paging.PagedList
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.myapplication.R
-import com.example.myapplication.adapter.ArticleListAdapter
+import com.example.myapplication.adapter.ArticlePagedListAdapter
 import com.example.myapplication.cfg.BANNER_OFFSET_TIME
 import com.example.myapplication.entity.Article
 import com.example.myapplication.entity.Banner
@@ -32,7 +32,7 @@ import kotlinx.android.synthetic.main.fragment_main_page.*
 class MainPageFragment : BaseFragment() {
 
     private lateinit var mViewModel: MainPageViewModel
-    private var mAdapter: ArticleListAdapter = ArticleListAdapter()
+    private var mAdapter= ArticlePagedListAdapter()
 
     private  var mFirstLoaded = true
     override fun onCreateView(
@@ -63,7 +63,7 @@ class MainPageFragment : BaseFragment() {
             setLoadingListener(object : XRecyclerView.LoadingListener {
                 override fun onRefresh() {
 //                    mViewModel.observeArticles().value?.dataSource?.invalidate()
-                    mViewModel.refreshArticles()
+//                    mViewModel.refreshArticles()
 
                 }
 
@@ -83,10 +83,13 @@ class MainPageFragment : BaseFragment() {
 
         mViewModel.observeLoadingState().observe(this, Observer {
             if(it == LoadingState.LOADING_STOP){
-                if(mAdapter.currentList?.size!! <= 40){
-                    recyclerView.scrollTo(0,0)
-                    mFirstLoaded = false
-                }
+
+            }
+        })
+
+        mViewModel.observePage().observe(this, Observer {
+            if(it <= 2){
+                recyclerView.scrollToPosition(0)
             }
         })
 

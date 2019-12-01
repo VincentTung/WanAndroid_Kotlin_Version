@@ -1,6 +1,7 @@
 package com.example.myapplication.datasource
 
 import androidx.lifecycle.LiveData
+import androidx.lifecycle.MediatorLiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.paging.PageKeyedDataSource
 import com.example.myapplication.entity.Article
@@ -13,6 +14,7 @@ class ArticleDataSource(private val articleRepository: ArticleRepository) :
     PageKeyedDataSource<Int, Article>() {
 
     private val loadingState: MutableLiveData<LoadingState> = MutableLiveData()
+    private val page: MediatorLiveData<Int> = MediatorLiveData()
     override fun loadInitial(
         params: LoadInitialParams<Int>,
         callback: LoadInitialCallback<Int, Article>
@@ -20,6 +22,7 @@ class ArticleDataSource(private val articleRepository: ArticleRepository) :
 
         loadingState.postValue(LoadingState.LOADING_BEGIN)
         val source = articleRepository.getArticles(0)
+
         Observable.just(source).observeOn(AndroidSchedulers.mainThread()).subscribe {
             source.observeForever {
                 it.data?.datas?.let { it1 ->
@@ -39,7 +42,11 @@ class ArticleDataSource(private val articleRepository: ArticleRepository) :
         val source = articleRepository.getArticles(params.key)
         Observable.just(source).observeOn(AndroidSchedulers.mainThread()).subscribe {
             source.observeForever {
-                it.data?.datas?.let { it1 -> callback.onResult(it1, it!!.data!!.curPage) }
+                it.data?.datas?.let { it1 ->
+                    callback.onResult(it1, it!!.data!!.curPage)
+
+                    page.value = it.data.curPage
+                }
                 loadingState.postValue(LoadingState.LOADING_STOP)
             }
         }
@@ -52,5 +59,9 @@ class ArticleDataSource(private val articleRepository: ArticleRepository) :
 
     fun observeLoadingState(): LiveData<LoadingState> {
         return loadingState
+    }
+
+    fun observePage(): LiveData<Int> {
+        return page
     }
 }

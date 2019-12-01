@@ -2,7 +2,6 @@ package com.example.myapplication.viewmodels
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MediatorLiveData
-import androidx.lifecycle.Observer
 import androidx.lifecycle.Transformations
 import androidx.lifecycle.ViewModel
 import androidx.paging.LivePagedListBuilder
@@ -10,7 +9,6 @@ import androidx.paging.PagedList
 import com.example.myapplication.datasource.ArticleDataSourceFactory
 import com.example.myapplication.entity.Article
 import com.example.myapplication.entity.Banner
-import com.example.myapplication.repository.ArticleRepository
 import com.example.myapplication.repository.BannerRepository
 import com.example.myapplication.util.LoadingState
 import java.util.concurrent.Executors
@@ -20,17 +18,35 @@ class MainPageViewModel internal constructor(bannerRepository: BannerRepository)
     ViewModel() {
 
 
-    private val mArticles: MediatorLiveData<ArrayList<Article>> = MediatorLiveData()
-    private var mLoadingState: MediatorLiveData<LoadingState> = MediatorLiveData()
+    private var mArticles: LiveData<PagedList<Article>>
+    private var mLoadingState: LiveData<LoadingState>
+    private var mPage:LiveData<Int>
     private val mBanners: MediatorLiveData<List<Banner>> = MediatorLiveData()
-
-    private var mPage = 0
-
-    private val mArticleRepository:ArticleRepository = ArticleRepository()
-    p
 
     init {
 
+        val factory = ArticleDataSourceFactory()
+        val executor = Executors.newFixedThreadPool(5)
+        val pagedListConfig: PagedList.Config =
+            PagedList.Config.Builder().setEnablePlaceholders(false).setInitialLoadSizeHint(10)
+                .setPageSize(20).build()
+        mArticles =
+            LivePagedListBuilder(factory, pagedListConfig).setFetchExecutor(
+                executor
+            ).build()
+
+        mLoadingState = Transformations.switchMap(
+            factory.observeArticleDataSource()
+        )
+        {
+
+            it.observeLoadingState()
+
+        }
+
+        mPage = Transformations.switchMap(factory.observeArticleDataSource()){
+            it.observePage()
+        }
         val source = bannerRepository.getBanners()
         mBanners.addSource(source) {
             mBanners.value = it.data
@@ -40,36 +56,12 @@ class MainPageViewModel internal constructor(bannerRepository: BannerRepository)
 
 
 
-
     }
 
 
-    fun getArticle( page:Int){
-
-        val source = mArticleRepository.getArticles(page)
-        mArticles.addSource(source, Observer {
-
-             it.data?.datas?.let { it1 ->
-
-                 var list = mArticles.value
-
-                 list?.addAll(it1)
-                 mArticles.value = list
-
-             }
-
-            mArticles.removeSource(source)
-        })
 
 
-    }
-    fun refreshArticles(){
-        mArticles.value = null
-        mPage = 0
-        getArticle(mPage)
-    }
-
-    fun observeArticles(): MediatorLiveData<ArrayList<Article>> {
+    fun observeArticles(): LiveData<PagedList<Article>> {
         return mArticles
     }
 
@@ -79,6 +71,10 @@ class MainPageViewModel internal constructor(bannerRepository: BannerRepository)
 
     fun observeBanners(): LiveData<List<Banner>> {
         return mBanners
+    }
+
+    fun observePage(): LiveData<Int> {
+        return mPage
     }
 
 }
