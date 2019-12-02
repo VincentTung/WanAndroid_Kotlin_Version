@@ -3,12 +3,35 @@ apply plugin: "kotlin-android"
 apply plugin: "kotlin-kapt"
 apply plugin: "kotlin-android-extensions"
 //apply plugin: 'com.getkeepsafe.dexcount'
-
+Properties properties = new Properties()
+InputStream inputStream = project.rootProject.file('local.properties').newDataInputStream()
+properties.load(inputStream)
 android {
     compileSdkVersion rootProject.ext.versions.compileSdkVersion
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
+    }
+
+
+    signingConfigs {
+        debug {
+            keyAlias(properties.getProperty("alias"))
+            keyPassword(properties.getProperty("pwd"))
+            storeFile file(properties.getProperty("key"))
+            storePassword(properties.getProperty("pwd"))
+            v2SigningEnabled false
+            v1SigningEnabled true
+        }
+
+        release {
+            keyAlias(properties.getProperty("alias"))
+            keyPassword(properties.getProperty("pwd"))
+            storeFile file(properties.getProperty("key"))
+            storePassword(properties.getProperty("pwd"))
+            v2SigningEnabled false
+            v1SigningEnabled true
+        }
     }
     dexOptions {
 
@@ -26,6 +49,7 @@ android {
     }
     buildTypes {
         release {
+            signingConfig signingConfigs.release
             minifyEnabled false
             proguardFiles getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro"
         }
@@ -100,9 +124,4 @@ android {
 
         implementation 'com.ldoublem.loadingview:loadingviewlib:1.0'
     }
-}
-
-dependencies {
-    implementation 'androidx.appcompat:appcompat:+'
-    implementation 'androidx.constraintlayout:constraintlayout:+'
 }
