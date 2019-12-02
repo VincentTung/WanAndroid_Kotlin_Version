@@ -98,7 +98,7 @@ android {
         // optional - RxJava support
         implementation "androidx.paging:paging-rxjava2:$paging_version" // For Kotlin use pag
 
-
+        implementation 'com.ldoublem.loadingview:loadingviewlib:1.0'
     }
 }
 

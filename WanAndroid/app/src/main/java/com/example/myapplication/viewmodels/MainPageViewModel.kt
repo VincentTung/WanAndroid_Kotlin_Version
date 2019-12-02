@@ -6,6 +6,8 @@ import androidx.lifecycle.Transformations
 import androidx.lifecycle.ViewModel
 import androidx.paging.LivePagedListBuilder
 import androidx.paging.PagedList
+import com.example.myapplication.cfg.EXECUTOR_SIZE
+import com.example.myapplication.cfg.PAGE_ITEMS_SIZE
 import com.example.myapplication.datasource.ArticleDataSourceFactory
 import com.example.myapplication.entity.Article
 import com.example.myapplication.entity.Banner
@@ -17,19 +19,19 @@ import java.util.concurrent.Executors
 class MainPageViewModel internal constructor(bannerRepository: BannerRepository) :
     ViewModel() {
 
-
     private var mArticles: LiveData<PagedList<Article>>
     private var mLoadingState: LiveData<LoadingState>
-    private var mPage:LiveData<Int>
+    private var mPage: LiveData<Int>
     private val mBanners: MediatorLiveData<List<Banner>> = MediatorLiveData()
 
     init {
-
         val factory = ArticleDataSourceFactory()
-        val executor = Executors.newFixedThreadPool(5)
+        val executor = Executors.newFixedThreadPool(EXECUTOR_SIZE)
         val pagedListConfig: PagedList.Config =
-            PagedList.Config.Builder().setEnablePlaceholders(false).setInitialLoadSizeHint(10)
-                .setPageSize(20).build()
+            PagedList.Config.Builder().setEnablePlaceholders(false).setInitialLoadSizeHint(
+                PAGE_ITEMS_SIZE * 2
+            )
+                .setPageSize(PAGE_ITEMS_SIZE).build()
         mArticles =
             LivePagedListBuilder(factory, pagedListConfig).setFetchExecutor(
                 executor
@@ -39,12 +41,10 @@ class MainPageViewModel internal constructor(bannerRepository: BannerRepository)
             factory.observeArticleDataSource()
         )
         {
-
             it.observeLoadingState()
-
         }
 
-        mPage = Transformations.switchMap(factory.observeArticleDataSource()){
+        mPage = Transformations.switchMap(factory.observeArticleDataSource()) {
             it.observePage()
         }
         val source = bannerRepository.getBanners()
@@ -53,13 +53,14 @@ class MainPageViewModel internal constructor(bannerRepository: BannerRepository)
             mBanners.removeSource(source)
         }
 
-
-
-
     }
 
-
-
+    /**
+     * 刷新数据
+     */
+    fun refreshArticles() {
+        mArticles.value?.dataSource?.invalidate()
+    }
 
     fun observeArticles(): LiveData<PagedList<Article>> {
         return mArticles

@@ -32,9 +32,8 @@ import kotlinx.android.synthetic.main.fragment_main_page.*
 class MainPageFragment : BaseFragment() {
 
     private lateinit var mViewModel: MainPageViewModel
-    private var mAdapter= ArticlePagedListAdapter()
-
-    private  var mFirstLoaded = true
+    private var mAdapter = ArticlePagedListAdapter()
+    private val mPreLoadPage = 2
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -62,33 +61,34 @@ class MainPageFragment : BaseFragment() {
 
             setLoadingListener(object : XRecyclerView.LoadingListener {
                 override fun onRefresh() {
-//                    mViewModel.observeArticles().value?.dataSource?.invalidate()
-//                    mViewModel.refreshArticles()
-
+                    recyclerView.refreshComplete()
                 }
 
                 override fun onLoadMore() {
                 }
             })
         }
-        mViewModel.observeBanners().observe(this, Observer {
-            var imgList = it.map { it.imagePath }
-            addBannerView(imgList, it)
+        mViewModel.observeBanners().observe(this, Observer { banners ->
+            var imgList = banners.map { banner -> banner.imagePath }
+            addBannerView(imgList, banners)
 
         })
         mViewModel.observeArticles().observe(this, Observer<PagedList<Article>> {
             mAdapter.submitList(it)
-
         })
 
         mViewModel.observeLoadingState().observe(this, Observer {
-            if(it == LoadingState.LOADING_STOP){
-
+            if (it == LoadingState.LOADING_STOP) {
+                    loading_view.visibility = View.INVISIBLE
+                    loading_view.stopAnim()
+            }else{
+                loading_view.visibility = View.VISIBLE
+                loading_view.startAnim()
             }
         })
 
-        mViewModel.observePage().observe(this, Observer {
-            if(it <= 2){
+        mViewModel.observePage().observe(this, Observer { page ->
+            if (page <= mPreLoadPage) {
                 recyclerView.scrollToPosition(0)
             }
         })

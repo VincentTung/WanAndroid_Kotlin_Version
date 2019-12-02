@@ -3,7 +3,6 @@ package com.example.myapplication.ui.activity
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
-import android.os.PersistableBundle
 import com.example.myapplication.R
 import android.widget.LinearLayout
 import com.example.myapplication.util.logd
@@ -13,10 +12,7 @@ import kotlinx.android.synthetic.main.activity_webview.*
 
 class WebViewActivity : BaseActivity() {
 
-
-
     companion object{
-
         @JvmStatic
         fun start(context: Context, url:String){
             var intent = Intent(context, WebViewActivity::class.java)

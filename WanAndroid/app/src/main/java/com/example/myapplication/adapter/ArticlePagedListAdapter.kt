@@ -51,7 +51,6 @@ class ArticlePagedListAdapter : PagedListAdapter<Article, ArticlePagedListAdapte
 
     }
 
-
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         holder.itemDataBinding.article = getItem(position)
         holder.itemDataBinding.clickHandler = mClickHandler

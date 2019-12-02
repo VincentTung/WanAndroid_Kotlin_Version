@@ -10,38 +10,22 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-<!--        <androidx.core.widget.NestedScrollView-->
-<!--            android:id="@+id/nestedscrollview"-->
-<!--            android:layout_width="match_parent"-->
-<!--            android:layout_height="match_parent">-->
 
-<!--            <LinearLayout-->
-<!--                android:layout_width="match_parent"-->
-<!--                android:layout_height="match_parent"-->
-<!--                android:orientation="vertical">-->
+        <com.jcodecraeer.xrecyclerview.XRecyclerView
+            android:id="@+id/recyclerView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:focusable="false"
+            android:focusableInTouchMode="false"
+            android:nestedScrollingEnabled="false">
 
-<!--                <com.youth.banner.Banner-->
-<!--                    android:id="@+id/banner"-->
-<!--                    android:layout_width="match_parent"-->
-<!--                    android:visibility="visible"-->
-<!--                    android:layout_height="150dp" />-->
+        </com.jcodecraeer.xrecyclerview.XRecyclerView>
 
-
-                <com.jcodecraeer.xrecyclerview.XRecyclerView
-                    android:id="@+id/recyclerView"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:focusable="false"
-                    android:nestedScrollingEnabled="false"
-                    android:focusableInTouchMode="false">
-
-                </com.jcodecraeer.xrecyclerview.XRecyclerView>
-
-<!--            </LinearLayout>-->
-<!--        </androidx.core.widget.NestedScrollView>-->
-
-
-
+        <com.ldoublem.loadingviewlib.view.LVCircularSmile
+            android:id="@+id/loading_view"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_gravity="center" />
     </FrameLayout>
 
 </LinearLayout>
