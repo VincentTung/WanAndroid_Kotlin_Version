@@ -1,6 +1,5 @@
 package com.example.myapplication.ui.activity
 
-import android.app.Activity
 import android.os.Bundle
 import androidx.fragment.app.FragmentActivity
 import com.uber.autodispose.android.lifecycle.AndroidLifecycleScopeProvider

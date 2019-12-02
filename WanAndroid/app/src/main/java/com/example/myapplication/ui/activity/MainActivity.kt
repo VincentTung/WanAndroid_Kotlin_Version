@@ -4,7 +4,6 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import android.widget.ImageView
-import android.widget.TextView
 import androidx.fragment.app.Fragment
 import com.example.myapplication.R
 import com.example.myapplication.adapter.MainTabAdapter
@@ -23,7 +22,6 @@ class MainActivity : BaseActivity() {
 
     private var fragmentList = mutableListOf<Fragment>()
 
-//    private lateinit var tv_title: TextView
     private val tabTexts = arrayOf("首页", "知识体系", "公众号", "项目")
     override fun onCreate(savedInstanceState: Bundle?) {
         logd("***onCreate")
@@ -31,7 +29,6 @@ class MainActivity : BaseActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         exView<ImageView>(R.id.img_back).visibility = View.INVISIBLE
-//        tv_title = exView(R.id.tv_title)
 
         tv_title.visibility
         if (fragmentList == null || fragmentList.isEmpty()) {

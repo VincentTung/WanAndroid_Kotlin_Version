@@ -122,6 +122,13 @@ android {
         // optional - RxJava support
         implementation "androidx.paging:paging-rxjava2:$paging_version" // For Kotlin use pag
 
-        implementation 'com.ldoublem.loadingview:loadingviewlib:1.0'
+        implementation "com.ldoublem.loadingview:loadingviewlib:${rootProject.ext.versions.loadingviewlib_version}"
+
+
+        // Java
+        implementation "androidx.activity:activity:${rootProject.ext.versions.activity_version}"
+        // Kotlin
+        implementation "androidx.activity:activity-ktx:${rootProject.ext.versions.activity_version}"
+
     }
 }
