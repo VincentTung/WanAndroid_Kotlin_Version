@@ -9,5 +9,4 @@ data class Chapter (
     val parentChapterId: Int = 0,
     val userControlSetTop: Boolean? = null,
     val visible: Int = 0
-){
-}
+)

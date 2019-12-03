@@ -24,7 +24,6 @@ data class Project(
     val title: String? = null,
     val type: Int = 0,
     val zan: Int = 0
-) {
-}
+)
 
 

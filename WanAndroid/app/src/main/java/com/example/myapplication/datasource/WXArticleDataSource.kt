@@ -39,7 +39,6 @@ class WXArticleDataSource(private val articleRepository: ArticleRepository, priv
     override fun loadAfter(params: LoadParams<Int>, callback: LoadCallback<Int, Article>) {
         val source = articleRepository.getArticlesUnderTree(cid, params.key)
         val nextKey =
-
             Observable.just(source).observeOn(AndroidSchedulers.mainThread()).subscribe {
                 source.observeForever {
                     if (it.data === null || it.data.datas?.isEmpty()!!) {

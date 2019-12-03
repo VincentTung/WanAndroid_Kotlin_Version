@@ -1,7 +1,6 @@
 package com.example.myapplication.entity
 
 data class Banner (
-
     val desc: String? = null,
     val id: Int = 0,
     val imagePath: String? = null,
@@ -10,6 +9,4 @@ data class Banner (
     val title: String? = null,
     val type: Int = 0,
     val url: String? = null
-){
-    
-}
+)

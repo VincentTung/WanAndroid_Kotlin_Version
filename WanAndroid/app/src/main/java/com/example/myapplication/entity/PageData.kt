@@ -8,5 +8,4 @@ data class PageData<T> (
     val pageCount: Int = 0,
     val size: Int = 0,
     val total: Int = 0,
-    val curPage:Int = 0){
-}
+    val curPage:Int = 0)

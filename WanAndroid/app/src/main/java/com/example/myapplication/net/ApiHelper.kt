@@ -44,7 +44,7 @@ class ApiHelper private constructor() {
         var okHttpBuilder: OkHttpClient.Builder = OkHttpClient.Builder()
         okHttpBuilder.addInterceptor(NetWorkStateInterceptor())
 
-        var loggingInterceptor: HttpLoggingInterceptor = HttpLoggingInterceptor()
+        var loggingInterceptor = HttpLoggingInterceptor()
         loggingInterceptor.level = HttpLoggingInterceptor.Level.BODY
         okHttpBuilder.addInterceptor(loggingInterceptor)
         okHttpBuilder.cache(Cache(WanApplication.mInstance.getExternalFilesDir(null), CACHE_SIZE))

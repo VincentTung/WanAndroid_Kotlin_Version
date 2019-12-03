@@ -23,8 +23,7 @@ data class Tree(
         parcel.readInt(),
         parcel.readValue(Boolean::class.java.classLoader) as? Boolean,
         parcel.readInt()
-    ) {
-    }
+    )
 
     override fun writeToParcel(parcel: Parcel, flags: Int) {
         parcel.writeTypedList(children)
