@@ -135,5 +135,8 @@ android {
         // Kotlin
         implementation "androidx.activity:activity-ktx:${rootProject.ext.versions.activity_version}"
 
+
+        debugImplementation "com.squareup.leakcanary:leakcanary-android:${rootProject.ext.versions.leakcanary}"
+
     }
 }
