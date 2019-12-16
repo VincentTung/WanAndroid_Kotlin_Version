@@ -37,8 +37,8 @@ class ProjectSubFragment : BaseFragment(), ArticlePagedListAdapter.OnItemListene
     companion object {
 
         fun newInstance(cid: Int): ProjectSubFragment {
-            var fragment = ProjectSubFragment()
-            var bundle = Bundle()
+            val fragment = ProjectSubFragment()
+            val  bundle = Bundle()
             bundle.putInt("cid", cid)
             fragment.arguments = bundle
             return fragment
@@ -47,7 +47,7 @@ class ProjectSubFragment : BaseFragment(), ArticlePagedListAdapter.OnItemListene
     }
 
     private var cid: Int = 0
-    private var mHandler: Handler = Handler()
+    private val mHandler: Handler = Handler()
     private var mPage = 0
     private var mProjects: MutableList<Project> = mutableListOf()
     private var mAdapter: ProjectListAdapter = ProjectListAdapter(mProjects)
@@ -81,7 +81,7 @@ class ProjectSubFragment : BaseFragment(), ArticlePagedListAdapter.OnItemListene
             mProjects.addAll(it)
             mAdapter.notifyDataSetChanged()
         })
-        mViewModel.getProjectSubList(mPage, cid);
+        mViewModel.getProjectSubList(mPage, cid)
     }
 
 }

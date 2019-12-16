@@ -8,7 +8,7 @@ import com.example.myapplication.R
 import com.example.myapplication.databinding.ItemProjectBinding
 import com.example.myapplication.entity.Project
 
-class ProjectListAdapter(var projectList: MutableList<Project>) :
+class ProjectListAdapter(private var projectList: MutableList<Project>) :
     RecyclerView.Adapter<ProjectListAdapter.ViewHolder>() {
 
     var onItemListener: OnItemListener? = null
@@ -21,7 +21,6 @@ class ProjectListAdapter(var projectList: MutableList<Project>) :
             false
         )
         return ViewHolder(mDataBinding)
-
     }
 
     override fun getItemCount(): Int {

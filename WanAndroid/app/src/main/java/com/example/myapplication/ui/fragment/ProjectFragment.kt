@@ -44,7 +44,7 @@ class ProjectFragment : BaseFragment() {
 
         mViewModel.observeProjects().observe(this, Observer {
 
-            var fragments =
+            val fragments =
                  it.map {
                     ProjectSubFragment.newInstance(it.id)
                 }
@@ -65,7 +65,7 @@ class ProjectFragment : BaseFragment() {
                     ): IPagerTitleView {
 
                         return SimplePagerTitleView(context).apply {
-                            text = it.get(index)?.name
+                            text = it[index]?.name
                             normalColor =
                                 resources.getColor(R.color.black)
                             selectedColor =
@@ -97,7 +97,7 @@ class ProjectFragment : BaseFragment() {
                 onPageSelected(0)
             }
             ViewPagerHelper.bind(magic_indicator, viewpager)
-            viewpager.adapter = fragments?.let { it -> MainTabAdapter(childFragmentManager, it) }
+            viewpager.adapter =  MainTabAdapter(childFragmentManager, fragments)
         })
 
         mViewModel.getProjects()

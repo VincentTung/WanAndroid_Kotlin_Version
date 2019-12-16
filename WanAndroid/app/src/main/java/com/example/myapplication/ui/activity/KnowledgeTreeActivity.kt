@@ -27,9 +27,9 @@ class KnowledgeTreeActivity : BaseActivity() {
 
         @JvmStatic
         fun start(context: Context, tree: Tree) {
-            var intent = Intent(context, KnowledgeTreeActivity::class.java)
+            val intent = Intent(context, KnowledgeTreeActivity::class.java)
             intent.putExtra("tree", tree)
-            context?.startActivity(intent)
+            context.startActivity(intent)
         }
     }
 
@@ -39,15 +39,15 @@ class KnowledgeTreeActivity : BaseActivity() {
         setContentView(R.layout.activity_knowledge_tree)
         tv_title = exView(R.id.tv_title)
         exView<ImageView>(R.id.img_back).setOnClickListener { finish() }
-        var tree: Tree = intent.getParcelableExtra("tree")
+        val tree: Tree = intent.getParcelableExtra("tree")
         tv_title.text = tree.name
 
 
-        var fragments =
+        val fragments =
             tree.children?.map {
                 WXAccountSubFragment.newInstance(it.id)
             }
-        var datas = tree.children
+         val datas = tree.children
 
         magic_indicator.apply {
             setBackgroundColor(resources.getColor(com.example.myapplication.R.color.white))

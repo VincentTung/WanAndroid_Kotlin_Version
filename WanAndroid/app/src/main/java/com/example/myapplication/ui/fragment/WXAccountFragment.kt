@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import com.example.myapplication.adapter.MainTabAdapter
 import com.example.myapplication.util.exViewModel
@@ -36,11 +37,11 @@ class WXAccountFragment : BaseFragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        mViewModel.observeChapters().observe(this, Observer {
+        mViewModel.observeChapters().observe(this, Observer { chapterList ->
 
-            var fragments =
-                it?.map { it ->
-                    WXAccountSubFragment.newInstance(it.id)
+            val fragments =
+                chapterList?.map { chapter ->
+                    WXAccountSubFragment.newInstance(chapter.id) as Fragment
                 }
             magic_indicator.apply {
                 setBackgroundColor(resources.getColor(com.example.myapplication.R.color.white))
@@ -49,7 +50,7 @@ class WXAccountFragment : BaseFragment() {
                     scrollPivotX = 0.25f
                     adapter = object : CommonNavigatorAdapter() {
                         override fun getCount(): Int {
-                            return it?.size ?: 0
+                            return chapterList?.size ?: 0
                         }
 
                         override fun getTitleView(
@@ -57,7 +58,7 @@ class WXAccountFragment : BaseFragment() {
                             index: Int
                         ): IPagerTitleView {
                             return SimplePagerTitleView(context).apply {
-                                text = it?.get(index)?.name
+                                text = chapterList?.get(index)?.name
                                 normalColor =
                                     resources.getColor(com.example.myapplication.R.color.black)
                                 selectedColor =
@@ -86,7 +87,8 @@ class WXAccountFragment : BaseFragment() {
                 }
             }
             ViewPagerHelper.bind(magic_indicator, viewpager)
-            viewpager.adapter = fragments?.let { MainTabAdapter(childFragmentManager, it) }
+            viewpager.adapter =
+                fragments?.let { frags -> MainTabAdapter(childFragmentManager, frags) }
         })
         mViewModel.getChapters()
 

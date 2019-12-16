@@ -41,17 +41,17 @@ class ApiHelper private constructor() {
 
     private fun initRetrofit() {
 
-        var okHttpBuilder: OkHttpClient.Builder = OkHttpClient.Builder()
+        val okHttpBuilder: OkHttpClient.Builder = OkHttpClient.Builder()
         okHttpBuilder.addInterceptor(NetWorkStateInterceptor())
 
-        var loggingInterceptor = HttpLoggingInterceptor()
+        val loggingInterceptor = HttpLoggingInterceptor()
         loggingInterceptor.level = HttpLoggingInterceptor.Level.BODY
         okHttpBuilder.addInterceptor(loggingInterceptor)
         okHttpBuilder.cache(Cache(WanApplication.mInstance.getExternalFilesDir(null), CACHE_SIZE))
 
         mOkHttpClient = okHttpBuilder.build()
 
-        var retrofitBuilder: Retrofit.Builder = Retrofit.Builder()
+        val retrofitBuilder: Retrofit.Builder = Retrofit.Builder()
         mRetrofit = retrofitBuilder.baseUrl(WanUrl.BASE_URL)
             .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
             .addConverterFactory(GsonConverterFactory.create()).client(mOkHttpClient).build()

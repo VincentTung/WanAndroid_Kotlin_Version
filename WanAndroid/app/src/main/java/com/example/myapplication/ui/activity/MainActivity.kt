@@ -31,7 +31,7 @@ class MainActivity : BaseActivity() {
         exView<ImageView>(R.id.img_back).visibility = View.INVISIBLE
 
         tv_title.visibility
-        if (fragmentList == null || fragmentList.isEmpty()) {
+        if ( fragmentList.isEmpty()) {
             fragmentList.addAll(
                 listOf(
                     MainPageFragment()
@@ -112,7 +112,7 @@ class MainActivity : BaseActivity() {
     private fun restoreTabIndex(savedInstanceState: Bundle?) {
 
         if (savedInstanceState != null) {
-            var index = savedInstanceState.getInt("index", -1)
+            val index = savedInstanceState.getInt("index", -1)
             if (index > 0 && viewpager.currentItem != index) {
                 viewPager.currentItem = index
             }

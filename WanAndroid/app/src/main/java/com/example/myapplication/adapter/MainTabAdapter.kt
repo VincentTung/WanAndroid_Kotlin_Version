@@ -5,7 +5,8 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentStatePagerAdapter
 
-class MainTabAdapter(fm: FragmentManager, var fragments: List<Fragment>) : FragmentStatePagerAdapter(fm) {
+class MainTabAdapter(fm: FragmentManager, private var fragments: List<Fragment>) :
+    FragmentStatePagerAdapter(fm) {
 
     override fun getCount(): Int {
         return fragments.size

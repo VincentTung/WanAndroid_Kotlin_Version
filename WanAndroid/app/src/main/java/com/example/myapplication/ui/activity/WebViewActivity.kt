@@ -15,10 +15,10 @@ class WebViewActivity : BaseActivity() {
     companion object{
         @JvmStatic
         fun start(context: Context, url:String){
-            var intent = Intent(context, WebViewActivity::class.java)
+            val intent = Intent(context, WebViewActivity::class.java)
             intent.putExtra("url", url)
             intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
-            context?.startActivity(intent)
+            context.startActivity(intent)
         }
     }
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -26,11 +26,10 @@ class WebViewActivity : BaseActivity() {
 
         logd("***onCreate")
         setContentView(R.layout.activity_webview)
-
         iv_back.setOnClickListener {
             finish()
         }
-        var url = intent.getStringExtra("url")
+        val url = intent.getStringExtra("url")
         AgentWeb.with(this)
             .setAgentWebParent(content, LinearLayout.LayoutParams(-1, -1))
             .useDefaultIndicator()

@@ -69,7 +69,7 @@ class MainPageFragment : BaseFragment() {
             })
         }
         mViewModel.observeBanners().observe(this, Observer { banners ->
-            var imgList = banners.map { banner -> banner.imagePath }
+            val imgList = banners.map { banner -> banner.imagePath }
             addBannerView(imgList, banners)
 
         })
@@ -79,9 +79,9 @@ class MainPageFragment : BaseFragment() {
 
         mViewModel.observeLoadingState().observe(this, Observer {
             if (it == LoadingState.LOADING_STOP) {
-                    loading_view.visibility = View.INVISIBLE
-                    loading_view.stopAnim()
-            }else{
+                loading_view.visibility = View.INVISIBLE
+                loading_view.stopAnim()
+            } else {
                 loading_view.visibility = View.VISIBLE
                 loading_view.startAnim()
             }
@@ -98,7 +98,7 @@ class MainPageFragment : BaseFragment() {
 
     private fun addBannerView(imgList: List<String?>?, banner: List<Banner>) {
 
-        var bannerView = LayoutInflater.from(context).inflate(R.layout.include_banner, null, false)
+        val bannerView = LayoutInflater.from(context).inflate(R.layout.include_banner, null, false)
         bannerView.findViewById<com.youth.banner.Banner>(R.id.banner).apply {
             setBannerStyle(BannerConfig.CIRCLE_INDICATOR)
             setImageLoader(BannerImageLoader())
@@ -108,20 +108,17 @@ class MainPageFragment : BaseFragment() {
             setIndicatorGravity(BannerConfig.CENTER)
             setImages(imgList)
             setOnBannerListener {
-                var url = banner?.get(it)?.url
-                this@MainPageFragment.context?.let { it1 ->
-                    url?.let { it2 ->
+                val url = banner[it].url
+                this@MainPageFragment.context?.let { context ->
+                    url?.let { url ->
                         WebViewActivity.start(
-                            it1,
-                            it2
+                            context,
+                            url
                         )
                     }
                 }
-
             }
         }.start()
         recyclerView.addHeaderView(bannerView)
     }
-
-
 }

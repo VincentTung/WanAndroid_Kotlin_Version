@@ -2,13 +2,11 @@ package com.example.myapplication.viewmodels
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MediatorLiveData
-import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModel
 import com.example.myapplication.entity.PageData
 import com.example.myapplication.entity.Project
-import com.example.myapplication.entity.Tree
 import com.example.myapplication.entity.ResultData
-import com.example.myapplication.repository.KnowledgeRepository
+import com.example.myapplication.entity.Tree
 import com.example.myapplication.repository.ProjectRepository
 
 class ProjectViewModel : ViewModel() {

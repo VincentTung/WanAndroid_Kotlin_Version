@@ -22,7 +22,7 @@ class KnowledgeTreeListAdapter(var treeList: MutableList<Tree>) :
             R.layout.item_knowledge_tree,
             parent,
             false
-        );
+        )
         return ViewHolder(dataBinding)
 
     }
@@ -33,15 +33,15 @@ class KnowledgeTreeListAdapter(var treeList: MutableList<Tree>) :
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
 
-        var tree = treeList[position]
+        val tree = treeList[position]
 
         holder.itemBiding.tree = tree
         tree.children?.forEach {
 
-            var tx: TextView =
+            val tx: TextView =
                 layoutInflater.inflate(R.layout.item_tree_child, null, false) as TextView
             tx.text = it.name
-            var layoutParams: ViewGroup.MarginLayoutParams =
+            val layoutParams: ViewGroup.MarginLayoutParams =
                 ViewGroup.MarginLayoutParams(
                     ViewGroup.LayoutParams.WRAP_CONTENT,
                     ViewGroup.LayoutParams.WRAP_CONTENT

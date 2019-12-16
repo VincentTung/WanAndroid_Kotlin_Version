@@ -42,9 +42,9 @@ class WXArticleDataSource(private val articleRepository: ArticleRepository, priv
             Observable.just(source).observeOn(AndroidSchedulers.mainThread()).subscribe {
                 source.observeForever {
                     if (it.data === null || it.data.datas?.isEmpty()!!) {
-                        it.data?.datas?.let { it1 -> callback.onResult(it1, null) }
+                        it.data?.datas?.let { articleList -> callback.onResult(articleList, null) }
                     } else {
-                        it.data?.datas?.let { it1 ->
+                        it.data.datas.let { it1 ->
                             callback.onResult(it1, it!!.data!!.curPage)
                         }
                     }

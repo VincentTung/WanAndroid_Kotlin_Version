@@ -15,13 +15,12 @@ import com.example.myapplication.ui.activity.WebViewActivity
 class ArticleClickHandler {
 
     fun onItemClick(article: Article) {
-        WanApplication.mInstance?.let {
-            article.link?.let { it ->
+            article.link?.let { url ->
                 WebViewActivity.start(
                     WanApplication.mInstance!!,
-                    it
+                    url
                 )
-            }
+
         }
     }
 }

@@ -6,7 +6,7 @@ import com.example.myapplication.entity.Article
 import com.example.myapplication.repository.ArticleRepository
 
 class ArticleDataSourceFactory : androidx.paging.DataSource.Factory<Int, Article>() {
-    private lateinit  var mArticleDataSource: ArticleDataSource
+    private lateinit var mArticleDataSource: ArticleDataSource
     private val mLiveArticleDataSource: MutableLiveData<ArticleDataSource> = MutableLiveData()
     override fun create(): androidx.paging.DataSource<Int, Article> {
         mArticleDataSource = ArticleDataSource(ArticleRepository())
@@ -15,7 +15,7 @@ class ArticleDataSourceFactory : androidx.paging.DataSource.Factory<Int, Article
     }
 
     fun observeArticleDataSource(): LiveData<ArticleDataSource> {
-        return mLiveArticleDataSource;
+        return mLiveArticleDataSource
     }
 
     fun getDataSource(): ArticleDataSource {

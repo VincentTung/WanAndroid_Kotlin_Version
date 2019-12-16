@@ -43,7 +43,7 @@ class ArticleListAdapter() :
         var index = articleList.size
 
         articleList.addAll(list)
-        notifyItemRangeInserted(index+1,length)
+        notifyItemRangeInserted(index + 1, length)
     }
 
     interface OnItemListener {

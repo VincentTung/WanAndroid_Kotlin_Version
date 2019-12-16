@@ -28,8 +28,8 @@ class WXAccountSubFragment : BaseFragment(), ArticlePagedListAdapter.OnItemListe
 
         fun newInstance(cid: Int): WXAccountSubFragment {
 
-            var fragment = WXAccountSubFragment()
-            var bundle = Bundle()
+            val fragment = WXAccountSubFragment()
+            val bundle = Bundle()
             bundle.putInt("cid", cid)
             fragment.arguments = bundle
             return fragment
@@ -49,7 +49,7 @@ class WXAccountSubFragment : BaseFragment(), ArticlePagedListAdapter.OnItemListe
     }
 
 
-    private var mHandler: Handler = Handler()
+    private val mHandler: Handler = Handler()
     private var mPage = 0
     private var mArticles: MutableList<Article> = mutableListOf()
     private var mAdapterPaged: ArticlePagedListAdapter = ArticlePagedListAdapter()
