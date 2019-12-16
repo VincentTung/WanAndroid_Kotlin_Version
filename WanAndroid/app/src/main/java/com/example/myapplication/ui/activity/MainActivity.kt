@@ -2,6 +2,7 @@ package com.example.myapplication.ui.activity
 
 import android.content.Intent
 import android.os.Bundle
+import android.os.Debug
 import android.view.View
 import android.widget.ImageView
 import androidx.fragment.app.Fragment
@@ -24,6 +25,7 @@ class MainActivity : BaseActivity() {
 
     private val tabTexts = arrayOf("首页", "知识体系", "公众号", "项目")
     override fun onCreate(savedInstanceState: Bundle?) {
+        Debug.startMethodTracing("mainactivity")
         logd("***onCreate")
         logd("***onCreate_Restore:" + savedInstanceState?.getLong("time"))
         super.onCreate(savedInstanceState)
@@ -58,7 +60,7 @@ class MainActivity : BaseActivity() {
         }
 
         restoreTabIndex(savedInstanceState)
-
+        Debug.stopMethodTracing()
     }
 
 

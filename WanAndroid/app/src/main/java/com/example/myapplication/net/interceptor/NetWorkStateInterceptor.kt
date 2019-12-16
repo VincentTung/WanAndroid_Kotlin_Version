@@ -15,7 +15,7 @@ class NetWorkStateInterceptor : Interceptor {
 
     override fun intercept(chain: Interceptor.Chain): Response {
 
-        if (!mMonitor.isConnected) {
+        if (!mMonitor.isConnected()) {
             mHandler.post { WanApplication.mInstance.toast("没有网络") }
         }
 
