@@ -5,12 +5,12 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".ui.activity.MainActivity">
+    tools:context=".kotlin.ui.activity.MainActivity">
 
 
     <include layout="@layout/include_top_title"/>
 
-    <com.example.myapplication.view.NoScrollViewPager
+    <com.vincent.funny.kotlin.view.NoScrollViewPager
         android:id="@+id/viewPager"
         android:layout_width="match_parent"
         android:layout_height="0dp"

@@ -3,11 +3,11 @@
 
     <data>
 
-        <import type="com.example.myapplication.adapter.ArticleClickHandler" />
+        <import type="com.vincent.funny.kotlin.adapter.ArticleClickHandler" />
 
         <variable
             name="article"
-            type="com.example.myapplication.entity.Article" />
+            type="com.vincent.funny.kotlin.entity.Article" />
 
         <variable
             name="clickHandler"

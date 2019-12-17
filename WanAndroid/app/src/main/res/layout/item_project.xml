@@ -5,7 +5,7 @@
     <data>
         <variable
             name="project"
-            type="com.example.myapplication.entity.Project" />
+            type="com.vincent.funny.kotlin.entity.Project" />
     </data>
 
     <LinearLayout

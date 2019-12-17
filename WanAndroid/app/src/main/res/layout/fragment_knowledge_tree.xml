@@ -4,7 +4,7 @@
     <data>
         <variable
             name="viewmodel"
-            type="com.example.myapplication.viewmodels.KnowledgeViewModel" />
+            type="com.vincent.funny.kotlin.viewmodels.KnowledgeViewModel" />
     </data>
     <LinearLayout
         android:layout_width="match_parent"
