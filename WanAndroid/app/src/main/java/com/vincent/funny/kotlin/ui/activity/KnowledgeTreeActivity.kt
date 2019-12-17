@@ -9,7 +9,7 @@ import com.vincent.funny.kotlin.R
 import com.vincent.funny.kotlin.adapter.MainTabAdapter
 import com.vincent.funny.kotlin.entity.Tree
 import com.vincent.funny.kotlin.ui.fragment.WXAccountSubFragment
-import com.vincent.funny.kotlin.util.exView
+import com.vicnent.lib.base.util.exView
 import kotlinx.android.synthetic.main.activity_knowledge_tree.*
 
 import net.lucode.hackware.magicindicator.ViewPagerHelper

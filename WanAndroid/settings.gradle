@@ -1,3 +1,4 @@
 include ':app'
 rootProject.name='WanAndroid'
 include ':lib_imagecontroller'
+include ':lib_base'

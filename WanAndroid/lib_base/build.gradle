@@ -1,7 +1,7 @@
 apply plugin: 'com.android.library'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
-apply plugin: 'kotlin-kapt'
+
 android {
     compileSdkVersion rootProject.ext.versions.compileSdkVersion
 
@@ -29,28 +29,10 @@ dependencies {
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
     implementation "androidx.appcompat:appcompat:${rootProject.ext.versions.appcompat}"
     implementation "androidx.core:core-ktx:${rootProject.ext.versions.core_ktx}"
+    implementation "androidx.lifecycle:lifecycle-extensions:${rootProject.ext.versions.lifecycle_version}"
+    implementation "androidx.lifecycle:lifecycle-reactivestreams:${rootProject.ext.versions.lifecycle_version}"
+    annotationProcessor "androidx.lifecycle:lifecycle-compiler:${rootProject.ext.versions.lifecycle_version}"
+    // For Kotlin use kapt instead of annotationProcessor
+    implementation "androidx.lifecycle:lifecycle-common-java8:${rootProject.ext.versions.lifecycle_version}"
 
-    /**
-     * glide
-     */
-    def glide = '4.10.0'
-    implementation "com.github.bumptech.glide:glide:$glide"
-    kapt  "com.github.bumptech.glide:compiler:$glide"
-    implementation ("com.github.bumptech.glide:recyclerview-integration:$glide") {
-        // Excludes the support library because it's already included by Glide.
-        transitive = false
-    }
-    /**
-     * picasso
-     */
-    def picasso = '2.71828'
-    implementation "com.squareup.picasso:picasso:$picasso"
-
-
-    /**
-     * fresco
-     */
-    def fresco ='2.0.0'
-    implementation "com.facebook.fresco:fresco:$fresco"
-    implementation project(path: ':lib_base')
 }

@@ -8,7 +8,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import com.vincent.funny.kotlin.adapter.MainTabAdapter
-import com.vincent.funny.kotlin.util.exViewModel
+import com.vicnent.lib.base.util.exViewModel
 import com.vincent.funny.kotlin.viewmodels.WXAccountFragmentViewModel
 import kotlinx.android.synthetic.main.fragment_wx_account.*
 import net.lucode.hackware.magicindicator.ViewPagerHelper

@@ -5,8 +5,8 @@ import com.vincent.funny.kotlin.R
 import com.vincent.funny.kotlin.app.WanApplication
 import com.vincent.funny.kotlin.network.LiveNetWorkMonitor
 import com.vincent.funny.kotlin.network.NetWorkMonitor
-import com.vincent.funny.kotlin.util.ContextUtil
-import com.vincent.funny.kotlin.util.toast
+import com.vicnent.lib.base.util.ContextUtil
+import com.vicnent.lib.base.util.toast
 import okhttp3.Interceptor
 import okhttp3.Response
 

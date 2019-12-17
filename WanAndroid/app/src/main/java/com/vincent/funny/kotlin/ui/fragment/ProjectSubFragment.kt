@@ -13,7 +13,7 @@ import com.vincent.funny.kotlin.adapter.ArticlePagedListAdapter
 import com.vincent.funny.kotlin.adapter.ProjectListAdapter
 import com.vincent.funny.kotlin.entity.Project
 import com.vincent.funny.kotlin.ui.activity.WebViewActivity
-import com.vincent.funny.kotlin.util.exViewModel
+import com.vicnent.lib.base.util.exViewModel
 import com.vincent.funny.kotlin.viewmodels.ProjectViewModel
 import kotlinx.android.synthetic.main.fragment_knowledge_sub.*
 

@@ -21,6 +21,7 @@ class WanApplication : Application() {
     override fun attachBaseContext(base: Context?) {
         super.attachBaseContext(base)
         MultiDex.install(baseContext)
-        ImageController.getInstance().setGlideLoaderAndInit()
+//        ImageController.getInstance().setGlideLoaderAndInit()
+        ImageController.getInstance().setPicassoLoaderAndInit()
     }
 }

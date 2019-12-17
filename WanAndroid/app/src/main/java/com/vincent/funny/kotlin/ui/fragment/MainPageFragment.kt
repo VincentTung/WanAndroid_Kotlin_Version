@@ -17,7 +17,7 @@ import com.vincent.funny.kotlin.repository.BannerRepository
 import com.vincent.funny.kotlin.ui.activity.WebViewActivity
 import com.vincent.funny.kotlin.util.BannerImageLoader
 import com.vincent.funny.kotlin.util.LoadingState
-import com.vincent.funny.kotlin.util.exViewModel
+import com.vicnent.lib.base.util.exViewModel
 import com.vincent.funny.kotlin.viewmodels.MainPageViewModel
 import com.vincent.funny.kotlin.viewmodels.MainPageViewModelFactory
 import com.jcodecraeer.xrecyclerview.XRecyclerView

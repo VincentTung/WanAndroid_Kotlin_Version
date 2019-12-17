@@ -1,4 +1,4 @@
-package com.vincent.funny.kotlin.util
+package com.vicnent.lib.base.util
 
 import android.app.Activity
 import android.content.Context

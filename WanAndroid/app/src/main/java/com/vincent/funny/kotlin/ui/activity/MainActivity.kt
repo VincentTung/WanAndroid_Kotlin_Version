@@ -11,8 +11,8 @@ import com.vincent.funny.kotlin.adapter.MainTabAdapter
 import com.vincent.funny.kotlin.ui.fragment.KnowledgeTreeFragment
 import com.vincent.funny.kotlin.ui.fragment.MainPageFragment
 import com.vincent.funny.kotlin.ui.fragment.WXAccountFragment
-import com.vincent.funny.kotlin.util.exView
-import com.vincent.funny.kotlin.util.logd
+import com.vicnent.lib.base.util.exView
+import com.vicnent.lib.base.util.logd
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.fragment_wx_account.*
 import kotlinx.android.synthetic.main.include_top_title.*

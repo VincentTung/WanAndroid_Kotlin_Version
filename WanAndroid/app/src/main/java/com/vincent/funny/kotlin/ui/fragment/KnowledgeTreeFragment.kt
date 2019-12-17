@@ -13,7 +13,7 @@ import com.vincent.funny.kotlin.databinding.FragmentKnowledgeTreeBinding
 import com.vincent.funny.kotlin.entity.Tree
 import com.vincent.funny.kotlin.repository.KnowledgeRepository
 import com.vincent.funny.kotlin.ui.activity.KnowledgeTreeActivity
-import com.vincent.funny.kotlin.util.exViewModel
+import com.vicnent.lib.base.util.exViewModel
 import com.vincent.funny.kotlin.viewmodels.KnowledgeViewModel
 import com.vincent.funny.kotlin.viewmodels.KnowledgeViewModelFactory
 

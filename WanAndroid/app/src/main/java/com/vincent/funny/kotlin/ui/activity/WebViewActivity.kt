@@ -5,13 +5,9 @@ import android.content.Intent
 import android.os.Bundle
 import com.vincent.funny.kotlin.R
 import android.widget.LinearLayout
-import com.vincent.funny.kotlin.util.logd
+import com.vicnent.lib.base.util.logd
 import com.just.agentweb.AgentWeb
 import kotlinx.android.synthetic.main.activity_webview.*
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.runBlocking
 
 
 class WebViewActivity : BaseActivity() {

@@ -3,6 +3,7 @@ package com.vincent.lib.imagecontroller
 import android.content.Context
 import android.widget.ImageView
 import com.vincent.lib.imagecontroller.glide.ImageLoader_Glide
+import com.vincent.lib.imagecontroller.picasso.ImageLoader_Picasso
 
 class ImageController private constructor() : ImageLoader {
 
@@ -14,6 +15,11 @@ class ImageController private constructor() : ImageLoader {
 
     fun setGlideLoaderAndInit() {
         this.mImageLoader = ImageLoader_Glide()
+        init()
+    }
+
+    fun setPicassoLoaderAndInit() {
+        this.mImageLoader = ImageLoader_Picasso()
         init()
     }
 
