@@ -1,4 +1,4 @@
-package ui.fragment
+package com.vincent.funny.kotlin.ui.fragment
 
 import android.content.Context
 import android.os.Bundle
@@ -8,8 +8,6 @@ import android.view.ViewGroup
 import androidx.lifecycle.Observer
 import com.vincent.funny.kotlin.R
 import com.vincent.funny.kotlin.adapter.MainTabAdapter
-import com.vincent.funny.kotlin.ui.fragment.BaseFragment
-import com.vincent.funny.kotlin.ui.fragment.ProjectSubFragment
 import com.vincent.funny.kotlin.util.exViewModel
 import com.vincent.funny.kotlin.viewmodels.ProjectViewModel
 import kotlinx.android.synthetic.main.fragment_wx_account.*

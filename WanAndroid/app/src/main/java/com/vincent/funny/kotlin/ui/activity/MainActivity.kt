@@ -16,7 +16,7 @@ import com.vincent.funny.kotlin.util.logd
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.fragment_wx_account.*
 import kotlinx.android.synthetic.main.include_top_title.*
-import ui.fragment.ProjectFragment
+import com.vincent.funny.kotlin.ui.fragment.ProjectFragment
 
 
 class MainActivity : BaseActivity() {
