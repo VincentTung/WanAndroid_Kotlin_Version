@@ -8,19 +8,24 @@ import android.widget.LinearLayout
 import com.vincent.funny.kotlin.util.logd
 import com.just.agentweb.AgentWeb
 import kotlinx.android.synthetic.main.activity_webview.*
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.runBlocking
 
 
 class WebViewActivity : BaseActivity() {
 
-    companion object{
+    companion object {
         @JvmStatic
-        fun start(context: Context, url:String){
+        fun start(context: Context, url: String) {
             val intent = Intent(context, WebViewActivity::class.java)
             intent.putExtra("url", url)
             intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
             context.startActivity(intent)
         }
     }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -30,12 +35,11 @@ class WebViewActivity : BaseActivity() {
             finish()
         }
         val url = intent.getStringExtra("url")
-        AgentWeb.with(this)
+        AgentWeb.with(this@WebViewActivity)
             .setAgentWebParent(content, LinearLayout.LayoutParams(-1, -1))
             .useDefaultIndicator()
             .createAgentWeb()
-            .ready()
-            .go(url)
+            .ready().go(url)
     }
 
 
