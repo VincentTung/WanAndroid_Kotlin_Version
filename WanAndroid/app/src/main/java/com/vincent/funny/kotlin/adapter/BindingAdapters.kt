@@ -5,9 +5,9 @@ package com.vincent.funny.kotlin.adapter
  */
 import android.widget.ImageView
 import androidx.databinding.BindingAdapter
-import com.bumptech.glide.Glide
+import com.vincent.lib.imagecontroller.ImageController
 
 @BindingAdapter("cover")
 fun bindCover(view: ImageView, url: String) {
-    Glide.with(view.context).load(url).into(view)
+    ImageController.getInstance().load(view,url,18)
 }

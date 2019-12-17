@@ -22,12 +22,20 @@
         <activity android:name="com.vincent.funny.kotlin.ui.activity.KnowledgeTreeActivity" />
         <activity
             android:name="com.vincent.funny.kotlin.ui.activity.MainActivity"
-            android:launchMode="singleInstance">
-        </activity>
+            android:launchMode="singleInstance"></activity>
         <activity
             android:name="com.vincent.funny.kotlin.ui.activity.WebViewActivity"
-            android:launchMode="singleTop">
-        </activity>
+            android:launchMode="singleTop"></activity>
+
+        <provider
+            android:name="com.vincent.funny.kotlin.provider.InitProvider"
+            android:authorities="${applicationId}.pdFileProvider"
+            android:exported="false"
+            android:grantUriPermissions="true">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/provider_path" />
+        </provider>
     </application>
 
 </manifest>

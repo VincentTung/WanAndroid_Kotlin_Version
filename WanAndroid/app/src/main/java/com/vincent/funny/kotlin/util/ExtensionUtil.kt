@@ -15,6 +15,10 @@ fun Context.toast(text: String) {
     Toast.makeText(this, text, Toast.LENGTH_SHORT).show()
 }
 
+fun Context.toast(stringId: Int) {
+    Toast.makeText(this, this.getString(stringId), Toast.LENGTH_SHORT).show()
+}
+
 fun <T : View> Activity.exView(@IdRes id: Int): T {
     return findViewById(id)
 }

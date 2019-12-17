@@ -5,4 +5,5 @@
     <string name="v2ex">V2EX</string>
     <string name="project">项目</string>
     <string name="wx_account">公众号</string>
+    <string name="no_initernet">没有网络</string>
 </resources>
