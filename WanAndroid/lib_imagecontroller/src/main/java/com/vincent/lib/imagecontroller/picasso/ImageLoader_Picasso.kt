@@ -16,8 +16,6 @@ import java.io.File
 import java.io.FileOutputStream
 import java.io.IOException
 import android.graphics.Bitmap
-import android.opengl.ETC1.getWidth
-import android.opengl.ETC1.getHeight
 
 
 class ImageLoader_Picasso : ImageLoader {
@@ -103,7 +101,7 @@ class ImageLoader_Picasso : ImageLoader {
                         ostream.flush()
                         ostream.close()
                     } catch (e: IOException) {
-                        Log.e("IOException", e.getLocalizedMessage())
+                        Log.e(TAG, e.getLocalizedMessage())
                     }
                 }).start()
 
@@ -132,12 +130,12 @@ class ImageLoader_Picasso : ImageLoader {
                     if (width > 0 && height > 0) {
                         val aspectRatio = bitmap.height as Double / bitmap.width as Double
                         val targetHeight = (width * aspectRatio) as Int
-                        result =  Bitmap.createScaledBitmap(bitmap, width, targetHeight, false)
+                        result = Bitmap.createScaledBitmap(bitmap, width, targetHeight, false)
                     }
 
                     if (roundValue > 0) {
 
-                        val source:Bitmap = result
+                        val source: Bitmap = result
                         val paint = Paint()
 
                         paint.isAntiAlias = true
@@ -179,5 +177,9 @@ class ImageLoader_Picasso : ImageLoader {
 
         requestCreator.into(img)
 
+    }
+
+    companion object {
+        const val TAG = "ImageLoader_Picasso"
     }
 }

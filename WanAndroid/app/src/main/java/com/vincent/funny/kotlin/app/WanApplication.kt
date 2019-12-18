@@ -12,16 +12,14 @@ class WanApplication : Application() {
             private set
 
     }
-
     override fun onCreate() {
         mInstance = this
         super.onCreate()
+        ImageController.getInstance().setFrescoLoaderAndInit()
     }
 
     override fun attachBaseContext(base: Context?) {
         super.attachBaseContext(base)
         MultiDex.install(baseContext)
-//        ImageController.getInstance().setGlideLoaderAndInit()
-        ImageController.getInstance().setPicassoLoaderAndInit()
     }
 }

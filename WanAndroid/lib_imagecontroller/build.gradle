@@ -51,6 +51,6 @@ dependencies {
      * fresco
      */
     def fresco ='2.0.0'
-    implementation "com.facebook.fresco:fresco:$fresco"
+    api "com.facebook.fresco:fresco:$fresco"
     implementation project(path: ':lib_base')
 }

@@ -21,6 +21,8 @@ import com.vicnent.lib.base.util.exViewModel
 import com.vincent.funny.kotlin.viewmodels.MainPageViewModel
 import com.vincent.funny.kotlin.viewmodels.MainPageViewModelFactory
 import com.jcodecraeer.xrecyclerview.XRecyclerView
+import com.vincent.lib.imagecontroller.ImageController
+import com.vincent.lib.imagecontroller.ImageLoader
 import com.youth.banner.BannerConfig
 import com.youth.banner.Transformer
 import kotlinx.android.synthetic.main.fragment_main_page.*
@@ -98,6 +100,18 @@ class MainPageFragment : BaseFragment() {
 
     private fun addBannerView(imgList: List<String?>?, banner: List<Banner>) {
 
+        imgList?.let {
+            this@MainPageFragment.context?.let { ctx ->
+                imgList[1]?.let { url ->
+                    ImageController.getInstance()
+                        .download(ctx, url, object : ImageLoader.DownloadImageListener {
+                            override fun onDownloadImageFinish(downloadPath: String?) {
+
+                            }
+                        })
+                }
+            }
+        }
         val bannerView = LayoutInflater.from(context).inflate(R.layout.include_banner, null, false)
         bannerView.findViewById<com.youth.banner.Banner>(R.id.banner).apply {
             setBannerStyle(BannerConfig.CIRCLE_INDICATOR)
@@ -105,6 +119,7 @@ class MainPageFragment : BaseFragment() {
             setBannerAnimation(Transformer.DepthPage)
             isAutoPlay(true)
             setDelayTime(BANNER_OFFSET_TIME)
+
             setIndicatorGravity(BannerConfig.CENTER)
             setImages(imgList)
             setOnBannerListener {

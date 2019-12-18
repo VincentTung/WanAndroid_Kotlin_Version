@@ -18,7 +18,7 @@ class NetWorkStateInterceptor : Interceptor {
     override fun intercept(chain: Interceptor.Chain): Response {
 
         if (!mMonitor.isConnected()) {
-            mHandler.post { ContextUtil.context.toast(R.string.no_initernet) }
+            mHandler.post { ContextUtil.getContext()?.toast(R.string.no_initernet) }
         }
 
         return chain.proceed(chain.request())
