@@ -6,6 +6,7 @@ import android.net.Uri
 import android.widget.ImageView
 import com.facebook.common.executors.CallerThreadExecutor
 import com.facebook.common.references.CloseableReference
+import com.facebook.common.util.UriUtil
 import com.facebook.datasource.DataSource
 import com.facebook.drawee.backends.pipeline.Fresco
 import com.facebook.drawee.generic.GenericDraweeHierarchyBuilder
@@ -22,6 +23,7 @@ import com.vincent.lib.imagecontroller.ImageDisplayParams
 import com.vincent.lib.imagecontroller.ImageLoader
 import com.vincent.lib.imagecontroller.util.BitmapUtil.Companion.getPath
 import com.vincent.lib.imagecontroller.util.BitmapUtil.Companion.saveBitmap
+import java.io.File
 
 
 class ImageLoader_Fresco : ImageLoader {
@@ -35,7 +37,8 @@ class ImageLoader_Fresco : ImageLoader {
             val simpleDraweeView = img as? SimpleDraweeView
             simpleDraweeView?.let { simpleDraweeView ->
                 if (imageDisplayParams.placeHolderResourceId > 0) {
-                    val builder = GenericDraweeHierarchyBuilder(simpleDraweeView.context.getResources())
+                    val builder =
+                        GenericDraweeHierarchyBuilder(simpleDraweeView.context.getResources())
                     val hierarchy = builder
                         .setPlaceholderImage(imageDisplayParams.placeHolderResourceId)
                         .build()
@@ -149,7 +152,12 @@ class ImageLoader_Fresco : ImageLoader {
 
                 override fun onNewResultImpl(bitmap: Bitmap?) {
                     if (bitmap != null) {
-                        saveBitmap(bitmap, getPath(context, imgUrl))
+                        val path = getPath(context, imgUrl)
+                        if (saveBitmap(bitmap, getPath(context, imgUrl))) {
+                            listener.onDownloadImageFinish(path)
+                        } else {
+                            listener.onDownloadImageFinish(null)
+                        }
                     } else {
                         listener.onDownloadImageFinish(null)
                     }

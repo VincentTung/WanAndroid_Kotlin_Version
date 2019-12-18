@@ -1,6 +1,8 @@
 package com.vincent.funny.kotlin.ui.fragment
 
+import android.graphics.Bitmap
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -106,6 +108,13 @@ class MainPageFragment : BaseFragment() {
                     ImageController.getInstance()
                         .download(ctx, url, object : ImageLoader.DownloadImageListener {
                             override fun onDownloadImageFinish(downloadPath: String?) {
+
+                                downloadPath?.let{
+                                    ImageController.getInstance().getLocalBitmap(this@MainPageFragment.context!!,downloadPath,object:ImageLoader.GetBitmapListener{
+                                        override fun onGetBitmapFinish(bitmap: Bitmap?) {
+                                        }
+                                    })
+                                }
 
                             }
                         })

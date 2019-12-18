@@ -8,6 +8,7 @@
 
     <FrameLayout
         android:layout_width="match_parent"
+        android:visibility="visible"
         android:layout_height="match_parent">
 
 
@@ -26,6 +27,10 @@
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:layout_gravity="center" />
-    </FrameLayout>
 
+    </FrameLayout>
+<!--    <com.facebook.drawee.view.SimpleDraweeView-->
+<!--        android:id="@+id/iv"-->
+<!--        android:layout_width="200dp"-->
+<!--        android:layout_height="100dp"/>-->
 </LinearLayout>

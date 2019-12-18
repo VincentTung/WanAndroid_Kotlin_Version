@@ -15,7 +15,7 @@ class WanApplication : Application() {
     override fun onCreate() {
         mInstance = this
         super.onCreate()
-        ImageController.getInstance().setFrescoLoaderAndInit()
+        ImageController.getInstance().setGlideLoaderAndInit()
     }
 
     override fun attachBaseContext(base: Context?) {

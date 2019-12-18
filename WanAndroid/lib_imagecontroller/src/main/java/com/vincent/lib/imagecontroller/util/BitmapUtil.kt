@@ -15,10 +15,10 @@ class BitmapUtil {
                     file.delete()
                 }
                 file.createNewFile()
-                val out: FileOutputStream = FileOutputStream(file);
-                bitmap.compress(Bitmap.CompressFormat.PNG, 100, out);
-                out.flush();
-                out.close();
+                val out = FileOutputStream(file)
+                bitmap.compress(Bitmap.CompressFormat.PNG, 100, out)
+                out.flush()
+                out.close()
                 true
             } catch (e: Exception) {
                 e.printStackTrace()
@@ -29,12 +29,12 @@ class BitmapUtil {
         fun getPath(context: Context, url: String): String {
 
             val cacheDir =
-                File(context.cacheDir.absolutePath + File.separator + "image" + File.separator)
+                File(context.cacheDir.absolutePath )
             if (!cacheDir.exists()) {
                 cacheDir.mkdirs()
             }
             val index = url.lastIndexOf("/") + 1
-            return cacheDir.absolutePath + url.subSequence(
+            return cacheDir.absolutePath + File.separator + url.subSequence(
                 index,
                 url.length
             )

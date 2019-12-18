@@ -144,8 +144,7 @@ class ImageLoader_Glide : ImageLoader {
         listener: ImageLoader.DownloadImageListener
     ) {
         val requestManager = Glide.with(context)
-        requestManager.load(imgUrl)
-        requestManager.downloadOnly().into(object : Target<File> {
+        requestManager.downloadOnly().load(imgUrl).into(object : Target<File> {
             override fun onLoadStarted(placeholder: Drawable?) {
             }
 

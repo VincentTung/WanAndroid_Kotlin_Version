@@ -3,7 +3,6 @@ package com.vincent.lib.imagecontroller.picasso
 import android.content.Context
 import android.graphics.*
 import android.graphics.drawable.Drawable
-import android.os.Environment
 import android.util.Log
 import android.widget.ImageView
 import com.squareup.picasso.Picasso
@@ -11,11 +10,10 @@ import com.squareup.picasso.Target
 import com.squareup.picasso.Transformation
 import com.vincent.lib.imagecontroller.ImageDisplayParams
 import com.vincent.lib.imagecontroller.ImageLoader
-import java.lang.Exception
+import com.vincent.lib.imagecontroller.util.BitmapUtil
 import java.io.File
 import java.io.FileOutputStream
 import java.io.IOException
-import android.graphics.Bitmap
 
 
 class ImageLoader_Picasso : ImageLoader {
@@ -74,7 +72,7 @@ class ImageLoader_Picasso : ImageLoader {
         imgUrl: String,
         listener: ImageLoader.DownloadImageListener
     ) {
-        Picasso.get().load(imgUrl).into(getTarget(imgUrl, listener))
+        Picasso.get().load(imgUrl).into(getTarget(BitmapUtil.getPath(context, imgUrl), listener))
     }
 
     override fun clearMemory(context: Context) {
@@ -83,25 +81,28 @@ class ImageLoader_Picasso : ImageLoader {
     override fun clearImageCache(context: Context) {
     }
 
-    private fun getTarget(url: String, listener: ImageLoader.DownloadImageListener): Target {
+    private fun getTarget(path: String, listener: ImageLoader.DownloadImageListener): Target {
         return object : Target {
-            override fun onPrepareLoad(placeHolderDrawable: Drawable) {
+            override fun onPrepareLoad(placeHolderDrawable: Drawable?) {
             }
 
             override fun onBitmapFailed(e: Exception?, errorDrawable: Drawable?) {
+                listener.onDownloadImageFinish(null)
             }
 
             override fun onBitmapLoaded(bitmap: Bitmap, from: Picasso.LoadedFrom) {
                 Thread(Runnable {
-                    val file = File(Environment.getExternalStorageDirectory().getPath() + "/" + url)
+                    val file = File(path)
                     try {
                         file.createNewFile()
                         val ostream = FileOutputStream(file)
                         bitmap.compress(Bitmap.CompressFormat.JPEG, 80, ostream)
                         ostream.flush()
                         ostream.close()
+                        listener.onDownloadImageFinish(path)
                     } catch (e: IOException) {
                         Log.e(TAG, e.getLocalizedMessage())
+                        listener.onDownloadImageFinish(null)
                     }
                 }).start()
 
@@ -128,8 +129,8 @@ class ImageLoader_Picasso : ImageLoader {
 
                     var result: Bitmap = bitmap
                     if (width > 0 && height > 0) {
-                        val aspectRatio = bitmap.height as Double / bitmap.width as Double
-                        val targetHeight = (width * aspectRatio) as Int
+                        val aspectRatio = bitmap.height.toDouble() / bitmap.width.toDouble()
+                        val targetHeight = (width * aspectRatio).toInt()
                         result = Bitmap.createScaledBitmap(bitmap, width, targetHeight, false)
                     }
 
