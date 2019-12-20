@@ -33,7 +33,7 @@ class BitmapUtil {
             if (!cacheDir.exists()) {
                 cacheDir.mkdirs()
             }
-            val index = url.lastIndexOf("/") + 1
+            val index = url.lastIndexOf(File.separator) + 1
             return cacheDir.absolutePath + File.separator + url.subSequence(
                 index,
                 url.length
