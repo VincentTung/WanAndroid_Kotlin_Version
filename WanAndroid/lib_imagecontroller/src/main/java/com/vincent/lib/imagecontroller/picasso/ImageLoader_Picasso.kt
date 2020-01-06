@@ -101,7 +101,7 @@ class ImageLoader_Picasso : ImageLoader {
                         ostream.close()
                         listener.onDownloadImageFinish(path)
                     } catch (e: IOException) {
-                        Log.e(TAG, e.getLocalizedMessage())
+                        Log.e(TAG, e.localizedMessage)
                         listener.onDownloadImageFinish(null)
                     }
                 }).start()

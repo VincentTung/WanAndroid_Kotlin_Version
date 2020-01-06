@@ -54,7 +54,7 @@ class ProjectFragment : BaseFragment() {
                 scrollPivotX = 0.25f
                 adapter = object : CommonNavigatorAdapter() {
                     override fun getCount(): Int {
-                        return it.size ?: 0
+                        return it.size
                     }
 
                     override fun getTitleView(
@@ -63,7 +63,7 @@ class ProjectFragment : BaseFragment() {
                     ): IPagerTitleView {
 
                         return SimplePagerTitleView(context).apply {
-                            text = it[index]?.name
+                            text = it[index].name
                             normalColor =
                                 resources.getColor(R.color.black)
                             selectedColor =

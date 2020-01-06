@@ -53,8 +53,7 @@ data class Article(
         parcel.readValue(Long::class.java.classLoader) as? Long,
         parcel.readInt(),
         parcel.readString()
-    ) {
-    }
+    )
 
     override fun writeToParcel(parcel: Parcel, flags: Int) {
         parcel.writeString(title)

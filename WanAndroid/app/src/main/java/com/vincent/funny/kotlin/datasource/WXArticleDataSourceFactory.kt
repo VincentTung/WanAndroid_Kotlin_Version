@@ -15,7 +15,7 @@ class WXArticleDataSourceFactory (private  val cid:Int): androidx.paging.DataSou
     }
 
     fun observeArticleDataSource(): LiveData<WXArticleDataSource> {
-        return mLiveArticleDataSource;
+        return mLiveArticleDataSource
     }
 
     fun getDataSource(): WXArticleDataSource {

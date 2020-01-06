@@ -38,7 +38,7 @@ class ImageLoader_Fresco : ImageLoader {
             simpleDraweeView?.let { simpleDraweeView ->
                 if (imageDisplayParams.placeHolderResourceId > 0) {
                     val builder =
-                        GenericDraweeHierarchyBuilder(simpleDraweeView.context.getResources())
+                        GenericDraweeHierarchyBuilder(simpleDraweeView.context.resources)
                     val hierarchy = builder
                         .setPlaceholderImage(imageDisplayParams.placeHolderResourceId)
                         .build()

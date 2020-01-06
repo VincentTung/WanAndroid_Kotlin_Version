@@ -9,7 +9,7 @@ import com.vincent.funny.kotlin.databinding.ItemArticleBinding
 
 import com.vincent.funny.kotlin.entity.Article
 
-class ArticleListAdapter() :
+class ArticleListAdapter :
     RecyclerView.Adapter<ArticleListAdapter.ViewHolder>() {
     private val mClickHandler: ArticleClickHandler = ArticleClickHandler()
     var onItemListener: OnItemListener? = null

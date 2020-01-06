@@ -1,4 +1,4 @@
-package com.vincent.funny.kotlin.repository;
+package com.vincent.funny.kotlin.repository
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData

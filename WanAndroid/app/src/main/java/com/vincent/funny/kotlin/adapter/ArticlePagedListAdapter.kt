@@ -17,7 +17,7 @@ class ArticleClickHandler {
     fun onItemClick(article: Article) {
             article.link?.let { url ->
                 WebViewActivity.start(
-                    WanApplication.mInstance!!,
+                    WanApplication.mInstance,
                     url
                 )
 
