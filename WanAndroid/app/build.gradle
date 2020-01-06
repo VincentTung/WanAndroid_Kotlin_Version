@@ -111,7 +111,7 @@ android {
 
         implementation "androidx.lifecycle:lifecycle-extensions:${rootProject.ext.versions.lifecycle_version}"
         implementation "androidx.lifecycle:lifecycle-reactivestreams:${rootProject.ext.versions.lifecycle_version}"
-        annotationProcessor "androidx.lifecycle:lifecycle-compiler:${rootProject.ext.versions.lifecycle_version}"
+        kapt "androidx.lifecycle:lifecycle-compiler:${rootProject.ext.versions.lifecycle_version}"
         // For Kotlin use kapt instead of annotationProcessor
         implementation "androidx.lifecycle:lifecycle-common-java8:${rootProject.ext.versions.lifecycle_version}"
 
