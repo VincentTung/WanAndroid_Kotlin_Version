@@ -44,7 +44,7 @@
                 android:lines="1"
                 android:text="@{project.title}"
                 android:textColor="#333333"
-                android:textSize="16sp"
+                android:textSize="14sp"
                 android:textStyle="bold" />
 
             <TextView
@@ -54,6 +54,7 @@
                 android:layout_weight="1"
                 android:ellipsize="end"
                 android:lines="3"
+                android:textSize="12sp"
                 android:text="@{project.desc}"
                 android:textColor="@color/black" />
 
@@ -64,6 +65,7 @@
 
                 <TextView
                     android:id="@+id/tv_date"
+                    android:textSize="12sp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_below="@id/tv_title"
@@ -78,6 +80,7 @@
                     android:layout_height="wrap_content"
                     android:drawableLeft="@drawable/wine"
                     android:ellipsize="end"
+                    android:textSize="12sp"
                     android:gravity="center_vertical"
                     android:text="@{project.author}"
                     android:textColor="#999999" />

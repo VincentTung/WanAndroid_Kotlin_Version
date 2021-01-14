@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <dimen name="tab_tx_size">14sp</dimen>
+    <dimen name="tab_tx_size">12sp</dimen>
     <dimen name="tab_padding">10dp</dimen>
     <dimen name="top_bar_height">60dp</dimen>
 </resources>

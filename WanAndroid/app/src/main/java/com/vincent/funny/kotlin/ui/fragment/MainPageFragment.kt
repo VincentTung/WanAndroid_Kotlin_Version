@@ -125,6 +125,7 @@ class MainPageFragment : BaseFragment() {
         bannerView.findViewById<com.youth.banner.Banner>(R.id.banner).apply {
             setBannerStyle(BannerConfig.CIRCLE_INDICATOR)
             setImageLoader(BannerImageLoader())
+
             setBannerAnimation(Transformer.DepthPage)
             isAutoPlay(true)
             setDelayTime(BANNER_OFFSET_TIME)
