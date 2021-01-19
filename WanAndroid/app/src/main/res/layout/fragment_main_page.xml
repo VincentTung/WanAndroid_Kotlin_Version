@@ -22,12 +22,8 @@
 
         </com.jcodecraeer.xrecyclerview.XRecyclerView>
 
-        <com.ldoublem.loadingviewlib.view.LVCircularSmile
-            android:id="@+id/loading_view"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
-            android:layout_gravity="center" />
 
+        <include layout="@layout/loading_layout"/>
     </FrameLayout>
 <!--    <com.facebook.drawee.view.SimpleDraweeView-->
 <!--        android:id="@+id/iv"-->

@@ -1,6 +1,7 @@
 package com.vincent.funny.kotlin.ui.fragment
 
 import android.graphics.Bitmap
+import android.graphics.Color
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -28,6 +29,7 @@ import com.vincent.lib.imagecontroller.ImageLoader
 import com.youth.banner.BannerConfig
 import com.youth.banner.Transformer
 import kotlinx.android.synthetic.main.fragment_main_page.*
+import kotlinx.android.synthetic.main.loading_layout.*
 
 
 /**
@@ -80,14 +82,12 @@ class MainPageFragment : BaseFragment() {
         mViewModel.observeArticles().observe(this, Observer<PagedList<Article>> {
             mAdapter.submitList(it)
         })
-
+        
         mViewModel.observeLoadingState().observe(this, Observer {
             if (it == LoadingState.LOADING_STOP) {
-                loading_view.visibility = View.INVISIBLE
-                loading_view.stopAnim()
+                progressBar.visibility = View.INVISIBLE
             } else {
-                loading_view.visibility = View.VISIBLE
-                loading_view.startAnim()
+                progressBar.visibility = View.VISIBLE
             }
         })
 
