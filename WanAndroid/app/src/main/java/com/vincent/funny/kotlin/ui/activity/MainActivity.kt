@@ -7,7 +7,6 @@ import android.view.View
 import android.widget.ImageView
 import androidx.fragment.app.Fragment
 import com.vincent.funny.kotlin.R
-import com.vincent.funny.kotlin.adapter.MainTabAdapter
 import com.vincent.funny.kotlin.ui.fragment.KnowledgeTreeFragment
 import com.vincent.funny.kotlin.ui.fragment.MainPageFragment
 import com.vincent.funny.kotlin.ui.fragment.WXAccountFragment
@@ -22,7 +21,9 @@ import com.vincent.funny.kotlin.ui.fragment.ProjectFragment
 class MainActivity : BaseActivity() {
 
     private var fragmentList = mutableListOf<Fragment>()
-
+    private var mCurrentTabIndex = -1
+    private val mFragments: Array<Class<out Fragment?>> = arrayOf(MainPageFragment::class.java, KnowledgeTreeFragment::class.java, WXAccountFragment::class.java, ProjectFragment::class.java)
+    private var mCurrentFragment: Fragment? = null
     private val tabTexts = arrayOf("首页", "知识体系", "公众号", "项目")
     override fun onCreate(savedInstanceState: Bundle?) {
         Debug.startMethodTracing("mainactivity")
@@ -33,32 +34,24 @@ class MainActivity : BaseActivity() {
         exView<ImageView>(R.id.img_back).visibility = View.INVISIBLE
 
         tv_title.visibility
-        if ( fragmentList.isEmpty()) {
+        if (fragmentList.isEmpty()) {
             fragmentList.addAll(
                 listOf(
-                    MainPageFragment()
-                   , KnowledgeTreeFragment(),
+                    MainPageFragment(), KnowledgeTreeFragment(),
                     WXAccountFragment(),
                     ProjectFragment()
                 )
             )
 
-
-            viewPager.apply {
-                adapter = MainTabAdapter(supportFragmentManager, fragmentList)
-                currentItem = 0
-                offscreenPageLimit = 3
-                isEnabled = false
-            }
-
             alphaIndicator.apply {
                 setOnTabChangedListner {
                     tv_title.text = tabTexts[it]
+                    changeTab(it)
                 }
-                setViewPager(viewPager)
             }
         }
 
+        changeTab(0)
         restoreTabIndex(savedInstanceState)
         Debug.stopMethodTracing()
     }
@@ -96,10 +89,36 @@ class MainActivity : BaseActivity() {
         logd("***onDestroy")
     }
 
+
+    private fun changeTab(position: Int) {
+
+        if (mCurrentTabIndex == position) return
+        val tag = position.toString()
+        val transaction = supportFragmentManager.beginTransaction()
+        var fragment = supportFragmentManager.findFragmentByTag(tag)
+
+        if (fragment == null) {
+            mCurrentFragment ?.run {
+                transaction.hide(this)
+            }
+            fragment = mFragments[position].newInstance()
+            transaction.add(R.id.content, fragment!!, tag)
+        } else {
+            mCurrentFragment?.run {
+                transaction.hide(this)
+            }
+            transaction.show(fragment)
+        }
+        mCurrentFragment = fragment
+        transaction.commitAllowingStateLoss()
+        mCurrentTabIndex = position
+    }
+
+
     override fun onSaveInstanceState(outState: Bundle) {
         super.onSaveInstanceState(outState)
         logd("***onSaveInstanceState")
-        outState.putInt("index", viewpager.currentItem)
+        outState.putInt("index", mCurrentTabIndex)
         outState.putLong("time", System.currentTimeMillis())
     }
 
@@ -115,8 +134,10 @@ class MainActivity : BaseActivity() {
 
         if (savedInstanceState != null) {
             val index = savedInstanceState.getInt("index", -1)
-            if (index > 0 && viewpager.currentItem != index) {
-                viewPager.currentItem = index
+            if (index > 0 && mCurrentTabIndex != index) {
+                changeTab(index)
+            }else if(index < 0){
+                changeTab(0)
             }
         }
     }

@@ -17,20 +17,15 @@ class SplashActivity : BaseActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        requestWindowFeature(Window.FEATURE_NO_TITLE)
-        window.setFlags(
-            WindowManager.LayoutParams.FLAG_FULLSCREEN,
-            WindowManager.LayoutParams.FLAG_FULLSCREEN
-        )
-        setContentView(R.layout.activity_splash)
 
         Observable.timer(TIME_SPLASH_DELAY, TimeUnit.MILLISECONDS).subscribeOn(Schedulers.io())
             .unsubscribeOn(Schedulers.io()).observeOn(
                 AndroidSchedulers.mainThread()
             ).autoDisposable(lifecycle.scope()).subscribe {
-            startActivity(Intent(this@SplashActivity, MainActivity::class.java))
-            finish()
+                startActivity(Intent(this@SplashActivity, MainActivity::class.java))
+                overridePendingTransition(R.anim.anim_zoom_in,R.anim.anim_zoom_out)
+                finish()
 
-        }
+            }
     }
 }
