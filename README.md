@@ -10,7 +10,7 @@
 | :----------------------------------------------------------: | :----------------------------------------------------------: | :----------------------------------------------------------: |
 |                             首页                             |                           知识体系                           |                            公众号                            |
 
-| <img src="https://github-1304799125.cos.ap-beijing.myqcloud.com/wankotlin/screen_shot/project.jpg" width="280" height="498" alt="项目"/> | <img src="https://github-1304799125.cos.ap-beijing.myqcloud.com/wankotlin/screen_shot/g2.gif" width="280" height="498" alt="动态图"/> | <img src="/screen_shot/webview.jpg" width="280" height="498" alt="详细页"/> |
+| <img src="https://github-1304799125.cos.ap-beijing.myqcloud.com/wankotlin/screen_shot/project.jpg" width="280" height="498" alt="项目"/> | <img src="https://github-1304799125.cos.ap-beijing.myqcloud.com/wankotlin/screen_shot/g2.gif" width="280" height="498" alt="动态图"/> | <img src="https://github-1304799125.cos.ap-beijing.myqcloud.com/wankotlin/screen_shot/webview.jpg" width="280" height="498" alt="详细页"/> |
 | :----------------------------------------------------------: | :----------------------------------------------------------: | :----------------------------------------------------------: |
 |                             项目                             |                            动态图                            |                            详细页                            |
 
